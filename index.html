@@ -3,1132 +3,173 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="نتيجة 2026 - نتائج البكالوريا، حاسبة القبول الجامعي، جداول الامتحانات لجميع الدول العربية">
-<meta name="keywords" content="نتائج البكالوريا 2026, بكالوريا العراق, بكالوريا الجزائر, بكالوريا المغرب, بكالوريا مصر, نتائج الثانوية">
-<meta property="og:title" content="natija2026 — نتائج البكالوريا العربية">
-<meta property="og:description" content="نتائج البكالوريا الفورية، حاسبة القبول الجامعي، جداول الامتحانات لجميع الدول العربية">
-<meta property="og:type" content="website">
-<meta name="robots" content="index, follow">
-<title>natija2026 — نتائج البكالوريا 2026</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<meta name="description" content="natija2026 — بوابة البكالوريا العربية الأولى. نتائج البكالوريا، حاسبة القبول الجامعي، جداول الامتحانات لجميع الدول العربية.">
+<meta name="keywords" content="بكالوريا 2026, نتائج, قبول جامعي, امتحانات, العراق, الجزائر, مصر">
+<title>natija2026 — بوابة البكالوريا العربية</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 <style>
-  :root {
-    --bg: #0a0e1a;
-    --bg2: #0f1525;
-    --bg3: #151d35;
-    --surface: #1a2340;
-    --surface2: #1f2a4a;
-    --border: rgba(99,130,255,0.15);
-    --accent: #4f7cff;
-    --accent2: #7c5cff;
-    --accent3: #00d4aa;
-    --gold: #f5c842;
-    --text: #e8edf8;
-    --text2: #a0aec0;
-    --text3: #64748b;
-    --danger: #ff5c5c;
-    --sidebar-w: 240px;
-    --bottom-h: 68px;
-    --radius: 16px;
-    --radius-sm: 10px;
-  }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'Cairo', 'Tajawal', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    overflow-x: hidden;
-    direction: rtl;
-  }
-
-  /* ── NOISE TEXTURE OVERLAY ── */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 0;
-    opacity: 0.4;
-  }
-
-  /* ── SIDEBAR (Desktop) ── */
-  .sidebar {
-    position: fixed;
-    top: 0; right: 0;
-    width: var(--sidebar-w);
-    height: 100vh;
-    background: var(--bg2);
-    border-left: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    z-index: 100;
-    padding: 0;
-    transition: transform 0.3s ease;
-  }
-
-  .sidebar-logo {
-    padding: 28px 20px 24px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .logo-mark {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .logo-icon {
-    width: 40px; height: 40px;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px;
-    flex-shrink: 0;
-  }
-
-  .logo-text {
-    display: flex; flex-direction: column; gap: 1px;
-  }
-
-  .logo-name {
-    font-family: 'Cairo', sans-serif;
-    font-weight: 900;
-    font-size: 18px;
-    color: var(--text);
-    letter-spacing: -0.5px;
-    line-height: 1;
-  }
-
-  .logo-sub {
-    font-size: 11px;
-    color: var(--text3);
-    font-weight: 400;
-  }
-
-  .sidebar-nav {
-    flex: 1;
-    padding: 16px 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    overflow-y: auto;
-  }
-
-  .nav-label {
-    font-size: 10px;
-    font-weight: 700;
-    color: var(--text3);
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    padding: 12px 10px 6px;
-  }
-
-  .nav-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 11px 14px;
-    border-radius: var(--radius-sm);
-    color: var(--text2);
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 600;
-    transition: all 0.2s ease;
-    position: relative;
-    cursor: pointer;
-  }
-
-  .nav-item:hover {
-    background: var(--surface);
-    color: var(--text);
-  }
-
-  .nav-item.active {
-    background: linear-gradient(135deg, rgba(79,124,255,0.15), rgba(124,92,255,0.1));
-    color: var(--accent);
-    border: 1px solid rgba(79,124,255,0.2);
-  }
-
-  .nav-item.active::before {
-    content: '';
-    position: absolute;
-    right: 0; top: 50%; transform: translateY(-50%);
-    width: 3px; height: 60%;
-    background: var(--accent);
-    border-radius: 2px 0 0 2px;
-  }
-
-  .nav-item .nav-icon { width: 18px; height: 18px; flex-shrink: 0; }
-
-  .nav-badge {
-    margin-right: auto;
-    background: var(--accent3);
-    color: var(--bg);
-    font-size: 10px;
-    font-weight: 800;
-    padding: 2px 7px;
-    border-radius: 20px;
-  }
-
-  .sidebar-footer {
-    padding: 16px 12px;
-    border-top: 1px solid var(--border);
-  }
-
-  .year-badge {
-    background: linear-gradient(135deg, var(--gold), #e5a800);
-    color: var(--bg);
-    padding: 10px 14px;
-    border-radius: var(--radius-sm);
-    font-size: 13px;
-    font-weight: 800;
-    text-align: center;
-    letter-spacing: 0.5px;
-  }
-
-  /* ── BOTTOM NAV (Mobile) ── */
-  .bottom-nav {
-    display: none;
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    height: var(--bottom-h);
-    background: rgba(15, 21, 37, 0.95);
-    backdrop-filter: blur(20px);
-    border-top: 1px solid var(--border);
-    z-index: 100;
-    padding: 0 8px;
-    justify-content: space-around;
-    align-items: center;
-  }
-
-  .bottom-nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    padding: 8px 16px;
-    border-radius: var(--radius-sm);
-    color: var(--text3);
-    text-decoration: none;
-    font-size: 10px;
-    font-weight: 600;
-    transition: all 0.2s;
-    cursor: pointer;
-    flex: 1;
-  }
-
-  .bottom-nav-item.active {
-    color: var(--accent);
-  }
-
-  .bottom-nav-item .bn-icon { width: 22px; height: 22px; }
-
-  .bottom-nav-item.active .bn-icon { stroke: var(--accent); }
-
-  /* ── MAIN CONTENT ── */
-  .main {
-    margin-right: var(--sidebar-w);
-    min-height: 100vh;
-    position: relative;
-    z-index: 1;
-  }
-
-  /* ── HERO ── */
-  .hero {
-    padding: 60px 32px 40px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: -100px; right: -100px;
-    width: 500px; height: 500px;
-    background: radial-gradient(circle, rgba(79,124,255,0.12) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .hero::after {
-    content: '';
-    position: absolute;
-    bottom: -80px; left: 20%;
-    width: 350px; height: 350px;
-    background: radial-gradient(circle, rgba(124,92,255,0.1) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .hero-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(79,124,255,0.1);
-    border: 1px solid rgba(79,124,255,0.25);
-    color: var(--accent);
-    padding: 6px 14px;
-    border-radius: 40px;
-    font-size: 12px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    animation: fadeDown 0.6s ease both;
-  }
-
-  .live-dot {
-    width: 7px; height: 7px;
-    background: var(--accent3);
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-  }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.8); }
-  }
-
-  .hero-title {
-    font-size: clamp(36px, 6vw, 64px);
-    font-weight: 900;
-    line-height: 1.1;
-    margin-bottom: 16px;
-    animation: fadeDown 0.6s 0.1s ease both;
-  }
-
-  .hero-title .grad {
-    background: linear-gradient(135deg, var(--accent), var(--accent2), var(--accent3));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .hero-sub {
-    font-size: 17px;
-    color: var(--text2);
-    line-height: 1.8;
-    max-width: 580px;
-    margin-bottom: 36px;
-    font-weight: 400;
-    animation: fadeDown 0.6s 0.2s ease both;
-  }
-
-  @keyframes fadeDown {
-    from { opacity: 0; transform: translateY(-16px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ── SEARCH BOX ── */
-  .search-wrap {
-    max-width: 600px;
-    animation: fadeDown 0.6s 0.3s ease both;
-  }
-
-  .search-box {
-    display: flex;
-    align-items: center;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 6px 6px 6px 16px;
-    gap: 12px;
-    transition: border-color 0.2s, box-shadow 0.2s;
-  }
-
-  .search-box:focus-within {
-    border-color: rgba(79,124,255,0.5);
-    box-shadow: 0 0 0 3px rgba(79,124,255,0.08);
-  }
-
-  .search-icon { color: var(--text3); flex-shrink: 0; }
-
-  .search-input {
-    flex: 1;
-    background: none;
-    border: none;
-    outline: none;
-    font-family: 'Cairo', sans-serif;
-    font-size: 15px;
-    color: var(--text);
-    direction: rtl;
-    min-width: 0;
-  }
-
-  .search-input::placeholder { color: var(--text3); }
-
-  .search-btn {
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    padding: 12px 22px;
-    font-family: 'Cairo', sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: opacity 0.2s, transform 0.2s;
-  }
-
-  .search-btn:hover { opacity: 0.9; transform: translateY(-1px); }
-  .search-btn:active { transform: translateY(0); }
-
-  .search-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 14px;
-  }
-
-  .tag {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    color: var(--text2);
-    padding: 5px 12px;
-    border-radius: 30px;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-
-  .tag:hover {
-    border-color: rgba(79,124,255,0.4);
-    color: var(--accent);
-    background: rgba(79,124,255,0.08);
-  }
-
-  /* ── STATS ROW ── */
-  .stats-row {
-    display: flex;
-    gap: 16px;
-    padding: 0 32px 40px;
-    flex-wrap: wrap;
-    animation: fadeUp 0.6s 0.4s ease both;
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .stat-card {
-    flex: 1;
-    min-width: 140px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    transition: transform 0.2s, border-color 0.2s;
-  }
-
-  .stat-card:hover {
-    transform: translateY(-2px);
-    border-color: rgba(79,124,255,0.3);
-  }
-
-  .stat-icon-wrap {
-    width: 46px; height: 46px;
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-
-  .stat-num {
-    font-size: 24px;
-    font-weight: 900;
-    line-height: 1;
-    margin-bottom: 3px;
-  }
-
-  .stat-label {
-    font-size: 12px;
-    color: var(--text3);
-    font-weight: 500;
-  }
-
-  /* ── SECTION ── */
-  .section { padding: 0 32px 48px; }
-
-  .section-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-  }
-
-  .section-title {
-    font-size: 20px;
-    font-weight: 800;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .section-title-icon {
-    width: 32px; height: 32px;
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px;
-  }
-
-  .see-all {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--accent);
-    text-decoration: none;
-    display: flex; align-items: center; gap: 4px;
-  }
-
-  /* ── COUNTRIES GRID ── */
-  .countries-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 12px;
-  }
-
-  .country-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    transition: all 0.25s ease;
-    text-decoration: none;
-    color: inherit;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .country-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    opacity: 0;
-    transition: opacity 0.25s;
-  }
-
-  .country-card:hover::before { opacity: 0.06; }
-
-  .country-card:hover {
-    border-color: rgba(79,124,255,0.35);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-  }
-
-  .country-flag { font-size: 36px; line-height: 1; position: relative; z-index: 1; }
-
-  .country-name {
-    font-size: 14px;
-    font-weight: 700;
-    position: relative; z-index: 1;
-    text-align: center;
-  }
-
-  .country-status {
-    font-size: 10px;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 20px;
-    position: relative; z-index: 1;
-  }
-
-  .status-live { background: rgba(0,212,170,0.15); color: var(--accent3); }
-  .status-soon { background: rgba(245,200,66,0.15); color: var(--gold); }
-
-  /* ── FEATURES GRID ── */
-  .features-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 16px;
-  }
-
-  .feature-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 24px;
-    cursor: pointer;
-    transition: all 0.25s;
-    text-decoration: none;
-    color: inherit;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .feature-card::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--accent), var(--accent2));
-    transform: scaleX(0);
-    transition: transform 0.3s ease;
-    transform-origin: right;
-  }
-
-  .feature-card:hover::after { transform: scaleX(1); }
-
-  .feature-card:hover {
-    border-color: rgba(79,124,255,0.25);
-    transform: translateY(-3px);
-    box-shadow: 0 12px 32px rgba(0,0,0,0.25);
-  }
-
-  .feature-icon-wrap {
-    width: 52px; height: 52px;
-    border-radius: 14px;
-    display: flex; align-items: center; justify-content: center;
-  }
-
-  .feature-title {
-    font-size: 17px;
-    font-weight: 800;
-  }
-
-  .feature-desc {
-    font-size: 13px;
-    color: var(--text2);
-    line-height: 1.7;
-  }
-
-  .feature-link {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--accent);
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    margin-top: auto;
-  }
-
-  /* ── ANNOUNCEMENT BANNER ── */
-  .announcement {
-    margin: 0 32px 32px;
-    background: linear-gradient(135deg, rgba(245,200,66,0.08), rgba(229,168,0,0.04));
-    border: 1px solid rgba(245,200,66,0.2);
-    border-radius: var(--radius);
-    padding: 18px 22px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
-
-  .ann-icon {
-    width: 40px; height: 40px;
-    background: rgba(245,200,66,0.15);
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-    font-size: 20px;
-  }
-
-  .ann-text { flex: 1; }
-  .ann-title { font-size: 15px; font-weight: 700; color: var(--gold); margin-bottom: 3px; }
-  .ann-sub { font-size: 13px; color: var(--text2); }
-
-  /* ── QUICK LINKS ── */
-  .quick-links {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-
-  .quick-link {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 12px 16px;
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text2);
-    text-decoration: none;
-    transition: all 0.2s;
-    cursor: pointer;
-  }
-
-  .quick-link:hover {
-    border-color: rgba(79,124,255,0.3);
-    color: var(--accent);
-    background: rgba(79,124,255,0.06);
-  }
-
-  /* ── MOBILE ── */
-  @media (max-width: 768px) {
-    .sidebar { display: none; }
-    .bottom-nav { display: flex; }
-    .main { margin-right: 0; padding-bottom: calc(var(--bottom-h) + 16px); }
-    .hero { padding: 24px 16px 28px; }
-    .hero-sub { font-size: 15px; }
-    .stats-row { padding: 0 16px 28px; gap: 10px; }
-    .stat-card { padding: 14px; min-width: 120px; }
-    .stat-num { font-size: 20px; }
-    .section { padding: 0 16px 36px; }
-    .countries-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 10px; }
-    .country-card { padding: 16px 12px; }
-    .country-flag { font-size: 28px; }
-    .features-grid { grid-template-columns: 1fr; }
-    .announcement { margin: 0 16px 24px; padding: 14px 16px; }
-    .search-btn { padding: 12px 14px; font-size: 13px; }
-  }
-
-  /* ── SCROLLBAR ── */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 3px; }
-
-  /* ── TOPBAR (Mobile only) ── */
-  .topbar {
-    display: none;
-    position: sticky;
-    top: 0;
-    background: rgba(10,14,26,0.92);
-    backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border);
-    padding: 14px 16px;
-    z-index: 50;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .topbar-logo {
-    display: flex; align-items: center; gap: 8px;
-    text-decoration: none; color: inherit;
-  }
-
-  .topbar-icon {
-    width: 32px; height: 32px;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 16px;
-  }
-
-  .topbar-name {
-    font-weight: 900;
-    font-size: 16px;
-  }
-
-  @media (max-width: 768px) {
-    .topbar { display: flex; }
-  }
+:root{--bg:#0a0e1a;--bg2:#0f1525;--bg3:#151d35;--surface:#1a2340;--surface2:#1f2a4a;--border:rgba(99,130,255,0.15);--accent:#4f7cff;--accent2:#7c5cff;--accent3:#00d4aa;--gold:#f5c842;--text:#e8edf8;--text2:#a0aec0;--text3:#64748b;--danger:#ff5c5c;--green:#22c55e;--sidebar-w:240px;--bottom-h:68px;--radius:16px;--radius-sm:10px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;direction:rtl;overflow-x:hidden}
+.sidebar{position:fixed;top:0;right:0;width:var(--sidebar-w);height:100vh;background:var(--bg2);border-left:1px solid var(--border);display:flex;flex-direction:column;z-index:100}
+.sidebar-logo{padding:24px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
+.logo-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.logo-name{font-weight:900;font-size:17px}.logo-sub{font-size:11px;color:var(--text3)}
+.sidebar-nav{flex:1;padding:14px 12px;display:flex;flex-direction:column;gap:3px;overflow-y:auto}
+.nav-label{font-size:10px;font-weight:700;color:var(--text3);letter-spacing:1.5px;padding:10px 10px 5px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:var(--radius-sm);color:var(--text2);text-decoration:none;font-size:13px;font-weight:600;transition:all .2s;position:relative}
+.nav-item:hover{background:var(--surface);color:var(--text)}
+.nav-item.active{background:linear-gradient(135deg,rgba(79,124,255,.15),rgba(124,92,255,.1));color:var(--accent);border:1px solid rgba(79,124,255,.2)}
+.nav-item.active::before{content:'';position:absolute;right:0;top:50%;transform:translateY(-50%);width:3px;height:60%;background:var(--accent);border-radius:2px 0 0 2px}
+.nav-icon{width:16px;height:16px;flex-shrink:0}
+.sidebar-footer{padding:14px 12px;border-top:1px solid var(--border)}
+.year-badge{background:linear-gradient(135deg,var(--gold),#e5a800);color:var(--bg);padding:9px 14px;border-radius:var(--radius-sm);font-size:13px;font-weight:800;text-align:center}
+.topbar{display:none;position:sticky;top:0;background:rgba(10,14,26,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:12px 16px;z-index:50;align-items:center;justify-content:space-between}
+.topbar-logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:inherit}
+.topbar-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px}
+.topbar-name{font-weight:900;font-size:16px}
+.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;height:var(--bottom-h);background:rgba(15,21,37,.97);backdrop-filter:blur(20px);border-top:1px solid var(--border);z-index:100;padding:0 8px;justify-content:space-around;align-items:center}
+.bn-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 12px;color:var(--text3);text-decoration:none;font-size:10px;font-weight:600;transition:all .2s;flex:1}
+.bn-item.active{color:var(--accent)}.bn-icon{width:22px;height:22px}
+.bn-home{width:44px;height:44px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(79,124,255,.4)}
+.main{margin-right:var(--sidebar-w);min-height:100vh;padding:36px 32px 60px}
+.page-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(79,124,255,.08);border:1px solid rgba(79,124,255,.2);color:var(--accent);padding:5px 14px;border-radius:40px;font-size:12px;font-weight:700;margin-bottom:14px}
+.page-title{font-size:clamp(26px,4vw,44px);font-weight:900;line-height:1.1;margin-bottom:8px}
+.page-title .grad{background:linear-gradient(135deg,var(--accent),var(--accent3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.page-sub{font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:28px;max-width:640px}
+.country-strip{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.cpill{display:flex;align-items:center;gap:7px;padding:9px 16px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);color:var(--text2);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap}
+.cpill:hover{border-color:rgba(79,124,255,.3);color:var(--text)}
+.cpill.active{background:rgba(79,124,255,.12);border-color:rgba(79,124,255,.4);color:var(--accent)}
+.cpill .flag{font-size:18px}
+.hero-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:40px;max-width:900px;margin-bottom:32px;position:relative;overflow:hidden}
+.hero-section::before{content:'';position:absolute;top:0;right:0;width:300px;height:300px;background:radial-gradient(circle,rgba(79,124,255,.08) 0%,transparent 70%);pointer-events:none}
+.search-box{display:flex;align-items:center;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:6px 6px 6px 14px;gap:10px;max-width:600px;margin-bottom:20px}
+.search-input{flex:1;background:none;border:none;outline:none;font-family:'Cairo',sans-serif;font-size:15px;color:var(--text);direction:rtl}
+.search-input::placeholder{color:var(--text3)}
+.search-btn{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;border-radius:10px;padding:11px 18px;font-family:'Cairo',sans-serif;font-size:13px;font-weight:800;cursor:pointer;white-space:nowrap;transition:opacity .2s}
+.search-btn:hover{opacity:.9}
+.quick-links{display:flex;gap:10px;flex-wrap:wrap;max-width:600px}
+.quick-link{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;text-decoration:none;color:var(--text2)}
+.quick-link:hover{border-color:rgba(79,124,255,.3);color:var(--text)}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;max-width:900px;margin-bottom:32px}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center}
+.stat-number{font-size:28px;font-weight:900;color:var(--accent);line-height:1}
+.stat-label{font-size:12px;color:var(--text3);margin-top:6px}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;max-width:900px}
+.feature-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px;cursor:pointer;transition:all .2s;text-decoration:none;color:inherit;display:flex;flex-direction:column}
+.feature-card:hover{border-color:rgba(79,124,255,.25);transform:translateY(-2px)}
+.feature-icon{font-size:32px;margin-bottom:12px}
+.feature-title{font-size:15px;font-weight:800;margin-bottom:8px}
+.feature-sub{font-size:13px;color:var(--text2);line-height:1.6}
+@media(max-width:768px){
+  .sidebar{display:none}.bottom-nav{display:flex}.topbar{display:flex}
+  .main{margin-right:0;padding:16px 16px 80px}
+  .hero-section{padding:20px}
+  .search-box{max-width:100%}
+  .quick-links{flex-direction:column}
+  .stats-grid{grid-template-columns:1fr}
+}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--surface2);border-radius:3px}
 </style>
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════
-     SIDEBAR (Desktop)
-════════════════════════════════════════ -->
+<!-- SIDEBAR -->
 <aside class="sidebar">
-  <div class="sidebar-logo">
-    <div class="logo-mark">
-      <div class="logo-icon">🎓</div>
-      <div class="logo-text">
-        <div class="logo-name">natija2026</div>
-        <div class="logo-sub">بوابة البكالوريا العربية</div>
-      </div>
-    </div>
-  </div>
-
+  <a href="index.html" class="sidebar-logo">
+    <div class="logo-icon">🎓</div>
+    <div><div class="logo-name">natija2026</div><div class="logo-sub">بوابة البكالوريا العربية</div></div>
+  </a>
   <nav class="sidebar-nav">
-    <div class="nav-label">الأقسام الرئيسية</div>
-
-    <a href="natija2026.com/نتائج" class="nav-item active">
-      <i data-lucide="graduation-cap" class="nav-icon"></i>
-      نتائج البكالوريا
-      <span class="nav-badge">مباشر</span>
-    </a>
-
-    <a href="natija2026.com/حاسبة" class="nav-item">
-      <i data-lucide="calculator" class="nav-icon"></i>
-      حاسبة القبول
-    </a>
-
-    <a href="natija2026.com/جداول" class="nav-item">
-      <i data-lucide="calendar-days" class="nav-icon"></i>
-      جداول الامتحانات
-    </a>
-
-    <a href="natija2026.com/جامعات" class="nav-item">
-      <i data-lucide="building-2" class="nav-icon"></i>
-      قاعدة الجامعات
-    </a>
-
-    <div class="nav-label" style="margin-top:8px;">الدول</div>
-
-    <a href="#" class="nav-item">
-      <span style="font-size:16px;">🇮🇶</span>
-      العراق
-    </a>
-    <a href="#" class="nav-item">
-      <span style="font-size:16px;">🇩🇿</span>
-      الجزائر
-    </a>
-    <a href="#" class="nav-item">
-      <span style="font-size:16px;">🇲🇦</span>
-      المغرب
-    </a>
-    <a href="#" class="nav-item">
-      <span style="font-size:16px;">🇹🇳</span>
-      تونس
-    </a>
-    <a href="#" class="nav-item">
-      <span style="font-size:16px;">🇪🇬</span>
-      مصر
-    </a>
-    <a href="#" class="nav-item">
-      <span style="font-size:16px;">🇯🇴</span>
-      الأردن
-    </a>
-    <a href="#" class="nav-item">
-      <span style="font-size:16px;">🇸🇦</span>
-      السعودية
-    </a>
+    <div class="nav-label">الأقسام</div>
+    <a href="results.html" class="nav-item"><i data-lucide="graduation-cap" class="nav-icon"></i>نتائج البكالوريا</a>
+    <a href="calculator-gulf.html" class="nav-item"><i data-lucide="calculator" class="nav-icon"></i>حاسبة القبول</a>
+    <a href="schedules.html" class="nav-item"><i data-lucide="calendar-days" class="nav-icon"></i>جداول الامتحانات</a>
+    <a href="calculator.html" class="nav-item"><i data-lucide="building-2" class="nav-icon"></i>قاعدة الجامعات</a>
   </nav>
-
-  <div class="sidebar-footer">
-    <div class="year-badge">🏆 موسم 2025 — 2026</div>
-  </div>
+  <div class="sidebar-footer"><div class="year-badge">🏆 موسم 2025 — 2026</div></div>
 </aside>
 
-<!-- ═══════════════════════════════════════
-     TOPBAR (Mobile)
-════════════════════════════════════════ -->
+<!-- TOPBAR -->
 <div class="topbar">
-  <div class="topbar-logo">
-    <div class="topbar-icon">🎓</div>
-    <div class="topbar-name">natija2026</div>
-  </div>
-  <div style="display:flex;align-items:center;gap:6px;background:rgba(0,212,170,0.12);border:1px solid rgba(0,212,170,0.25);color:var(--accent3);padding:5px 10px;border-radius:20px;font-size:11px;font-weight:700;">
-    <div class="live-dot"></div>
-    مباشر
-  </div>
+  <a href="index.html" class="topbar-logo"><div class="topbar-icon">🎓</div><div class="topbar-name">natija2026</div></a>
+  <span style="font-size:12px;color:var(--text3);font-weight:700">🌍 بوابة البكالوريا العربية</span>
 </div>
 
-<!-- ═══════════════════════════════════════
-     MAIN CONTENT
-════════════════════════════════════════ -->
+<!-- MAIN -->
 <main class="main">
+  <div class="page-eyebrow">🌍 الدول العربية جميعاً</div>
+  <h1 class="page-title">نتائج البكالوريا <span class="grad">2026</span></h1>
+  <p class="page-sub">البوابة الأولى العربية لنتائج البكالوريا والقبول الجامعي وجداول الامتحانات. اختر دولتك واحصل على كل المعلومات.</p>
 
   <!-- HERO -->
-  <section class="hero">
-    <div class="hero-eyebrow">
-      <div class="live-dot"></div>
-      نتائج 2026 متاحة الآن
-    </div>
-    <h1 class="hero-title">
-      نتيجتك في<br>
-      <span class="grad">ثوانٍ — مجاناً</span>
-    </h1>
-    <p class="hero-sub">
-      البوابة العربية الأولى لنتائج البكالوريا — نتائج فورية، حاسبة قبول جامعي، جداول امتحانات محدثة لجميع الدول العربية.
-    </p>
-
-    <!-- Search -->
-    <div class="search-wrap">
-      <div class="search-box">
-        <i data-lucide="search" class="search-icon" style="width:18px;height:18px;"></i>
-        <input
-          type="text"
-          class="search-input"
-          placeholder="ابحث برقم الجلوس أو الاسم..."
-        >
-        <button class="search-btn">🔍 ابحث الآن</button>
-      </div>
-      <div class="search-tags">
-        <span class="tag">🇮🇶 العراق</span>
-        <span class="tag">🇩🇿 الجزائر</span>
-        <span class="tag">🇲🇦 المغرب</span>
-        <span class="tag">🇪🇬 مصر</span>
-        <span class="tag">🇹🇳 تونس</span>
-        <span class="tag">🇯🇴 الأردن</span>
-        <span class="tag">🇸🇦 السعودية</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- STATS -->
-  <div class="stats-row">
-    <div class="stat-card">
-      <div class="stat-icon-wrap" style="background:rgba(79,124,255,0.12);">
-        <i data-lucide="users" style="width:22px;height:22px;color:var(--accent);"></i>
-      </div>
-      <div>
-        <div class="stat-num" style="color:var(--accent);">+2M</div>
-        <div class="stat-label">طالب مسجل</div>
-      </div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-icon-wrap" style="background:rgba(0,212,170,0.12);">
-        <i data-lucide="globe" style="width:22px;height:22px;color:var(--accent3);"></i>
-      </div>
-      <div>
-        <div class="stat-num" style="color:var(--accent3);">7</div>
-        <div class="stat-label">دول عربية</div>
-      </div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-icon-wrap" style="background:rgba(245,200,66,0.12);">
-        <i data-lucide="building-2" style="width:22px;height:22px;color:var(--gold);"></i>
-      </div>
-      <div>
-        <div class="stat-num" style="color:var(--gold);">+500</div>
-        <div class="stat-label">جامعة</div>
-      </div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-icon-wrap" style="background:rgba(255,92,92,0.12);">
-        <i data-lucide="zap" style="width:22px;height:22px;color:var(--danger);"></i>
-      </div>
-      <div>
-        <div class="stat-num" style="color:var(--danger);">فوري</div>
-        <div class="stat-label">نتائج مباشرة</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ANNOUNCEMENT -->
-  <div class="announcement">
-    <div class="ann-icon">📢</div>
-    <div class="ann-text">
-      <div class="ann-title">نتائج البكالوريا العراقية 2026 متاحة الآن!</div>
-      <div class="ann-sub">تمت إضافة نتائج وزارة التربية العراقية — ابحث برقم الجلوس مباشرة</div>
-    </div>
-    <a href="#" style="flex-shrink:0;background:rgba(245,200,66,0.15);border:1px solid rgba(245,200,66,0.3);color:var(--gold);padding:8px 14px;border-radius:8px;font-size:12px;font-weight:700;text-decoration:none;white-space:nowrap;">
-      استعرض ←
-    </a>
-  </div>
-
-  <!-- COUNTRIES -->
-  <section class="section">
-    <div class="section-header">
-      <div class="section-title">
-        <div class="section-title-icon" style="background:rgba(79,124,255,0.12);">🌍</div>
-        اختر دولتك
-      </div>
-      <a href="#" class="see-all">عرض الكل ←</a>
-    </div>
-
-    <div class="countries-grid">
-      <a href="natija2026.com/نتائج/العراق" class="country-card">
-        <div class="country-flag">🇮🇶</div>
-        <div class="country-name">العراق</div>
-        <div class="country-status status-live">● مباشر</div>
-      </a>
-      <a href="natija2026.com/نتائج/الجزائر" class="country-card">
-        <div class="country-flag">🇩🇿</div>
-        <div class="country-name">الجزائر</div>
-        <div class="country-status status-live">● مباشر</div>
-      </a>
-      <a href="natija2026.com/نتائج/المغرب" class="country-card">
-        <div class="country-flag">🇲🇦</div>
-        <div class="country-name">المغرب</div>
-        <div class="country-status status-live">● مباشر</div>
-      </a>
-      <a href="natija2026.com/نتائج/تونس" class="country-card">
-        <div class="country-flag">🇹🇳</div>
-        <div class="country-name">تونس</div>
-        <div class="country-status status-soon">⏳ قريباً</div>
-      </a>
-      <a href="natija2026.com/نتائج/مصر" class="country-card">
-        <div class="country-flag">🇪🇬</div>
-        <div class="country-name">مصر</div>
-        <div class="country-status status-live">● مباشر</div>
-      </a>
-      <a href="natija2026.com/نتائج/الأردن" class="country-card">
-        <div class="country-flag">🇯🇴</div>
-        <div class="country-name">الأردن</div>
-        <div class="country-status status-soon">⏳ قريباً</div>
-      </a>
-      <a href="natija2026.com/نتائج/السعودية" class="country-card">
-        <div class="country-flag">🇸🇦</div>
-        <div class="country-name">السعودية</div>
-        <div class="country-status status-live">● مباشر</div>
-      </a>
-    </div>
-  </section>
-
-  <!-- FEATURES -->
-  <section class="section">
-    <div class="section-header">
-      <div class="section-title">
-        <div class="section-title-icon" style="background:rgba(124,92,255,0.12);">⚡</div>
-        خدماتنا
-      </div>
-    </div>
-
-    <div class="features-grid">
-      <a href="natija2026.com/نتائج" class="feature-card">
-        <div class="feature-icon-wrap" style="background:rgba(79,124,255,0.12);">
-          <i data-lucide="graduation-cap" style="width:26px;height:26px;color:var(--accent);"></i>
-        </div>
-        <div class="feature-title">نتائج البكالوريا</div>
-        <div class="feature-desc">نتائج فورية مباشرة من مواقع الوزارات الرسمية — ابحث برقم الجلوس أو الاسم لجميع الدول العربية.</div>
-        <div class="feature-link">ابحث عن نتيجتك <i data-lucide="arrow-left" style="width:14px;height:14px;"></i></div>
-      </a>
-
-      <a href="natija2026.com/حاسبة" class="feature-card">
-        <div class="feature-icon-wrap" style="background:rgba(0,212,170,0.1);">
-          <i data-lucide="calculator" style="width:26px;height:26px;color:var(--accent3);"></i>
-        </div>
-        <div class="feature-title">حاسبة القبول الجامعي</div>
-        <div class="feature-desc">أدخل معدلك ودولتك — نعرض لك الجامعات والاختصاصات المتاحة فوراً مع نسب القبول المحدثة.</div>
-        <div class="feature-link" style="color:var(--accent3);">احسب قبولك <i data-lucide="arrow-left" style="width:14px;height:14px;"></i></div>
-      </a>
-
-      <a href="natija2026.com/جداول" class="feature-card">
-        <div class="feature-icon-wrap" style="background:rgba(245,200,66,0.1);">
-          <i data-lucide="calendar-days" style="width:26px;height:26px;color:var(--gold);"></i>
-        </div>
-        <div class="feature-title">جداول الامتحانات</div>
-        <div class="feature-desc">جداول امتحانات البكالوريا محدثة تلقائياً لجميع الدول — مع تنبيهات ذكية قبل كل موعد.</div>
-        <div class="feature-link" style="color:var(--gold);">عرض الجدول <i data-lucide="arrow-left" style="width:14px;height:14px;"></i></div>
-      </a>
-
-      <a href="natija2026.com/جامعات" class="feature-card">
-        <div class="feature-icon-wrap" style="background:rgba(255,92,92,0.1);">
-          <i data-lucide="building-2" style="width:26px;height:26px;color:var(--danger);"></i>
-        </div>
-        <div class="feature-title">قاعدة بيانات الجامعات</div>
-        <div class="feature-desc">أكثر من 500 جامعة عربية مع التخصصات، معدلات القبول، وطرق التقديم — كل شيء في مكان واحد.</div>
-        <div class="feature-link" style="color:var(--danger);">اكتشف الجامعات <i data-lucide="arrow-left" style="width:14px;height:14px;"></i></div>
-      </a>
-    </div>
-  </section>
-
-  <!-- QUICK LINKS -->
-  <section class="section">
-    <div class="section-header">
-      <div class="section-title">
-        <div class="section-title-icon" style="background:rgba(0,212,170,0.1);">🔗</div>
-        روابط سريعة
-      </div>
+  <div class="hero-section">
+    <div class="search-box">
+      <i data-lucide="search" style="width:18px;height:18px;color:var(--text3);flex-shrink:0"></i>
+      <input type="text" class="search-input" placeholder="ابحث عن رقم الجلوس أو الاسم...">
+      <button class="search-btn">بحث</button>
     </div>
     <div class="quick-links">
-      <a href="#" class="quick-link">
-        <i data-lucide="file-text" style="width:16px;height:16px;"></i>
-        نتائج العراق 2026
-      </a>
-      <a href="#" class="quick-link">
-        <i data-lucide="file-text" style="width:16px;height:16px;"></i>
-        نتائج الجزائر BEM
-      </a>
-      <a href="#" class="quick-link">
-        <i data-lucide="file-text" style="width:16px;height:16px;"></i>
-        نتائج الثانوية المغرب
-      </a>
-      <a href="#" class="quick-link">
-        <i data-lucide="calendar" style="width:16px;height:16px;"></i>
-        جدول العراق 2026
-      </a>
-      <a href="#" class="quick-link">
-        <i data-lucide="university" style="width:16px;height:16px;"></i>
-        جامعات العراق
-      </a>
-      <a href="#" class="quick-link">
-        <i data-lucide="calculator" style="width:16px;height:16px;"></i>
-        حاسبة معدل القبول
-      </a>
+      <a href="results.html" class="quick-link">📋 نتائج البكالوريا</a>
+      <a href="calculator-gulf.html" class="quick-link">🧮 حاسبة القبول</a>
+      <a href="schedules.html" class="quick-link">📅 جداول الامتحانات</a>
     </div>
-  </section>
+  </div>
 
-  <!-- SPACER bottom -->
-  <div style="height:16px;"></div>
+  <!-- STATS -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-number">7</div>
+      <div class="stat-label">دول عربية</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">2M+</div>
+      <div class="stat-label">طالب مستهدف</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">500+</div>
+      <div class="stat-label">جامعة</div>
+    </div>
+  </div>
 
+  <!-- FEATURES -->
+  <div class="features-grid">
+    <a href="results.html" class="feature-card">
+      <div class="feature-icon">📋</div>
+      <div class="feature-title">نتائج البكالوريا</div>
+      <div class="feature-sub">ابحث عن نتيجتك برقم الجلوس أو الاسم من وزارات التربية الرسمية</div>
+    </a>
+    <a href="calculator-gulf.html" class="feature-card">
+      <div class="feature-icon">🧮</div>
+      <div class="feature-title">حاسبة القبول</div>
+      <div class="feature-sub">اكتشف التخصصات المتاحة لك بناءً على معدلك في 7 دول</div>
+    </a>
+    <a href="schedules.html" class="feature-card">
+      <div class="feature-icon">📅</div>
+      <div class="feature-title">جداول الامتحانات</div>
+      <div class="feature-sub">مواعيم وجداول البكالوريا والثانوية لجميع الدول العربية</div>
+    </a>
+    <a href="calculator.html" class="feature-card">
+      <div class="feature-icon">🏛️</div>
+      <div class="feature-title">قاعدة الجامعات</div>
+      <div class="feature-sub">معلومات شاملة عن الجامعات والتخصصات والمنح الدراسية</div>
+    </a>
+  </div>
 </main>
 
-<!-- ═══════════════════════════════════════
-     BOTTOM NAV (Mobile)
-════════════════════════════════════════ -->
+<!-- BOTTOM NAV -->
 <nav class="bottom-nav">
-  <a href="natija2026.com/نتائج" class="bottom-nav-item active">
-    <i data-lucide="graduation-cap" class="bn-icon"></i>
-    نتائج
-  </a>
-  <a href="natija2026.com/حاسبة" class="bottom-nav-item">
-    <i data-lucide="calculator" class="bn-icon"></i>
-    حاسبة
-  </a>
-  <a href="/" class="bottom-nav-item" style="color:var(--accent);">
-    <div style="width:44px;height:44px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:2px;box-shadow:0 4px 16px rgba(79,124,255,0.4);">
-      <i data-lucide="home" style="width:20px;height:20px;color:#fff;"></i>
-    </div>
-    الرئيسية
-  </a>
-  <a href="natija2026.com/جداول" class="bottom-nav-item">
-    <i data-lucide="calendar-days" class="bn-icon"></i>
-    جداول
-  </a>
-  <a href="natija2026.com/جامعات" class="bottom-nav-item">
-    <i data-lucide="building-2" class="bn-icon"></i>
-    جامعات
-  </a>
+  <a href="results.html" class="bn-item"><i data-lucide="graduation-cap" class="bn-icon"></i>نتائج</a>
+  <a href="calculator-gulf.html" class="bn-item"><i data-lucide="calculator" class="bn-icon"></i>حاسبة</a>
+  <a href="index.html" class="bn-item" style="color:var(--accent)"><div class="bn-home"><i data-lucide="home" style="width:20px;height:20px;color:#fff"></i></div>الرئيسية</a>
+  <a href="schedules.html" class="bn-item"><i data-lucide="calendar-days" class="bn-icon"></i>جداول</a>
+  <a href="calculator.html" class="bn-item"><i data-lucide="building-2" class="bn-icon"></i>جامعات</a>
 </nav>
 
 <script>
-  // Init Lucide icons
-  lucide.createIcons();
-
-  // Search tags click → fill input
-  document.querySelectorAll('.tag').forEach(tag => {
-    tag.addEventListener('click', () => {
-      const input = document.querySelector('.search-input');
-      const countryName = tag.textContent.replace(/[🇮🇶🇩🇿🇲🇦🇹🇳🇪🇬🇯🇴🇸🇦]/gu, '').trim();
-      input.placeholder = `ابحث في ${countryName}...`;
-      input.focus();
-      document.querySelectorAll('.tag').forEach(t => t.style.borderColor = '');
-      tag.style.borderColor = 'rgba(79,124,255,0.5)';
-      tag.style.color = 'var(--accent)';
-    });
-  });
-
-  // Bottom nav active state
-  document.querySelectorAll('.bottom-nav-item').forEach(item => {
-    item.addEventListener('click', function(e) {
-      document.querySelectorAll('.bottom-nav-item').forEach(i => i.classList.remove('active'));
-      this.classList.add('active');
-    });
-  });
-
-  // Sidebar nav active state
-  document.querySelectorAll('.nav-item').forEach(item => {
-    item.addEventListener('click', function(e) {
-      document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-      this.classList.add('active');
-    });
-  });
-
-  // Animate stat numbers on load
-  const animateNum = (el, target, suffix = '') => {
-    let current = 0;
-    const step = target / 40;
-    const timer = setInterval(() => {
-      current = Math.min(current + step, target);
-      if (suffix === 'M') el.textContent = '+' + (current / 1e6).toFixed(1) + 'M';
-      else if (suffix === '+') el.textContent = '+' + Math.round(current);
-      else el.textContent = Math.round(current);
-      if (current >= target) clearInterval(timer);
-    }, 30);
-  };
+lucide.createIcons();
 </script>
 </body>
 </html>
