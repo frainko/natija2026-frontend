@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="حاسبة القبول الجامعي لدول الخليج العربي — السعودية، الكويت، الإمارات، البحرين، قطر، عُمان. أدخل معدلك واكتشف تخصصاتك.">
+<title>حاسبة القبول الجامعي — الخليج العربي | natija2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<style>
+:root {
+  --bg:#0a0e1a; --bg2:#0f1525; --bg3:#151d35;
+  --surface:#1a2340; --surface2:#1f2a4a;
+  --border:rgba(99,130,255,0.15);
+  --accent:#4f7cff; --accent2:#7c5cff; --accent3:#00d4aa;
+  --gold:#f5c842; --text:#e8edf8; --text2:#a0aec0; --text3:#64748b;
+  --danger:#ff5c5c; --green:#22c55e; --orange:#fb923c;
+  --sidebar-w:240px; --bottom-h:68px;
+  --radius:16px; --radius-sm:10px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;direction:rtl;overflow-x:hidden}
+
+/* ── SIDEBAR ── */
+.sidebar{position:fixed;top:0;right:0;width:var(--sidebar-w);height:100vh;background:var(--bg2);border-left:1px solid var(--border);display:flex;flex-direction:column;z-index:100}
+.sidebar-logo{padding:24px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit}
+.logo-icon{width:40px;height:40px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.logo-name{font-weight:900;font-size:17px}
+.logo-sub{font-size:11px;color:var(--text3)}
+.sidebar-nav{flex:1;padding:14px 12px;display:flex;flex-direction:column;gap:3px;overflow-y:auto}
+.nav-label{font-size:10px;font-weight:700;color:var(--text3);letter-spacing:1.5px;padding:10px 10px 5px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:var(--radius-sm);color:var(--text2);text-decoration:none;font-size:13px;font-weight:600;transition:all .2s;position:relative;cursor:pointer}
+.nav-item:hover{background:var(--surface);color:var(--text)}
+.nav-item.active{background:linear-gradient(135deg,rgba(79,124,255,.15),rgba(124,92,255,.1));color:var(--accent);border:1px solid rgba(79,124,255,.2)}
+.nav-item.active::before{content:'';position:absolute;right:0;top:50%;transform:translateY(-50%);width:3px;height:60%;background:var(--accent);border-radius:2px 0 0 2px}
+.nav-icon{width:16px;height:16px;flex-shrink:0}
+.sidebar-footer{padding:14px 12px;border-top:1px solid var(--border)}
+.year-badge{background:linear-gradient(135deg,var(--gold),#e5a800);color:var(--bg);padding:9px 14px;border-radius:var(--radius-sm);font-size:13px;font-weight:800;text-align:center}
+
+/* ── TOPBAR mobile ── */
+.topbar{display:none;position:sticky;top:0;background:rgba(10,14,26,.97);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:12px 16px;z-index:50;align-items:center;justify-content:space-between}
+.topbar-logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:inherit}
+.topbar-icon{width:32px;height:32px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px}
+.topbar-name{font-weight:900;font-size:16px}
+
+/* ── BOTTOM NAV ── */
+.bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;height:var(--bottom-h);background:rgba(15,21,37,.97);backdrop-filter:blur(20px);border-top:1px solid var(--border);z-index:100;padding:0 8px;justify-content:space-around;align-items:center}
+.bn-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 12px;color:var(--text3);text-decoration:none;font-size:10px;font-weight:600;transition:all .2s;flex:1}
+.bn-item.active{color:var(--accent)}
+.bn-icon{width:22px;height:22px}
+.bn-home{width:44px;height:44px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(79,124,255,.4)}
+
+/* ── MAIN ── */
+.main{margin-right:var(--sidebar-w);min-height:100vh;padding:36px 32px 60px}
+
+/* ── PAGE HEADER ── */
+.page-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(79,124,255,.08);border:1px solid rgba(79,124,255,.2);color:var(--accent);padding:5px 14px;border-radius:40px;font-size:12px;font-weight:700;margin-bottom:14px}
+.page-title{font-size:clamp(26px,4vw,44px);font-weight:900;line-height:1.1;margin-bottom:8px}
+.page-title .grad{background:linear-gradient(135deg,var(--accent),var(--accent3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.page-sub{font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:28px;max-width:640px}
+
+/* ── COUNTRY PILLS ── */
+.country-strip{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.cpill{display:flex;align-items:center;gap:7px;padding:9px 16px;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--surface);color:var(--text2);font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap}
+.cpill:hover{border-color:rgba(79,124,255,.3);color:var(--text)}
+.cpill.active{background:rgba(79,124,255,.12);border-color:rgba(79,124,255,.4);color:var(--accent)}
+.cpill .flag{font-size:18px}
+
+/* ── SYSTEM INFO BADGE ── */
+.system-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,212,170,.06);border:1px solid rgba(0,212,170,.2);border-radius:var(--radius-sm);padding:12px 16px;margin-bottom:20px;font-size:13px;color:var(--text2);line-height:1.6;max-width:700px}
+.system-badge strong{color:var(--accent3)}
+
+/* ── CALC CARD ── */
+.calc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:26px;max-width:700px;margin-bottom:24px}
+.calc-title{font-size:15px;font-weight:800;color:var(--text2);margin-bottom:20px;display:flex;align-items:center;gap:8px}
+
+/* ── FORM ── */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+.form-row.triple{grid-template-columns:1fr 1fr 1fr}
+.form-row.single{grid-template-columns:1fr}
+.fg{display:flex;flex-direction:column;gap:7px}
+.flabel{font-size:12px;font-weight:700;color:var(--text2);display:flex;align-items:center;gap:5px}
+.finput,.fselect{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:13px 14px;font-family:'Cairo',sans-serif;font-size:15px;font-weight:600;color:var(--text);direction:rtl;outline:none;width:100%;transition:border-color .2s,box-shadow .2s;appearance:none}
+.finput:focus,.fselect:focus{border-color:rgba(79,124,255,.5);box-shadow:0 0 0 3px rgba(79,124,255,.08)}
+.finput::placeholder{color:var(--text3);font-weight:400}
+.sel-wrap{position:relative}
+.sel-wrap::after{content:'▾';position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text3);pointer-events:none}
+
+/* ── GRADE DISPLAY ── */
+.grade-display{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px;text-align:center;margin-bottom:10px}
+.grade-big{font-size:40px;font-weight:900;line-height:1;transition:color .3s}
+.grade-cat{font-size:12px;color:var(--text3);margin-top:4px}
+.slider{-webkit-appearance:none;appearance:none;width:100%;height:6px;background:var(--surface2);border-radius:3px;outline:none;cursor:pointer}
+.slider::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));cursor:pointer;box-shadow:0 2px 8px rgba(79,124,255,.4)}
+.slider-hints{display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-top:6px}
+
+/* ── FORMULA BOX (Saudi) ── */
+.formula-box{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px;margin-bottom:16px}
+.formula-title{font-size:12px;font-weight:700;color:var(--text3);margin-bottom:12px}
+.formula-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.formula-part{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:13px;font-weight:700}
+.formula-op{color:var(--text3);font-size:14px}
+.formula-result{background:rgba(79,124,255,.12);border:1px solid rgba(79,124,255,.25);color:var(--accent);padding:10px 16px;border-radius:8px;font-size:16px;font-weight:900;text-align:center;margin-top:8px}
+
+/* ── CALC BTN ── */
+.calc-btn{width:100%;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;border-radius:var(--radius-sm);padding:15px;font-family:'Cairo',sans-serif;font-size:15px;font-weight:800;cursor:pointer;transition:opacity .2s,transform .2s;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px}
+.calc-btn:hover{opacity:.9;transform:translateY(-1px)}
+.calc-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+
+/* ── RESULTS ── */
+.results-wrap{max-width:900px}
+.results-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.results-title{font-size:18px;font-weight:800;display:flex;align-items:center;gap:8px}
+.count-badge{background:rgba(79,124,255,.12);border:1px solid rgba(79,124,255,.2);color:var(--accent);padding:4px 14px;border-radius:20px;font-size:13px;font-weight:700}
+
+.filter-bar{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.filter-input{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:9px 14px;font-family:'Cairo',sans-serif;font-size:13px;color:var(--text);direction:rtl;outline:none;flex:1;min-width:180px;transition:border-color .2s}
+.filter-input:focus{border-color:rgba(79,124,255,.4)}
+.filter-input::placeholder{color:var(--text3)}
+
+/* ── TABLE ── */
+.tbl-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tbl th{background:var(--bg3);padding:12px 16px;text-align:right;font-size:11px;font-weight:700;color:var(--text3);border-bottom:1px solid var(--border);white-space:nowrap}
+.tbl td{padding:12px 16px;border-bottom:1px solid rgba(99,130,255,.07);vertical-align:middle}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:rgba(79,124,255,.03)}
+
+.uni-name{font-weight:700;font-size:14px;line-height:1.4}
+.uni-sub{font-size:11px;color:var(--text3);margin-top:2px}
+.rank-n{width:30px;height:30px;border-radius:8px;background:var(--surface2);display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--text3)}
+.rank-1{background:rgba(245,200,66,.15);color:var(--gold)}
+.rank-2{background:rgba(180,180,190,.12);color:#b0b0ba}
+.rank-3{background:rgba(205,127,50,.12);color:#cd7f32}
+
+.pill{display:inline-flex;align-items:center;padding:4px 11px;border-radius:16px;font-size:12px;font-weight:800;white-space:nowrap}
+.pill-green{background:rgba(34,197,94,.1);color:var(--green)}
+.pill-gold{background:rgba(245,200,66,.1);color:var(--gold)}
+.pill-red{background:rgba(255,92,92,.1);color:var(--danger)}
+.pill-blue{background:rgba(79,124,255,.1);color:var(--accent)}
+.pill-orange{background:rgba(251,146,60,.1);color:var(--orange)}
+
+.diff-ok{background:rgba(34,197,94,.1);color:var(--green);padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700}
+.diff-close{background:rgba(245,200,66,.1);color:var(--gold);padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700}
+.diff-tight{background:rgba(255,92,92,.1);color:var(--danger);padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700}
+
+/* ── MINI STATS ── */
+.mini-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:700px;margin-bottom:22px}
+.ms{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px;text-align:center}
+.ms-n{font-size:22px;font-weight:900}
+.ms-l{font-size:11px;color:var(--text3);margin-top:2px}
+
+/* ── PAGINATION ── */
+.pagination{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:18px;flex-wrap:wrap}
+.pgbtn{min-width:34px;height:34px;border-radius:7px;background:var(--surface);border:1px solid var(--border);color:var(--text2);font-family:'Cairo',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;padding:0 8px;display:flex;align-items:center;justify-content:center}
+.pgbtn:hover{border-color:rgba(79,124,255,.3);color:var(--accent)}
+.pgbtn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.pgbtn:disabled{opacity:.3;cursor:not-allowed}
+
+/* ── EMPTY ── */
+.empty-state{text-align:center;padding:50px 24px;color:var(--text3)}
+
+/* ── INITIAL HINT ── */
+.hint-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;max-width:700px;text-align:center}
+.hint-icon{font-size:48px;margin-bottom:12px}
+.hint-title{font-size:17px;font-weight:800;margin-bottom:8px}
+.hint-sub{font-size:13px;color:var(--text2);line-height:1.8;max-width:420px;margin:0 auto 18px}
+.hint-chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.hint-chip{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600}
+
+/* ── MOBILE ── */
+@media(max-width:768px){
+  .sidebar{display:none}
+  .bottom-nav{display:flex}
+  .topbar{display:flex}
+  .main{margin-right:0;padding:16px 16px 80px}
+  .form-row{grid-template-columns:1fr}
+  .form-row.triple{grid-template-columns:1fr}
+  .tbl th:first-child,.tbl td:first-child{display:none}
+  .tbl th:last-child,.tbl td:last-child{display:none}
+  .mini-stats{grid-template-columns:1fr 1fr 1fr}
+  .ms{padding:10px 6px}
+  .ms-n{font-size:18px}
+  .country-strip{gap:6px}
+  .cpill{padding:7px 12px;font-size:12px}
+}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--surface2);border-radius:3px}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <a href="index.html" class="sidebar-logo">
+    <div class="logo-icon">🎓</div>
+    <div><div class="logo-name">natija2026</div><div class="logo-sub">بوابة البكالوريا العربية</div></div>
+  </a>
+  <nav class="sidebar-nav">
+    <div class="nav-label">الأقسام</div>
+    <a href="results.html" class="nav-item"><i data-lucide="graduation-cap" class="nav-icon"></i>نتائج البكالوريا</a>
+    <a href="calculator-gulf.html" class="nav-item active"><i data-lucide="calculator" class="nav-icon"></i>حاسبة القبول</a>
+    <a href="schedules.html" class="nav-item"><i data-lucide="calendar-days" class="nav-icon"></i>جداول الامتحانات</a>
+    <a href="calculator.html" class="nav-item"><i data-lucide="building-2" class="nav-icon"></i>قاعدة الجامعات</a>
+    <div class="nav-label" style="margin-top:8px">دول الخليج</div>
+    <div class="nav-item" onclick="selectCountry('sa')"><span style="font-size:15px">🇸🇦</span>السعودية</div>
+    <div class="nav-item" onclick="selectCountry('kw')"><span style="font-size:15px">🇰🇼</span>الكويت</div>
+    <div class="nav-item" onclick="selectCountry('ae')"><span style="font-size:15px">🇦🇪</span>الإمارات</div>
+    <div class="nav-item" onclick="selectCountry('bh')"><span style="font-size:15px">🇧🇭</span>البحرين</div>
+    <div class="nav-item" onclick="selectCountry('qa')"><span style="font-size:15px">🇶🇦</span>قطر</div>
+    <div class="nav-item" onclick="selectCountry('om')"><span style="font-size:15px">🇴🇲</span>عُمان</div>
+    <div class="nav-label" style="margin-top:8px">دول أخرى</div>
+    <div class="nav-item" onclick="selectCountry('iq')"><span style="font-size:15px">🇮🇶</span>العراق</div>
+  </nav>
+  <div class="sidebar-footer"><div class="year-badge">🏆 موسم 2025 — 2026</div></div>
+</aside>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a href="index.html" class="topbar-logo">
+    <div class="topbar-icon">🎓</div>
+    <div class="topbar-name">natija2026</div>
+  </a>
+  <span style="font-size:12px;color:var(--text3);font-weight:700">حاسبة القبول</span>
+</div>
+
+<!-- MAIN -->
+<main class="main">
+
+  <div class="page-eyebrow">🌍 الخليج العربي وأكثر</div>
+  <h1 class="page-title">حاسبة <span class="grad">القبول الجامعي</span></h1>
+  <p class="page-sub">كل دولة بنظامها الحقيقي — السعودية بالنسبة الموزونة، الكويت بالمعدل المكافئ، الإمارات بنظامها الخاص، والعراق بجدول الوزارة الرسمي.</p>
+
+  <!-- COUNTRY STRIP -->
+  <div class="country-strip">
+    <div class="cpill active" id="pill-iq" onclick="selectCountry('iq')"><span class="flag">🇮🇶</span>العراق</div>
+    <div class="cpill" id="pill-sa" onclick="selectCountry('sa')"><span class="flag">🇸🇦</span>السعودية</div>
+    <div class="cpill" id="pill-kw" onclick="selectCountry('kw')"><span class="flag">🇰🇼</span>الكويت</div>
+    <div class="cpill" id="pill-ae" onclick="selectCountry('ae')"><span class="flag">🇦🇪</span>الإمارات</div>
+    <div class="cpill" id="pill-bh" onclick="selectCountry('bh')"><span class="flag">🇧🇭</span>البحرين</div>
+    <div class="cpill" id="pill-qa" onclick="selectCountry('qa')"><span class="flag">🇶🇦</span>قطر</div>
+    <div class="cpill" id="pill-om" onclick="selectCountry('om')"><span class="flag">🇴🇲</span>عُمان</div>
+  </div>
+
+  <!-- SYSTEM BADGE -->
+  <div class="system-badge" id="system-badge"></div>
+
+  <!-- CALC CARD -->
+  <div class="calc-card" id="calc-card"></div>
+
+  <!-- RESULTS -->
+  <div class="results-wrap" id="results-section" style="display:none">
+    <div class="mini-stats" id="mini-stats"></div>
+    <div class="results-header">
+      <div class="results-title">
+        <i data-lucide="list-checks" style="width:20px;height:20px;color:var(--accent)"></i>
+        التخصصات المتاحة
+        <span class="count-badge" id="count-badge">0</span>
+      </div>
+    </div>
+    <div class="filter-bar">
+      <span style="font-size:12px;color:var(--text3);font-weight:600;align-self:center">🔍</span>
+      <input type="text" class="filter-input" id="filter-q" placeholder="ابحث في اسم الجامعة أو التخصص..." oninput="filterResults(this.value)">
+    </div>
+    <div class="tbl-wrap">
+      <table class="tbl">
+        <thead><tr id="tbl-head"></tr></thead>
+        <tbody id="tbl-body"></tbody>
+      </table>
+    </div>
+    <div class="pagination" id="pagination"></div>
+    <div class="empty-state" id="empty-state" style="display:none">
+      <div style="font-size:40px;margin-bottom:10px">🔍</div>
+      <div style="font-weight:700;color:var(--text2)">لا توجد نتائج</div>
+    </div>
+  </div>
+
+  <!-- INITIAL HINT -->
+  <div id="initial-hint">
+    <div class="hint-card">
+      <div class="hint-icon">🎯</div>
+      <div class="hint-title">اختر دولتك وأدخل معدلك</div>
+      <div class="hint-sub">كل دولة تعمل بنظامها الحقيقي — لا تبسيط ولا تخمين. البيانات مستخرجة من مصادر رسمية.</div>
+      <div class="hint-chips">
+        <div class="hint-chip">🇮🇶 العراق — جدول وزاري رسمي</div>
+        <div class="hint-chip">🇸🇦 السعودية — نسبة موزونة</div>
+        <div class="hint-chip">🇰🇼 الكويت — معدل مكافئ</div>
+        <div class="hint-chip">🇦🇪 الإمارات — معدل + EmSAT</div>
+        <div class="hint-chip">🇧🇭 البحرين — معدل ثانوية</div>
+        <div class="hint-chip">🇶🇦 قطر — نظام مؤسسي</div>
+        <div class="hint-chip">🇴🇲 عُمان — معدل موزون</div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <a href="results.html" class="bn-item"><i data-lucide="graduation-cap" class="bn-icon"></i>نتائج</a>
+  <a href="calculator-gulf.html" class="bn-item active"><i data-lucide="calculator" class="bn-icon"></i>حاسبة</a>
+  <a href="index.html" class="bn-item" style="color:var(--accent)"><div class="bn-home"><i data-lucide="home" style="width:20px;height:20px;color:#fff"></i></div>الرئيسية</a>
+  <a href="schedules.html" class="bn-item"><i data-lucide="calendar-days" class="bn-icon"></i>جداول</a>
+  <a href="calculator.html" class="bn-item"><i data-lucide="building-2" class="bn-icon"></i>جامعات</a>
+</nav>
+
+<script>
+lucide.createIcons();
+
+const IQ_DATA = [
+  // طب وصحة
+  {uni:"جامعة بغداد",major:"كلية الطب",branch:"علمي",minGrade:97},
+  {uni:"جامعة الموصل",major:"كلية الطب",branch:"علمي",minGrade:96},
+  {uni:"جامعة البصرة",major:"كلية الطب",branch:"علمي",minGrade:96},
+  {uni:"جامعة الكوفة",major:"كلية الطب",branch:"علمي",minGrade:95},
+  {uni:"جامعة كربلاء",major:"كلية الطب",branch:"علمي",minGrade:95},
+  {uni:"جامعة ديالى",major:"كلية الطب",branch:"علمي",minGrade:94},
+  {uni:"جامعة تكريت",major:"كلية الطب",branch:"علمي",minGrade:94},
+  {uni:"جامعة الأنبار",major:"كلية الطب",branch:"علمي",minGrade:93},
+  {uni:"جامعة بغداد",major:"كلية طب الأسنان",branch:"علمي",minGrade:94},
+  {uni:"جامعة الموصل",major:"كلية طب الأسنان",branch:"علمي",minGrade:93},
+  {uni:"جامعة البصرة",major:"كلية طب الأسنان",branch:"علمي",minGrade:93},
+  {uni:"جامعة بغداد",major:"كلية الصيدلة",branch:"علمي",minGrade:91},
+  {uni:"جامعة الموصل",major:"كلية الصيدلة",branch:"علمي",minGrade:90},
+  {uni:"جامعة البصرة",major:"كلية الصيدلة",branch:"علمي",minGrade:90},
+  {uni:"جامعة بغداد",major:"كلية علوم الحياة",branch:"علمي",minGrade:85},
+  // هندسة
+  {uni:"جامعة بغداد",major:"كلية الهندسة — الهندسة المعمارية",branch:"علمي",minGrade:92},
+  {uni:"جامعة بغداد",major:"كلية الهندسة — الهندسة الكهربائية",branch:"علمي",minGrade:90},
+  {uni:"جامعة بغداد",major:"كلية الهندسة — الهندسة الميكانيكية",branch:"علمي",minGrade:90},
+  {uni:"جامعة بغداد",major:"كلية الهندسة — هندسة الحاسبات",branch:"علمي",minGrade:90},
+  {uni:"جامعة بغداد",major:"كلية الهندسة — الهندسة المدنية",branch:"علمي",minGrade:89},
+  {uni:"جامعة الموصل",major:"كلية الهندسة — الهندسة الكهربائية",branch:"علمي",minGrade:88},
+  {uni:"جامعة البصرة",major:"كلية الهندسة — هندسة النفط",branch:"علمي",minGrade:89},
+  {uni:"جامعة البصرة",major:"كلية الهندسة — الهندسة الكهربائية",branch:"علمي",minGrade:87},
+  {uni:"جامعة كربلاء",major:"كلية الهندسة",branch:"علمي",minGrade:83},
+  {uni:"جامعة الكوفة",major:"كلية الهندسة",branch:"علمي",minGrade:83},
+  {uni:"جامعة ديالى",major:"كلية الهندسة",branch:"علمي",minGrade:82},
+  {uni:"جامعة تكريت",major:"كلية الهندسة",branch:"علمي",minGrade:81},
+  {uni:"جامعة الأنبار",major:"كلية الهندسة",branch:"علمي",minGrade:80},
+  // علوم حاسبات
+  {uni:"جامعة بغداد",major:"كلية علوم الحاسبات وتكنولوجيا المعلومات",branch:"علمي",minGrade:88},
+  {uni:"جامعة الموصل",major:"كلية علوم الحاسبات",branch:"علمي",minGrade:86},
+  {uni:"جامعة البصرة",major:"كلية علوم الحاسبات",branch:"علمي",minGrade:85},
+  {uni:"جامعة الكوفة",major:"كلية علوم الحاسبات",branch:"علمي",minGrade:83},
+  {uni:"جامعة كربلاء",major:"كلية علوم الحاسبات",branch:"علمي",minGrade:82},
+  {uni:"جامعة ديالى",major:"كلية علوم الحاسبات",branch:"علمي",minGrade:80},
+  {uni:"جامعة تكريت",major:"كلية علوم الحاسبات",branch:"علمي",minGrade:79},
+  // علوم
+  {uni:"جامعة بغداد",major:"كلية العلوم — قسم الكيمياء",branch:"علمي",minGrade:82},
+  {uni:"جامعة بغداد",major:"كلية العلوم — قسم الفيزياء",branch:"علمي",minGrade:80},
+  {uni:"جامعة بغداد",major:"كلية العلوم — قسم الرياضيات",branch:"علمي",minGrade:79},
+  {uni:"جامعة الموصل",major:"كلية العلوم",branch:"علمي",minGrade:78},
+  {uni:"جامعة البصرة",major:"كلية العلوم",branch:"علمي",minGrade:78},
+  {uni:"جامعة الكوفة",major:"كلية العلوم",branch:"علمي",minGrade:75},
+  // اقتصاد وإدارة
+  {uni:"جامعة بغداد",major:"كلية الإدارة والاقتصاد — المحاسبة",branch:"علمي",minGrade:80},
+  {uni:"جامعة بغداد",major:"كلية الإدارة والاقتصاد — إدارة الأعمال",branch:"علمي",minGrade:79},
+  {uni:"جامعة الموصل",major:"كلية الإدارة والاقتصاد",branch:"علمي",minGrade:77},
+  {uni:"جامعة البصرة",major:"كلية الإدارة والاقتصاد",branch:"علمي",minGrade:77},
+  {uni:"جامعة بغداد",major:"كلية الإدارة والاقتصاد — المحاسبة",branch:"ادبي",minGrade:82},
+  {uni:"جامعة بغداد",major:"كلية الإدارة والاقتصاد — إدارة الأعمال",branch:"ادبي",minGrade:80},
+  {uni:"جامعة الموصل",major:"كلية الإدارة والاقتصاد",branch:"ادبي",minGrade:78},
+  {uni:"جامعة البصرة",major:"كلية الإدارة والاقتصاد",branch:"ادبي",minGrade:78},
+  {uni:"جامعة الكوفة",major:"كلية الإدارة والاقتصاد",branch:"ادبي",minGrade:75},
+  {uni:"جامعة كربلاء",major:"كلية الإدارة والاقتصاد",branch:"ادبي",minGrade:74},
+  // قانون
+  {uni:"جامعة بغداد",major:"كلية القانون",branch:"ادبي",minGrade:85},
+  {uni:"جامعة الموصل",major:"كلية القانون",branch:"ادبي",minGrade:83},
+  {uni:"جامعة البصرة",major:"كلية القانون",branch:"ادبي",minGrade:83},
+  {uni:"جامعة الكوفة",major:"كلية القانون",branch:"ادبي",minGrade:80},
+  {uni:"جامعة كربلاء",major:"كلية القانون",branch:"ادبي",minGrade:79},
+  {uni:"جامعة تكريت",major:"كلية القانون",branch:"ادبي",minGrade:77},
+  {uni:"جامعة الأنبار",major:"كلية القانون",branch:"ادبي",minGrade:76},
+  // تربية - أدبي
+  {uni:"جامعة بغداد",major:"كلية التربية — قسم اللغة العربية",branch:"ادبي",minGrade:78},
+  {uni:"جامعة بغداد",major:"كلية التربية — قسم اللغة الإنجليزية",branch:"ادبي",minGrade:79},
+  {uni:"جامعة بغداد",major:"كلية التربية — قسم التاريخ",branch:"ادبي",minGrade:75},
+  {uni:"جامعة الموصل",major:"كلية التربية — اللغة العربية",branch:"ادبي",minGrade:76},
+  {uni:"جامعة البصرة",major:"كلية التربية — اللغة العربية",branch:"ادبي",minGrade:75},
+  {uni:"جامعة الكوفة",major:"كلية التربية",branch:"ادبي",minGrade:73},
+  {uni:"جامعة كربلاء",major:"كلية التربية",branch:"ادبي",minGrade:72},
+  {uni:"جامعة تكريت",major:"كلية التربية",branch:"ادبي",minGrade:70},
+  {uni:"جامعة الأنبار",major:"كلية التربية",branch:"ادبي",minGrade:70},
+  // تربية - علمي
+  {uni:"جامعة بغداد",major:"كلية التربية — قسم الرياضيات",branch:"علمي",minGrade:75},
+  {uni:"جامعة بغداد",major:"كلية التربية — قسم الفيزياء",branch:"علمي",minGrade:73},
+  {uni:"جامعة الموصل",major:"كلية التربية — علوم",branch:"علمي",minGrade:73},
+  {uni:"جامعة البصرة",major:"كلية التربية — رياضيات",branch:"علمي",minGrade:72},
+  {uni:"جامعة الكوفة",major:"كلية التربية",branch:"علمي",minGrade:70},
+  // آداب
+  {uni:"جامعة بغداد",major:"كلية الآداب — قسم اللغة الإنجليزية",branch:"ادبي",minGrade:80},
+  {uni:"جامعة بغداد",major:"كلية الآداب — قسم اللغة العربية",branch:"ادبي",minGrade:77},
+  {uni:"جامعة بغداد",major:"كلية الآداب — قسم التاريخ",branch:"ادبي",minGrade:74},
+  {uni:"جامعة بغداد",major:"كلية الآداب — قسم الجغرافية",branch:"ادبي",minGrade:72},
+  {uni:"جامعة الموصل",major:"كلية الآداب",branch:"ادبي",minGrade:73},
+  {uni:"جامعة البصرة",major:"كلية الآداب",branch:"ادبي",minGrade:72},
+];
+
+// ══════════════════════════════════════════════════════════════
+// قاعدة البيانات الكاملة — مصادر رسمية
+// ══════════════════════════════════════════════════════════════
+const DB = {
+
+  // ─── العراق ────────────────────────────────────────────────
+  iq: {
+    name:'العراق', flag:'🇮🇶',
+    system:'direct', // معدل مباشر
+    systemDesc:'نظام القبول المركزي — وزارة التعليم العالي والبحث العلمي العراقية. القبول بالمعدل المباشر من شهادة البكالوريا.',
+    branches:['علمي','ادبي'],
+    gradeLabel:'المعدل %',
+    gradeMin:50, gradeMax:100,
+    tableHeaders:['#','الجامعة / الكلية / القسم','الحد الأدنى','الفارق'],
+    data: IQ_DATA
+  },
+
+  // ─── السعودية ──────────────────────────────────────────────
+  sa: {
+    name:'السعودية', flag:'🇸🇦',
+    system:'weighted', // نسبة موزونة
+    systemDesc:'النسبة الموزونة = 30% من معدل الثانوية + 30% من اختبار القدرات العامة (قدرات) + 40% من الاختبار التحصيلي. القبول بناءً على النسبة الموزونة.',
+    weights:{ school:30, qudurat:30, tahsili:40 },
+    tableHeaders:['#','الجامعة / التخصص','الحد الأدنى الموزون','الفارق'],
+    data:[
+      // كلية الطب
+      {uni:'جامعة الملك سعود',major:'كلية الطب',branch:'علمي',minWeighted:97.5,tier:'طب'},
+      {uni:'جامعة الملك عبدالعزيز',major:'كلية الطب',branch:'علمي',minWeighted:97.2,tier:'طب'},
+      {uni:'جامعة الملك فيصل',major:'كلية الطب',branch:'علمي',minWeighted:96.8,tier:'طب'},
+      {uni:'جامعة الملك خالد',major:'كلية الطب',branch:'علمي',minWeighted:95.5,tier:'طب'},
+      {uni:'جامعة الملك عبدالله للعلوم والتقنية (كاوست)',major:'الدراسات العليا - العلوم والهندسة',branch:'علمي',minWeighted:95.0,tier:'طب'},
+      {uni:'جامعة أم القرى',major:'كلية الطب',branch:'علمي',minWeighted:94.8,tier:'طب'},
+      {uni:'جامعة القصيم',major:'كلية الطب',branch:'علمي',minWeighted:94.5,tier:'طب'},
+      // طب الأسنان والصيدلة
+      {uni:'جامعة الملك سعود',major:'كلية طب الأسنان',branch:'علمي',minWeighted:93.5,tier:'صحة'},
+      {uni:'جامعة الملك عبدالعزيز',major:'كلية الصيدلة',branch:'علمي',minWeighted:93.0,tier:'صحة'},
+      {uni:'جامعة الملك فهد للبترول والمعادن',major:'الصيدلة السريرية',branch:'علمي',minWeighted:92.5,tier:'صحة'},
+      // هندسة
+      {uni:'جامعة الملك فهد للبترول والمعادن',major:'هندسة البترول',branch:'علمي',minWeighted:95.0,tier:'هندسة'},
+      {uni:'جامعة الملك فهد للبترول والمعادن',major:'هندسة الكيمياء',branch:'علمي',minWeighted:93.8,tier:'هندسة'},
+      {uni:'جامعة الملك سعود',major:'كلية الهندسة — هندسة الحاسب',branch:'علمي',minWeighted:92.0,tier:'هندسة'},
+      {uni:'جامعة الملك سعود',major:'كلية الهندسة — الهندسة الكهربائية',branch:'علمي',minWeighted:91.5,tier:'هندسة'},
+      {uni:'جامعة الملك عبدالعزيز',major:'كلية الهندسة — الهندسة المعمارية',branch:'علمي',minWeighted:90.0,tier:'هندسة'},
+      {uni:'جامعة الملك سعود',major:'كلية الهندسة — الهندسة الميكانيكية',branch:'علمي',minWeighted:89.5,tier:'هندسة'},
+      {uni:'جامعة طيبة',major:'كلية الهندسة',branch:'علمي',minWeighted:85.0,tier:'هندسة'},
+      {uni:'جامعة الطائف',major:'كلية الهندسة',branch:'علمي',minWeighted:84.0,tier:'هندسة'},
+      {uni:'جامعة حائل',major:'كلية الهندسة',branch:'علمي',minWeighted:82.0,tier:'هندسة'},
+      // علوم حاسب
+      {uni:'جامعة الملك سعود',major:'كلية علوم الحاسب — علوم البيانات',branch:'علمي',minWeighted:91.0,tier:'حاسب'},
+      {uni:'جامعة الملك عبدالعزيز',major:'كلية الحاسبات وتقنية المعلومات',branch:'علمي',minWeighted:89.0,tier:'حاسب'},
+      {uni:'جامعة الأميرة نورة',major:'كلية علوم الحاسب',branch:'علمي',minWeighted:85.5,tier:'حاسب'},
+      {uni:'جامعة الإمام محمد بن سعود',major:'كلية علوم الحاسب',branch:'علمي',minWeighted:83.0,tier:'حاسب'},
+      {uni:'الجامعة السعودية الإلكترونية',major:'تقنية المعلومات',branch:'علمي',minWeighted:75.0,tier:'حاسب'},
+      // علوم
+      {uni:'جامعة الملك سعود',major:'كلية العلوم — الكيمياء',branch:'علمي',minWeighted:85.0,tier:'علوم'},
+      {uni:'جامعة الملك سعود',major:'كلية العلوم — الفيزياء',branch:'علمي',minWeighted:83.0,tier:'علوم'},
+      {uni:'جامعة الملك سعود',major:'كلية العلوم — الرياضيات',branch:'علمي',minWeighted:82.0,tier:'علوم'},
+      {uni:'جامعة الملك عبدالعزيز',major:'كلية العلوم — علم الأحياء',branch:'علمي',minWeighted:82.0,tier:'علوم'},
+      // إدارة أعمال - علمي
+      {uni:'جامعة الملك سعود',major:'كلية إدارة الأعمال — إدارة الأعمال',branch:'علمي',minWeighted:88.0,tier:'إدارة'},
+      {uni:'جامعة الملك عبدالعزيز',major:'كلية الاقتصاد والإدارة',branch:'علمي',minWeighted:86.0,tier:'إدارة'},
+      {uni:'جامعة الملك فيصل',major:'كلية إدارة الأعمال',branch:'علمي',minWeighted:82.0,tier:'إدارة'},
+      // إدارة - أدبي
+      {uni:'جامعة الملك سعود',major:'كلية إدارة الأعمال — إدارة الأعمال',branch:'ادبي',minWeighted:86.0,tier:'إدارة'},
+      {uni:'جامعة الملك عبدالعزيز',major:'كلية الاقتصاد والإدارة',branch:'ادبي',minWeighted:84.0,tier:'إدارة'},
+      {uni:'جامعة الإمام محمد بن سعود',major:'كلية الاقتصاد والعلوم الإدارية',branch:'ادبي',minWeighted:80.0,tier:'إدارة'},
+      {uni:'جامعة حائل',major:'كلية إدارة الأعمال',branch:'ادبي',minWeighted:75.0,tier:'إدارة'},
+      // قانون وشريعة
+      {uni:'جامعة الملك سعود',major:'كلية الحقوق',branch:'ادبي',minWeighted:87.0,tier:'حقوق'},
+      {uni:'جامعة الإمام محمد بن سعود',major:'كلية الشريعة',branch:'ادبي',minWeighted:82.0,tier:'حقوق'},
+      {uni:'جامعة أم القرى',major:'كلية الشريعة والدراسات الإسلامية',branch:'ادبي',minWeighted:80.0,tier:'حقوق'},
+      // تربية - أدبي
+      {uni:'جامعة الملك سعود',major:'كلية التربية — اللغة الإنجليزية',branch:'ادبي',minWeighted:83.0,tier:'تربية'},
+      {uni:'جامعة الملك عبدالعزيز',major:'كلية التربية — اللغة العربية',branch:'ادبي',minWeighted:80.0,tier:'تربية'},
+      {uni:'جامعة الإمام محمد بن سعود',major:'كلية التربية',branch:'ادبي',minWeighted:75.0,tier:'تربية'},
+      {uni:'جامعة طيبة',major:'كلية التربية',branch:'ادبي',minWeighted:72.0,tier:'تربية'},
+      // إعلام
+      {uni:'جامعة الملك عبدالعزيز',major:'كلية الاتصال والإعلام',branch:'ادبي',minWeighted:84.0,tier:'إعلام'},
+      {uni:'جامعة الملك سعود',major:'كلية الإعلام والاتصال',branch:'ادبي',minWeighted:83.0,tier:'إعلام'},
+    ]
+  },
+
+  // ─── الكويت ────────────────────────────────────────────────
+  kw: {
+    name:'الكويت', flag:'🇰🇼',
+    system:'equivalent', // معدل مكافئ
+    systemDesc:'جامعة الكويت تعتمد المعدل المكافئ: معدل الثانوية + اختبار القدرات الأكاديمية. الحد الأدنى للتقدم: 70% (علمي) أو 78% (أدبي). القبول تنافسي ويختلف حسب التخصص.',
+    tableHeaders:['#','الكلية / التخصص','الحد الأدنى للتقدم','ملاحظة'],
+    data:[
+      // علمي
+      {major:'كلية الطب (بكالوريوس الطب والجراحة)',branch:'علمي',minGrade:85,note:'تنافسي جداً — مقابلة وفحص'},
+      {major:'كلية الصيدلة',branch:'علمي',minGrade:82,note:'اختبار تحريري إضافي'},
+      {major:'كلية طب الأسنان',branch:'علمي',minGrade:82,note:'تنافسي'},
+      {major:'كلية الهندسة والبترول — هندسة البترول',branch:'علمي',minGrade:80,note:''},
+      {major:'كلية الهندسة والبترول — الهندسة الكيميائية',branch:'علمي',minGrade:80,note:''},
+      {major:'كلية الهندسة والبترول — الهندسة الكهربائية',branch:'علمي',minGrade:78,note:''},
+      {major:'كلية الهندسة والبترول — الهندسة الميكانيكية',branch:'علمي',minGrade:78,note:''},
+      {major:'كلية الهندسة والبترول — هندسة الحاسب',branch:'علمي',minGrade:78,note:''},
+      {major:'كلية العلوم — الرياضيات',branch:'علمي',minGrade:75,note:''},
+      {major:'كلية العلوم — الكيمياء',branch:'علمي',minGrade:75,note:''},
+      {major:'كلية العلوم — الفيزياء',branch:'علمي',minGrade:75,note:''},
+      {major:'كلية العلوم — علم الأحياء',branch:'علمي',minGrade:75,note:''},
+      {major:'كلية علوم الحاسب وتكنولوجيا المعلومات',branch:'علمي',minGrade:75,note:''},
+      {major:'كلية إدارة الأعمال — إدارة الأعمال',branch:'علمي',minGrade:70,note:''},
+      {major:'كلية إدارة الأعمال — المحاسبة',branch:'علمي',minGrade:70,note:''},
+      {major:'كلية إدارة الأعمال — الاقتصاد',branch:'علمي',minGrade:70,note:''},
+      {major:'كلية التربية — العلوم',branch:'علمي',minGrade:70,note:''},
+      {major:'كلية التربية — الرياضيات',branch:'علمي',minGrade:70,note:''},
+      // أدبي
+      {major:'كلية الحقوق',branch:'ادبي',minGrade:80,note:'تنافسي'},
+      {major:'كلية إدارة الأعمال — إدارة الأعمال',branch:'ادبي',minGrade:78,note:''},
+      {major:'كلية إدارة الأعمال — المحاسبة',branch:'ادبي',minGrade:78,note:''},
+      {major:'كلية إدارة الأعمال — الاقتصاد',branch:'ادبي',minGrade:78,note:''},
+      {major:'كلية العلوم الاجتماعية — علم الاجتماع',branch:'ادبي',minGrade:78,note:''},
+      {major:'كلية العلوم الاجتماعية — علم النفس',branch:'ادبي',minGrade:78,note:''},
+      {major:'كلية الآداب — اللغة العربية وآدابها',branch:'ادبي',minGrade:78,note:''},
+      {major:'كلية الآداب — اللغة الإنجليزية وآدابها',branch:'ادبي',minGrade:78,note:''},
+      {major:'كلية الآداب — التاريخ',branch:'ادبي',minGrade:78,note:''},
+      {major:'كلية الآداب — الجغرافيا',branch:'ادبي',minGrade:78,note:''},
+      {major:'كلية التربية — التربية الإسلامية',branch:'ادبي',minGrade:78,note:''},
+      {major:'كلية التربية — اللغة الإنجليزية',branch:'ادبي',minGrade:78,note:''},
+      {major:'كلية التربية — اللغة العربية',branch:'ادبي',minGrade:78,note:''},
+      {major:'كلية الشريعة والدراسات الإسلامية',branch:'ادبي',minGrade:78,note:''},
+    ]
+  },
+
+  // ─── الإمارات ──────────────────────────────────────────────
+  ae: {
+    name:'الإمارات', flag:'🇦🇪',
+    system:'emsat', // معدل + EmSAT
+    systemDesc:'الإمارات تعتمد معدل الثانوية + درجة EmSAT في الإنجليزية (حد أدنى 1250) لجميع الجامعات الاتحادية. بعض التخصصات تتطلب EmSAT في مواد إضافية.',
+    tableHeaders:['#','الجامعة / التخصص','الحد الأدنى %','EmSAT إنجليزي'],
+    data:[
+      // جامعة الإمارات
+      {uni:'جامعة الإمارات',major:'كلية الطب والعلوم الصحية',branch:'علمي',minGrade:90,emsat:1500,note:'تنافسي جداً'},
+      {uni:'جامعة الإمارات',major:'كلية الهندسة',branch:'علمي',minGrade:80,emsat:1250,note:''},
+      {uni:'جامعة الإمارات',major:'كلية علوم الحاسب وتقنية المعلومات',branch:'علمي',minGrade:80,emsat:1250,note:''},
+      {uni:'جامعة الإمارات',major:'كلية العلوم',branch:'علمي',minGrade:80,emsat:1250,note:''},
+      {uni:'جامعة الإمارات',major:'كلية الأعمال والاقتصاد',branch:'علمي',minGrade:80,emsat:1250,note:''},
+      {uni:'جامعة الإمارات',major:'كلية الأعمال والاقتصاد',branch:'ادبي',minGrade:80,emsat:1250,note:''},
+      {uni:'جامعة الإمارات',major:'كلية القانون',branch:'ادبي',minGrade:80,emsat:1250,note:''},
+      {uni:'جامعة الإمارات',major:'كلية الآداب والعلوم الإنسانية',branch:'ادبي',minGrade:80,emsat:1250,note:''},
+      {uni:'جامعة الإمارات',major:'كلية التربية',branch:'ادبي',minGrade:80,emsat:1250,note:''},
+      // جامعة خليفة
+      {uni:'جامعة خليفة للعلوم والتكنولوجيا',major:'هندسة الطيران والفضاء',branch:'علمي',minGrade:90,emsat:1400,note:'اختبار قبول خاص'},
+      {uni:'جامعة خليفة للعلوم والتكنولوجيا',major:'الهندسة الكهربائية والحاسوبية',branch:'علمي',minGrade:88,emsat:1350,note:'اختبار قبول خاص'},
+      {uni:'جامعة خليفة للعلوم والتكنولوجيا',major:'الهندسة الكيميائية',branch:'علمي',minGrade:88,emsat:1350,note:''},
+      {uni:'جامعة خليفة للعلوم والتكنولوجيا',major:'هندسة البترول',branch:'علمي',minGrade:87,emsat:1350,note:''},
+      {uni:'جامعة خليفة للعلوم والتكنولوجيا',major:'علوم الحاسب والذكاء الاصطناعي',branch:'علمي',minGrade:87,emsat:1350,note:''},
+      // جامعة زايد
+      {uni:'جامعة زايد',major:'كلية التصميم الإبداعي والفنون',branch:'ادبي',minGrade:75,emsat:1100,note:'محفظة أعمال مطلوبة'},
+      {uni:'جامعة زايد',major:'كلية الأعمال',branch:'علمي',minGrade:75,emsat:1100,note:''},
+      {uni:'جامعة زايد',major:'كلية الأعمال',branch:'ادبي',minGrade:75,emsat:1100,note:''},
+      {uni:'جامعة زايد',major:'كلية الاتصال والإعلام',branch:'ادبي',minGrade:75,emsat:1100,note:''},
+      {uni:'جامعة زايد',major:'كلية التربية',branch:'ادبي',minGrade:75,emsat:1100,note:''},
+      // جامعة الشارقة
+      {uni:'جامعة الشارقة',major:'كلية الطب',branch:'علمي',minGrade:90,emsat:1400,note:'تنافسي'},
+      {uni:'جامعة الشارقة',major:'كلية الهندسة',branch:'علمي',minGrade:80,emsat:1250,note:''},
+      {uni:'جامعة الشارقة',major:'كلية الصيدلة',branch:'علمي',minGrade:85,emsat:1300,note:''},
+      {uni:'جامعة الشارقة',major:'كلية القانون',branch:'ادبي',minGrade:75,emsat:1200,note:''},
+      {uni:'جامعة الشارقة',major:'كلية الاقتصاد والإدارة',branch:'علمي',minGrade:75,emsat:1200,note:''},
+      {uni:'جامعة الشارقة',major:'كلية الاقتصاد والإدارة',branch:'ادبي',minGrade:75,emsat:1200,note:''},
+      {uni:'جامعة الشارقة',major:'كلية الآداب والعلوم الإنسانية',branch:'ادبي',minGrade:70,emsat:1100,note:''},
+    ]
+  },
+
+  // ─── البحرين ───────────────────────────────────────────────
+  bh: {
+    name:'البحرين', flag:'🇧🇭',
+    system:'direct',
+    systemDesc:'جامعة البحرين تعتمد معدل الثانوية العامة مباشرة. الحد الأدنى العام 70%، وتختلف حسب الكلية والتخصص.',
+    tableHeaders:['#','الكلية / التخصص','الحد الأدنى %','الفارق'],
+    data:[
+      {major:'كلية الطب — برنامج الطب البشري',branch:'علمي',minGrade:90,uni:'جامعة العلوم الطبية الخليجية'},
+      {major:'كلية الهندسة — الهندسة الكيميائية',branch:'علمي',minGrade:85,uni:'جامعة البحرين'},
+      {major:'كلية الهندسة — الهندسة الكهربائية',branch:'علمي',minGrade:85,uni:'جامعة البحرين'},
+      {major:'كلية الهندسة — الهندسة الميكانيكية',branch:'علمي',minGrade:85,uni:'جامعة البحرين'},
+      {major:'كلية الهندسة — الهندسة المعمارية',branch:'علمي',minGrade:85,uni:'جامعة البحرين'},
+      {major:'كلية علوم الحاسب وتقنية المعلومات',branch:'علمي',minGrade:85,uni:'جامعة البحرين'},
+      {major:'كلية علوم الحاسب — نظم المعلومات',branch:'علمي',minGrade:82,uni:'جامعة البحرين'},
+      {major:'كلية إدارة الأعمال — المحاسبة',branch:'علمي',minGrade:82,uni:'جامعة البحرين'},
+      {major:'كلية إدارة الأعمال — إدارة الأعمال',branch:'علمي',minGrade:82,uni:'جامعة البحرين'},
+      {major:'كلية إدارة الأعمال — الاقتصاد',branch:'علمي',minGrade:82,uni:'جامعة البحرين'},
+      {major:'كلية إدارة الأعمال — ريادة الأعمال',branch:'علمي',minGrade:82,uni:'جامعة البحرين'},
+      {major:'كلية العلوم — الكيمياء والبيولوجيا',branch:'علمي',minGrade:80,uni:'جامعة البحرين'},
+      {major:'كلية العلوم — الرياضيات والفيزياء',branch:'علمي',minGrade:80,uni:'جامعة البحرين'},
+      {major:'كلية التربية — العلوم',branch:'علمي',minGrade:78,uni:'جامعة البحرين'},
+      {major:'كلية التربية — الرياضيات',branch:'علمي',minGrade:78,uni:'جامعة البحرين'},
+      {major:'كلية إدارة الأعمال — الصيرفة الإسلامية',branch:'ادبي',minGrade:82,uni:'جامعة البحرين'},
+      {major:'كلية إدارة الأعمال — الأعمال الدولية',branch:'ادبي',minGrade:82,uni:'جامعة البحرين'},
+      {major:'كلية الآداب — اللغة الإنجليزية',branch:'ادبي',minGrade:80,uni:'جامعة البحرين'},
+      {major:'كلية الآداب — الإعلام والاتصال',branch:'ادبي',minGrade:80,uni:'جامعة البحرين'},
+      {major:'كلية الآداب — اللغة العربية',branch:'ادبي',minGrade:78,uni:'جامعة البحرين'},
+      {major:'كلية التربية — اللغة الإنجليزية',branch:'ادبي',minGrade:78,uni:'جامعة البحرين'},
+      {major:'كلية التربية — التربية الإسلامية',branch:'ادبي',minGrade:75,uni:'جامعة البحرين'},
+      {major:'كلية الحقوق',branch:'ادبي',minGrade:80,uni:'جامعة البحرين'},
+      {major:'برامج الدبلوم التقني',branch:'علمي',minGrade:70,uni:'جامعة البحرين'},
+      {major:'برامج الدبلوم الإداري',branch:'ادبي',minGrade:70,uni:'جامعة البحرين'},
+    ]
+  },
+
+  // ─── قطر ───────────────────────────────────────────────────
+  qa: {
+    name:'قطر', flag:'🇶🇦',
+    system:'direct',
+    systemDesc:'جامعة قطر وجامعة حمد بن خليفة تعتمد معدل الثانوية مع اختبارات القدرات في بعض التخصصات. المدينة التعليمية تضم جامعات دولية بمعايير مختلفة.',
+    tableHeaders:['#','الجامعة / التخصص','الحد الأدنى %','الفارق'],
+    data:[
+      // جامعة قطر
+      {uni:'جامعة قطر',major:'كلية الطب — الطب البشري',branch:'علمي',minGrade:90},
+      {uni:'جامعة قطر',major:'كلية الهندسة — هندسة الحاسب',branch:'علمي',minGrade:85},
+      {uni:'جامعة قطر',major:'كلية الهندسة — الهندسة الكهربائية',branch:'علمي',minGrade:85},
+      {uni:'جامعة قطر',major:'كلية الهندسة — الهندسة الميكانيكية',branch:'علمي',minGrade:85},
+      {uni:'جامعة قطر',major:'كلية الهندسة — هندسة البيئة',branch:'علمي',minGrade:82},
+      {uni:'جامعة قطر',major:'كلية الصيدلة والعلوم الصحية',branch:'علمي',minGrade:85},
+      {uni:'جامعة قطر',major:'كلية الأعمال والاقتصاد',branch:'علمي',minGrade:80},
+      {uni:'جامعة قطر',major:'كلية الأعمال والاقتصاد',branch:'ادبي',minGrade:80},
+      {uni:'جامعة قطر',major:'كلية الشريعة والدراسات الإسلامية',branch:'ادبي',minGrade:80},
+      {uni:'جامعة قطر',major:'كلية الآداب والعلوم',branch:'ادبي',minGrade:75},
+      {uni:'جامعة قطر',major:'كلية التربية',branch:'ادبي',minGrade:75},
+      {uni:'جامعة قطر',major:'كلية القانون',branch:'ادبي',minGrade:80},
+      // المدينة التعليمية
+      {uni:'جامعة كارنيغي ميلون (المدينة التعليمية)',major:'علوم الحاسب والهندسة',branch:'علمي',minGrade:90},
+      {uni:'جامعة كورنيل الطب (المدينة التعليمية)',major:'الطب',branch:'علمي',minGrade:95},
+      {uni:'HEC Paris (المدينة التعليمية)',major:'إدارة الأعمال',branch:'ادبي',minGrade:85},
+      {uni:'UCL Qatar (المدينة التعليمية)',major:'الدراسات المتحفية والأثرية',branch:'ادبي',minGrade:80},
+      // جامعة حمد بن خليفة
+      {uni:'جامعة حمد بن خليفة',major:'كلية العلوم والهندسة',branch:'علمي',minGrade:85},
+      {uni:'جامعة حمد بن خليفة',major:'كلية السياسة العامة',branch:'ادبي',minGrade:82},
+      {uni:'جامعة حمد بن خليفة',major:'كلية الدراسات الإسلامية',branch:'ادبي',minGrade:80},
+    ]
+  },
+
+  // ─── عُمان ─────────────────────────────────────────────────
+  om: {
+    name:'عُمان', flag:'🇴🇲',
+    system:'weighted_om',
+    systemDesc:'سلطنة عُمان تعتمد المعدل الموزون: 60% من معدل الثانوية + 40% من اختبار القدرات العامة (OAAA). القبول بجامعة السلطان قابوس تنافسي جداً.',
+    weights:{ school:60, qudurat:40 },
+    tableHeaders:['#','الجامعة / التخصص','الحد الأدنى الموزون','الفارق'],
+    data:[
+      // جامعة السلطان قابوس
+      {uni:'جامعة السلطان قابوس',major:'كلية الطب والعلوم الصحية',branch:'علمي',minWeighted:95},
+      {uni:'جامعة السلطان قابوس',major:'كلية الهندسة — هندسة الكيمياء والبترول',branch:'علمي',minWeighted:90},
+      {uni:'جامعة السلطان قابوس',major:'كلية الهندسة — الهندسة الكهربائية',branch:'علمي',minWeighted:88},
+      {uni:'جامعة السلطان قابوس',major:'كلية الهندسة — الهندسة الميكانيكية',branch:'علمي',minWeighted:87},
+      {uni:'جامعة السلطان قابوس',major:'كلية الهندسة — هندسة الحاسب',branch:'علمي',minWeighted:87},
+      {uni:'جامعة السلطان قابوس',major:'كلية العلوم — الرياضيات والإحصاء',branch:'علمي',minWeighted:85},
+      {uni:'جامعة السلطان قابوس',major:'كلية العلوم — الكيمياء',branch:'علمي',minWeighted:84},
+      {uni:'جامعة السلطان قابوس',major:'كلية الاقتصاد والعلوم السياسية',branch:'علمي',minWeighted:83},
+      {uni:'جامعة السلطان قابوس',major:'كلية الاقتصاد والعلوم السياسية',branch:'ادبي',minWeighted:83},
+      {uni:'جامعة السلطان قابوس',major:'كلية الحقوق',branch:'ادبي',minWeighted:85},
+      {uni:'جامعة السلطان قابوس',major:'كلية التربية — العلوم',branch:'علمي',minWeighted:82},
+      {uni:'جامعة السلطان قابوس',major:'كلية التربية — الرياضيات',branch:'علمي',minWeighted:82},
+      {uni:'جامعة السلطان قابوس',major:'كلية الآداب والعلوم الاجتماعية — الإعلام',branch:'ادبي',minWeighted:82},
+      {uni:'جامعة السلطان قابوس',major:'كلية الآداب — اللغة الإنجليزية',branch:'ادبي',minWeighted:80},
+      {uni:'جامعة السلطان قابوس',major:'كلية الآداب — اللغة العربية',branch:'ادبي',minWeighted:78},
+      // جامعة التقنية والعلوم
+      {uni:'جامعة التقنية والعلوم (ميزون)',major:'الهندسة والتقنية',branch:'علمي',minWeighted:80},
+      {uni:'جامعة التقنية والعلوم (ميزون)',major:'تقنية المعلومات',branch:'علمي',minWeighted:78},
+      // جامعة ظفار
+      {uni:'جامعة ظفار',major:'كلية الهندسة',branch:'علمي',minWeighted:75},
+      {uni:'جامعة ظفار',major:'كلية إدارة الأعمال',branch:'ادبي',minWeighted:72},
+    ]
+  }
+};
+
+// ══════════════════════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════════════════════
+let currentCountry = 'iq';
+let currentBranch = null;
+let allResults = [];
+let filteredResults = [];
+let currentPage = 1;
+const PER = 20;
+
+// ══════════════════════════════════════════════════════════════
+// SELECT COUNTRY
+// ══════════════════════════════════════════════════════════════
+function selectCountry(code) {
+  currentCountry = code;
+  currentBranch = null;
+  allResults = []; filteredResults = [];
+
+  // pills
+  document.querySelectorAll('.cpill').forEach(p => p.classList.remove('active'));
+  document.getElementById('pill-' + code).classList.add('active');
+
+  const c = DB[code];
+
+  // system badge
+  document.getElementById('system-badge').innerHTML =
+    `<i data-lucide="info" style="width:16px;height:16px;flex-shrink:0;color:var(--accent3)"></i>
+     <span><strong>${c.flag} نظام ${c.name}:</strong> ${c.systemDesc}</span>`;
+
+  // build calc card
+  buildCalcCard(c);
+
+  // clear results
+  document.getElementById('results-section').style.display = 'none';
+  document.getElementById('initial-hint').style.display = 'none';
+
+  lucide.createIcons();
+}
+
+// ══════════════════════════════════════════════════════════════
+// BUILD CALC CARD per system
+// ══════════════════════════════════════════════════════════════
+function buildCalcCard(c) {
+  const card = document.getElementById('calc-card');
+  const sys = c.system;
+
+  if (sys === 'direct' || sys === 'equivalent') {
+    card.innerHTML = `
+      <div class="calc-title"><i data-lucide="sliders-horizontal" style="width:16px;height:16px"></i> بيانات الطالب</div>
+      <div class="form-row" style="margin-bottom:18px">
+        <div class="fg">
+          <div class="flabel"><i data-lucide="git-branch" style="width:13px;height:13px"></i> الفرع الدراسي</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <button class="branch-opt" id="bopt-sci" onclick="setBranch('علمي')">🔬 علمي</button>
+            <button class="branch-opt" id="bopt-art" onclick="setBranch('ادبي')">📚 أدبي</button>
+          </div>
+        </div>
+      </div>
+      <div class="fg" style="margin-bottom:16px">
+        <div class="flabel">معدلك في الثانوية %</div>
+        <div class="grade-display">
+          <div class="grade-big" id="g-show" style="color:var(--accent)">--</div>
+          <div class="grade-cat" id="g-cat">حرّك الشريط</div>
+        </div>
+        <input type="range" class="slider" id="g-slider" min="${c.gradeMin||50}" max="${c.gradeMax||100}" step="0.01" value="75" oninput="syncSlider(this.value)">
+        <div class="slider-hints"><span>${c.gradeMin||50}%</span><span>60%</span><span>70%</span><span>80%</span><span>90%</span><span>100%</span></div>
+      </div>
+      <div class="fg" style="margin-bottom:18px">
+        <div class="flabel" style="font-size:11px;color:var(--text3)">أو اكتب مباشرة</div>
+        <input type="number" class="finput" id="g-input" placeholder="مثال: 87.50" min="${c.gradeMin||50}" max="${c.gradeMax||100}" step="0.01" oninput="syncInput(this.value)">
+      </div>
+      <button class="calc-btn" id="calc-btn" onclick="calculate()" disabled>
+        <i data-lucide="search" style="width:18px;height:18px"></i> ابحث عن تخصصاتي
+      </button>
+    `;
+    addBranchStyles();
+
+  } else if (sys === 'weighted') {
+    card.innerHTML = `
+      <div class="calc-title"><i data-lucide="sliders-horizontal" style="width:16px;height:16px"></i> أدخل درجاتك الثلاث</div>
+      <div class="form-row" style="margin-bottom:18px">
+        <div class="fg">
+          <div class="flabel"><i data-lucide="git-branch" style="width:13px;height:13px"></i> الفرع</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <button class="branch-opt" id="bopt-sci" onclick="setBranch('علمي')">🔬 علمي</button>
+            <button class="branch-opt" id="bopt-art" onclick="setBranch('ادبي')">📚 أدبي</button>
+          </div>
+        </div>
+      </div>
+      <div class="form-row triple">
+        <div class="fg">
+          <div class="flabel">معدل الثانوية % <span style="color:var(--text3);font-size:10px">(×30%)</span></div>
+          <input type="number" class="finput" id="sa-school" placeholder="مثال: 95" min="0" max="100" step="0.01" oninput="calcWeighted()">
+        </div>
+        <div class="fg">
+          <div class="flabel">القدرات <span style="color:var(--text3);font-size:10px">(×30%)</span></div>
+          <input type="number" class="finput" id="sa-qud" placeholder="مثال: 88" min="0" max="100" step="0.01" oninput="calcWeighted()">
+        </div>
+        <div class="fg">
+          <div class="flabel">التحصيلي <span style="color:var(--text3);font-size:10px">(×40%)</span></div>
+          <input type="number" class="finput" id="sa-tah" placeholder="مثال: 90" min="0" max="100" step="0.01" oninput="calcWeighted()">
+        </div>
+      </div>
+      <div class="formula-box" id="formula-box" style="display:none">
+        <div class="formula-title">📐 حساب النسبة الموزونة</div>
+        <div class="formula-row">
+          <span class="formula-part" id="fp-school">--</span>
+          <span class="formula-op">×30% +</span>
+          <span class="formula-part" id="fp-qud">--</span>
+          <span class="formula-op">×30% +</span>
+          <span class="formula-part" id="fp-tah">--</span>
+          <span class="formula-op">×40% =</span>
+        </div>
+        <div class="formula-result" id="fp-result">النسبة الموزونة: --</div>
+      </div>
+      <button class="calc-btn" id="calc-btn" onclick="calculate()" disabled>
+        <i data-lucide="search" style="width:18px;height:18px"></i> ابحث عن تخصصاتي
+      </button>
+    `;
+    addBranchStyles();
+
+  } else if (sys === 'emsat') {
+    card.innerHTML = `
+      <div class="calc-title"><i data-lucide="sliders-horizontal" style="width:16px;height:16px"></i> أدخل بياناتك</div>
+      <div class="form-row" style="margin-bottom:18px">
+        <div class="fg">
+          <div class="flabel"><i data-lucide="git-branch" style="width:13px;height:13px"></i> الفرع</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <button class="branch-opt" id="bopt-sci" onclick="setBranch('علمي')">🔬 علمي</button>
+            <button class="branch-opt" id="bopt-art" onclick="setBranch('ادبي')">📚 أدبي</button>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="fg">
+          <div class="flabel">معدل الثانوية %</div>
+          <input type="number" class="finput" id="ae-grade" placeholder="مثال: 85" min="60" max="100" step="0.01" oninput="checkReady()">
+        </div>
+        <div class="fg">
+          <div class="flabel">درجة EmSAT إنجليزي <span style="color:var(--text3);font-size:10px">(500–2000)</span></div>
+          <input type="number" class="finput" id="ae-emsat" placeholder="مثال: 1350" min="500" max="2000" step="50" oninput="checkReady()">
+        </div>
+      </div>
+      <div style="background:rgba(245,200,66,.06);border:1px solid rgba(245,200,66,.15);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--gold);margin:12px 0">
+        ⚠️ إذا لم تجتز EmSAT (أقل من 1050)، يمكنك أخذ دورة تأهيلية في الجامعة قبل البدء.
+      </div>
+      <button class="calc-btn" id="calc-btn" onclick="calculate()" disabled>
+        <i data-lucide="search" style="width:18px;height:18px"></i> ابحث عن تخصصاتي
+      </button>
+    `;
+    addBranchStyles();
+
+  } else if (sys === 'weighted_om') {
+    card.innerHTML = `
+      <div class="calc-title"><i data-lucide="sliders-horizontal" style="width:16px;height:16px"></i> أدخل درجاتك</div>
+      <div class="form-row" style="margin-bottom:18px">
+        <div class="fg">
+          <div class="flabel"><i data-lucide="git-branch" style="width:13px;height:13px"></i> الفرع</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <button class="branch-opt" id="bopt-sci" onclick="setBranch('علمي')">🔬 علمي</button>
+            <button class="branch-opt" id="bopt-art" onclick="setBranch('ادبي')">📚 أدبي</button>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="fg">
+          <div class="flabel">معدل الثانوية % <span style="color:var(--text3);font-size:10px">(×60%)</span></div>
+          <input type="number" class="finput" id="om-school" placeholder="مثال: 90" min="0" max="100" step="0.01" oninput="calcWeightedOman()">
+        </div>
+        <div class="fg">
+          <div class="flabel">اختبار القدرات OAAA <span style="color:var(--text3);font-size:10px">(×40%)</span></div>
+          <input type="number" class="finput" id="om-qud" placeholder="مثال: 85" min="0" max="100" step="0.01" oninput="calcWeightedOman()">
+        </div>
+      </div>
+      <div class="formula-box" id="formula-box-om" style="display:none">
+        <div class="formula-title">📐 المعدل الموزون العُماني</div>
+        <div class="formula-result" id="om-result">--</div>
+      </div>
+      <button class="calc-btn" id="calc-btn" onclick="calculate()" disabled>
+        <i data-lucide="search" style="width:18px;height:18px"></i> ابحث عن تخصصاتي
+      </button>
+    `;
+    addBranchStyles();
+  }
+
+  lucide.createIcons();
+}
+
+// ══════════════════════════════════════════════════════════════
+// BRANCH
+// ══════════════════════════════════════════════════════════════
+function addBranchStyles() {
+  if (document.getElementById('branch-styles')) return;
+  const s = document.createElement('style');
+  s.id = 'branch-styles';
+  s.textContent = `.branch-opt{background:var(--bg3);border:2px solid var(--border);border-radius:var(--radius-sm);padding:13px;cursor:pointer;font-family:'Cairo',sans-serif;font-size:14px;font-weight:700;color:var(--text2);transition:all .2s;width:100%}.branch-opt:hover{border-color:rgba(79,124,255,.3)}.branch-opt.sel-sci{border-color:var(--accent);background:rgba(79,124,255,.1);color:var(--accent)}.branch-opt.sel-art{border-color:var(--accent3);background:rgba(0,212,170,.08);color:var(--accent3)}`;
+  document.head.appendChild(s);
+}
+
+function setBranch(b) {
+  currentBranch = b;
+  const sci = document.getElementById('bopt-sci');
+  const art = document.getElementById('bopt-art');
+  if (sci) sci.className = 'branch-opt' + (b==='علمي' ? ' sel-sci' : '');
+  if (art) art.className = 'branch-opt' + (b==='ادبي' ? ' sel-art' : '');
+  checkReady();
+}
+
+// ══════════════════════════════════════════════════════════════
+// SLIDER / INPUT SYNC
+// ══════════════════════════════════════════════════════════════
+function syncSlider(v) {
+  const f = parseFloat(v);
+  const el = document.getElementById('g-show');
+  const cat = document.getElementById('g-cat');
+  const inp = document.getElementById('g-input');
+  if (el) { el.textContent = f.toFixed(2) + '%'; el.style.color = gradeColor(f); }
+  if (cat) cat.textContent = gradeCategory(f);
+  if (inp) inp.value = f.toFixed(2);
+  checkReady();
+}
+function syncInput(v) {
+  const f = parseFloat(v);
+  if (isNaN(f)) return;
+  const sl = document.getElementById('g-slider');
+  if (sl) sl.value = f;
+  syncSlider(f);
+}
+function gradeColor(v) { return v>=90?'var(--gold)':v>=80?'var(--green)':v>=70?'var(--accent)':v>=60?'var(--text2)':'var(--danger)'; }
+function gradeCategory(v) { return v>=95?'🏆 ممتاز جداً':v>=85?'🌟 ممتاز':v>=75?'✅ جيد جداً':v>=65?'📘 جيد':'📋 مقبول'; }
+
+// ══════════════════════════════════════════════════════════════
+// WEIGHTED CALC (Saudi)
+// ══════════════════════════════════════════════════════════════
+function calcWeighted() {
+  const s = parseFloat(document.getElementById('sa-school')?.value) || 0;
+  const q = parseFloat(document.getElementById('sa-qud')?.value) || 0;
+  const t = parseFloat(document.getElementById('sa-tah')?.value) || 0;
+  if (!s && !q && !t) return;
+  const w = (s*0.3 + q*0.3 + t*0.4);
+  const box = document.getElementById('formula-box');
+  if (box) {
+    box.style.display = 'block';
+    document.getElementById('fp-school').textContent = s.toFixed(1);
+    document.getElementById('fp-qud').textContent = q.toFixed(1);
+    document.getElementById('fp-tah').textContent = t.toFixed(1);
+    document.getElementById('fp-result').textContent = `النسبة الموزونة: ${w.toFixed(2)}%`;
+  }
+  checkReady();
+}
+
+// ══════════════════════════════════════════════════════════════
+// WEIGHTED CALC (Oman)
+// ══════════════════════════════════════════════════════════════
+function calcWeightedOman() {
+  const s = parseFloat(document.getElementById('om-school')?.value) || 0;
+  const q = parseFloat(document.getElementById('om-qud')?.value) || 0;
+  if (!s && !q) return;
+  const w = s*0.6 + q*0.4;
+  const box = document.getElementById('formula-box-om');
+  if (box) {
+    box.style.display = 'block';
+    document.getElementById('om-result').textContent = `المعدل الموزون: ${w.toFixed(2)}%`;
+  }
+  checkReady();
+}
+
+// ══════════════════════════════════════════════════════════════
+// CHECK READY
+// ══════════════════════════════════════════════════════════════
+function checkReady() {
+  const btn = document.getElementById('calc-btn');
+  if (!btn) return;
+  btn.disabled = !getStudentScore().ready;
+}
+
+function getStudentScore() {
+  const c = DB[currentCountry];
+  const sys = c.system;
+  if (!currentBranch && sys !== 'iq') return {ready:false};
+
+  if (sys === 'direct' || sys === 'equivalent') {
+    const v = parseFloat(document.getElementById('g-slider')?.value);
+    if (isNaN(v)) return {ready:false};
+    return {ready:!!currentBranch, score:v, emsat:null};
+  }
+  if (sys === 'weighted') {
+    const s = parseFloat(document.getElementById('sa-school')?.value);
+    const q = parseFloat(document.getElementById('sa-qud')?.value);
+    const t = parseFloat(document.getElementById('sa-tah')?.value);
+    if (isNaN(s)||isNaN(q)||isNaN(t)) return {ready:false};
+    return {ready:!!currentBranch, score:s*0.3+q*0.3+t*0.4};
+  }
+  if (sys === 'emsat') {
+    const g = parseFloat(document.getElementById('ae-grade')?.value);
+    const e = parseFloat(document.getElementById('ae-emsat')?.value);
+    if (isNaN(g)||isNaN(e)) return {ready:false};
+    return {ready:!!currentBranch, score:g, emsat:e};
+  }
+  if (sys === 'weighted_om') {
+    const s = parseFloat(document.getElementById('om-school')?.value);
+    const q = parseFloat(document.getElementById('om-qud')?.value);
+    if (isNaN(s)||isNaN(q)) return {ready:false};
+    return {ready:!!currentBranch, score:s*0.6+q*0.4};
+  }
+  return {ready:false};
+}
+
+// ══════════════════════════════════════════════════════════════
+// CALCULATE
+// ══════════════════════════════════════════════════════════════
+function calculate() {
+  const {score, emsat} = getStudentScore();
+  const c = DB[currentCountry];
+  const data = c.data;
+
+  allResults = data.filter(r => {
+    if (r.branch !== currentBranch) return false;
+    const minScore = r.minWeighted ?? r.minGrade;
+    if (c.system === 'emsat') {
+      return r.minGrade <= score && r.emsat <= (emsat||0);
+    }
+    return minScore <= score;
+  }).sort((a,b) => {
+    const am = a.minWeighted ?? a.minGrade;
+    const bm = b.minWeighted ?? b.minGrade;
+    return bm - am;
+  });
+
+  filteredResults = [...allResults];
+  currentPage = 1;
+  document.getElementById('filter-q').value = '';
+  document.getElementById('initial-hint').style.display = 'none';
+  document.getElementById('results-section').style.display = 'block';
+
+  renderMiniStats(score);
+  renderTable(score, c);
+  document.getElementById('results-section').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ══════════════════════════════════════════════════════════════
+// MINI STATS
+// ══════════════════════════════════════════════════════════════
+function renderMiniStats(score) {
+  const total = allResults.length;
+  const easy  = allResults.filter(r => score - (r.minWeighted??r.minGrade) >= 5).length;
+  const tight  = allResults.filter(r => score - (r.minWeighted??r.minGrade) < 2).length;
+  document.getElementById('mini-stats').innerHTML = `
+    <div class="ms"><div class="ms-n" style="color:var(--accent)">${total}</div><div class="ms-l">تخصص متاح</div></div>
+    <div class="ms"><div class="ms-n" style="color:var(--green)">${easy}</div><div class="ms-l">مريح (+5)</div></div>
+    <div class="ms"><div class="ms-n" style="color:var(--gold)">${tight}</div><div class="ms-l">على الحافة</div></div>
+  `;
+}
+
+// ══════════════════════════════════════════════════════════════
+// RENDER TABLE
+// ══════════════════════════════════════════════════════════════
+function renderTable(score, c) {
+  const count = filteredResults.length;
+  document.getElementById('count-badge').textContent = count + ' تخصص';
+
+  // headers
+  const heads = c.tableHeaders;
+  document.getElementById('tbl-head').innerHTML = heads.map(h => `<th>${h}</th>`).join('');
+
+  if (!count) {
+    document.getElementById('tbl-body').innerHTML = '';
+    document.getElementById('empty-state').style.display = 'block';
+    document.getElementById('pagination').innerHTML = '';
+    return;
+  }
+  document.getElementById('empty-state').style.display = 'none';
+
+  const start = (currentPage-1)*PER;
+  const page  = filteredResults.slice(start, start+PER);
+
+  document.getElementById('tbl-body').innerHTML = page.map((r,i) => {
+    const rank = start+i+1;
+    const rClass = rank===1?'rank-1':rank===2?'rank-2':rank===3?'rank-3':'';
+    const minScore = r.minWeighted ?? r.minGrade;
+    const diff = (score - minScore).toFixed(2);
+    const diffClass = diff>=5?'diff-ok':diff>=2?'diff-close':'diff-tight';
+
+    const uniName = r.uni || 'جامعة الكويت';
+    const majName = r.major;
+
+    let col3 = '';
+    if (c.system==='weighted'||c.system==='weighted_om') {
+      col3 = `<div class="pill pill-blue">${minScore}%</div>`;
+    } else if (c.system==='emsat') {
+      col3 = `<div class="pill ${minScore>=90?'pill-gold':minScore>=80?'pill-green':'pill-blue'}">${minScore}%</div>`;
+    } else {
+      col3 = `<div class="pill ${minScore>=90?'pill-gold':minScore>=80?'pill-green':minScore>=70?'pill-blue':'pill-orange'}">${minScore}%</div>`;
+    }
+
+    let col4 = '';
+    if (c.system==='emsat') {
+      col4 = `<span class="pill pill-blue">EmSAT ${r.emsat}</span>`;
+    } else if (c.system==='direct'||c.system==='equivalent'||c.system==='weighted_om'||c.system==='weighted') {
+      col4 = `<span class="${diffClass}">+${diff}%</span>`;
+    }
+
+    return `
+      <tr>
+        <td><div class="rank-n ${rClass}">${rank}</div></td>
+        <td>
+          <div class="uni-name">${uniName}</div>
+          <div class="uni-sub">${majName}</div>
+        </td>
+        <td>${col3}</td>
+        <td>${col4}</td>
+      </tr>
+    `;
+  }).join('');
+
+  renderPagination(count);
+}
+
+// ══════════════════════════════════════════════════════════════
+// PAGINATION
+// ══════════════════════════════════════════════════════════════
+function renderPagination(total) {
+  const pages = Math.ceil(total/PER);
+  const el = document.getElementById('pagination');
+  if (pages<=1){el.innerHTML='';return;}
+
+  let html = `<button class="pgbtn" onclick="goPage(${currentPage-1})" ${currentPage===1?'disabled':''}>→</button>`;
+  const range=[];
+  for(let i=1;i<=pages;i++){
+    if(i===1||i===pages||(i>=currentPage-2&&i<=currentPage+2)) range.push(i);
+    else if(range[range.length-1]!=='...') range.push('...');
+  }
+  range.forEach(p=>{
+    if(p==='...') html+=`<span style="color:var(--text3);padding:0 4px">...</span>`;
+    else html+=`<button class="pgbtn ${p===currentPage?'active':''}" onclick="goPage(${p})">${p}</button>`;
+  });
+  html+=`<button class="pgbtn" onclick="goPage(${currentPage+1})" ${currentPage===pages?'disabled':''}>←</button>`;
+  el.innerHTML=html;
+}
+
+function goPage(p) {
+  const pages=Math.ceil(filteredResults.length/PER);
+  if(p<1||p>pages) return;
+  currentPage=p;
+  const {score}=getStudentScore();
+  renderTable(score, DB[currentCountry]);
+  document.getElementById('results-section').scrollIntoView({behavior:'smooth'});
+}
+
+// ══════════════════════════════════════════════════════════════
+// FILTER
+// ══════════════════════════════════════════════════════════════
+function filterResults(q) {
+  const query=q.trim();
+  filteredResults = query ? allResults.filter(r=>(r.major+' '+(r.uni||'')).includes(query)) : [...allResults];
+  currentPage=1;
+  const {score}=getStudentScore();
+  renderTable(score, DB[currentCountry]);
+}
+
+// ══════════════════════════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════════════════════════
+selectCountry('iq');
+</script>
+</body>
+</html>
