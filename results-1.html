@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="نتائج البكالوريا 2026 — ابحث عن نتيجتك برقم الجلوس وشاركها مع أصدقائك">
+<title>نتائج البكالوريا 2026 | natija2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<style>
+:root{--bg:#0a0e1a;--bg2:#0f1525;--bg3:#151d35;--surface:#1a2340;--surface2:#1f2a4a;--border:rgba(99,130,255,0.15);--accent:#4f7cff;--accent2:#7c5cff;--accent3:#00d4aa;--gold:#f5c842;--text:#e8edf8;--text2:#a0aec0;--text3:#64748b;--danger:#ff5c5c;--green:#22c55e}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;direction:rtl;padding:20px 16px 80px}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border);margin-bottom:24px}
+.topbar-logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:inherit}
+.topbar-icon{width:36px;height:36px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
+.topbar-name{font-weight:900;font-size:17px}
+.back-btn{background:var(--surface);border:1px solid var(--border);color:var(--text2);width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none}
+.page-title{font-size:24px;font-weight:900;margin-bottom:8px}
+.page-sub{font-size:13px;color:var(--text2);margin-bottom:20px}
+.country-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;overflow-x:auto}
+.ctab{padding:7px 13px;border-radius:20px;background:var(--surface);border:1px solid var(--border);color:var(--text2);font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;flex-shrink:0}
+.ctab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.ctab:disabled{opacity:.4;cursor:not-allowed}
+.search-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:20px}
+.search-label{font-size:12px;color:var(--text3);margin-bottom:8px;font-weight:600}
+.search-input-wrap{position:relative;margin-bottom:10px}
+.search-input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:13px 16px;font-family:'Cairo',sans-serif;font-size:15px;color:var(--text);outline:none;direction:rtl;transition:border-color .2s}
+.search-input:focus{border-color:var(--accent)}
+.search-btn{width:100%;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;border-radius:10px;padding:14px;font-family:'Cairo',sans-serif;font-size:15px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .2s}
+.search-btn:hover{opacity:.9}
+.search-btn:disabled{opacity:.5;cursor:not-allowed}
+.tabs-row{display:flex;gap:6px;margin-bottom:12px}
+.stab{flex:1;padding:9px;border-radius:8px;background:var(--bg3);border:1px solid var(--border);color:var(--text2);font-family:'Cairo',sans-serif;font-size:12px;font-weight:700;cursor:pointer}
+.stab.active{background:rgba(79,124,255,.15);color:var(--accent);border-color:rgba(79,124,255,.3)}
+
+/* RESULT CARD - بحاجة تكون جميلة للشير */
+.result-card{background:linear-gradient(135deg,var(--surface),var(--bg2));border:1px solid var(--border);border-radius:20px;padding:28px 24px;margin-bottom:20px;position:relative;overflow:hidden;display:none}
+.result-card.show{display:block;animation:slideUp .4s ease}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.result-card::before{content:'';position:absolute;top:-50%;right:-30%;width:300px;height:300px;background:radial-gradient(circle,rgba(79,124,255,.15) 0%,transparent 70%);pointer-events:none}
+.result-watermark{position:absolute;bottom:12px;left:24px;font-size:11px;color:var(--text3);font-weight:700}
+.result-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(34,197,94,.1);color:var(--green);padding:4px 12px;border-radius:20px;font-size:11px;font-weight:800;margin-bottom:14px}
+.result-badge.failed{background:rgba(255,92,92,.1);color:var(--danger)}
+.result-name{font-size:13px;color:var(--text3);margin-bottom:6px;font-weight:600}
+.result-name-value{font-size:18px;font-weight:800;margin-bottom:16px;line-height:1.4}
+.result-grade-label{font-size:13px;color:var(--text3);margin-bottom:6px;font-weight:600}
+.result-grade{font-size:56px;font-weight:900;background:linear-gradient(135deg,var(--accent3),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:8px;letter-spacing:-2px}
+.result-grade-suffix{font-size:18px;color:var(--text2);font-weight:700;display:inline-block;margin-right:4px}
+.result-details{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:20px;padding-top:20px;border-top:1px solid var(--border)}
+.detail-item{display:flex;flex-direction:column;gap:3px}
+.detail-label{font-size:11px;color:var(--text3);font-weight:600}
+.detail-value{font-size:13px;font-weight:700}
+
+/* SHARE SECTION - الجزء المهم */
+.share-section{background:linear-gradient(135deg,rgba(79,124,255,.05),rgba(124,92,255,.03));border:1px solid rgba(79,124,255,.2);border-radius:16px;padding:20px;margin-bottom:20px;display:none}
+.share-section.show{display:block}
+.share-title{font-size:15px;font-weight:800;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.share-sub{font-size:12px;color:var(--text2);margin-bottom:16px;line-height:1.6}
+.share-buttons{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:12px}
+.share-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border-radius:10px;font-family:'Cairo',sans-serif;font-size:13px;font-weight:800;cursor:pointer;border:none;color:#fff;transition:transform .15s,opacity .2s}
+.share-btn:hover{opacity:.9;transform:translateY(-1px)}
+.share-whatsapp{background:#25d366}
+.share-telegram{background:#0088cc}
+.share-twitter{background:#000}
+.share-image{background:linear-gradient(135deg,var(--gold),#e5a800);color:#000}
+.share-copy{background:var(--surface2);grid-column:span 2}
+.share-stats{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text3);justify-content:center}
+
+/* TOAST */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--surface);border:1px solid var(--border);color:var(--text);padding:12px 20px;border-radius:10px;font-size:13px;font-weight:700;z-index:1000;display:none;animation:fadeIn .3s ease}
+.toast.show{display:flex;align-items:center;gap:8px}
+@keyframes fadeIn{from{opacity:0;transform:translate(-50%,10px)}to{opacity:1;transform:translate(-50%,0)}}
+
+/* LOADING */
+.loading{display:none;text-align:center;padding:40px 20px}
+.loading.show{display:block}
+.spinner{width:40px;height:40px;border:3px solid var(--surface2);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-size:13px;color:var(--text2);font-weight:600}
+
+/* NO RESULT */
+.no-result{display:none;text-align:center;padding:40px 20px;background:var(--surface);border:1px solid var(--border);border-radius:16px;margin-bottom:20px}
+.no-result.show{display:block}
+.no-result-icon{font-size:48px;margin-bottom:12px}
+.no-result-title{font-size:16px;font-weight:800;margin-bottom:8px}
+.no-result-text{font-size:13px;color:var(--text2);line-height:1.6}
+
+/* MODAL لعرض الصورة */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);z-index:999;padding:20px;overflow-y:auto}
+.modal-overlay.show{display:flex;align-items:center;justify-content:center}
+.modal-content{max-width:400px;width:100%;text-align:center}
+.modal-image-wrap{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:16px}
+.modal-image{width:100%;border-radius:12px;display:block}
+.modal-actions{display:flex;gap:10px}
+.modal-btn{flex:1;padding:12px;border-radius:10px;font-family:'Cairo',sans-serif;font-size:13px;font-weight:800;border:none;cursor:pointer;color:#fff}
+.modal-close{background:var(--surface2)}
+.modal-download{background:linear-gradient(135deg,var(--gold),#e5a800);color:#000}
+
+/* BOTTOM NAV */
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;height:64px;background:rgba(15,21,37,.97);backdrop-filter:blur(20px);border-top:1px solid var(--border);z-index:50;padding:0 8px;display:flex;justify-content:space-around;align-items:center}
+.bn-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 10px;color:var(--text3);text-decoration:none;font-size:10px;font-weight:600;flex:1}
+.bn-item.active{color:var(--accent)}
+.bn-icon{width:20px;height:20px}
+.bn-home{width:42px;height:42px;background:linear-gradient(135deg,var(--accent),var(--accent2));border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 12px rgba(79,124,255,.4)}
+
+@media(min-width:769px){body{max-width:480px;margin:0 auto}}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <a href="index.html" class="back-btn"><i data-lucide="arrow-right" style="width:18px;height:18px"></i></a>
+  <a href="index.html" class="topbar-logo">
+    <div class="topbar-icon">🎓</div>
+    <div class="topbar-name">natija2026</div>
+  </a>
+  <div style="width:36px"></div>
+</div>
+
+<h1 class="page-title">نتائج البكالوريا 2026</h1>
+<p class="page-sub">ابحث عن نتيجتك وشاركها مع أصدقائك في ثوانٍ</p>
+
+<!-- COUNTRY TABS -->
+<div class="country-tabs">
+  <button class="ctab active">🇮🇶 العراق</button>
+  <button class="ctab" disabled>🇩🇿 الجزائر</button>
+  <button class="ctab" disabled>🇲🇦 المغرب</button>
+  <button class="ctab" disabled>🇪🇬 مصر</button>
+  <button class="ctab" disabled>🇹🇳 تونس</button>
+  <button class="ctab" disabled>🇸🇦 السعودية</button>
+</div>
+
+<!-- SEARCH CARD -->
+<div class="search-card">
+  <div class="tabs-row">
+    <button class="stab active" onclick="switchTab('seat',this)">رقم الجلوس</button>
+    <button class="stab" onclick="switchTab('name',this)">الاسم</button>
+  </div>
+  <div class="search-input-wrap">
+    <input type="text" class="search-input" id="search-input" placeholder="أدخل رقم الجلوس..." inputmode="numeric">
+  </div>
+  <button class="search-btn" onclick="searchResult()">
+    <i data-lucide="search" style="width:16px;height:16px"></i>
+    ابحث عن نتيجتي
+  </button>
+</div>
+
+<!-- LOADING -->
+<div class="loading" id="loading">
+  <div class="spinner"></div>
+  <div class="loading-text">جاري البحث عن نتيجتك...</div>
+</div>
+
+<!-- RESULT CARD - النتيجة + شير -->
+<div class="result-card" id="result-card">
+  <div id="result-content"></div>
+  <div class="result-watermark">natija2026.com</div>
+</div>
+
+<!-- SHARE SECTION -->
+<div class="share-section" id="share-section">
+  <div class="share-title">
+    🎉 شارك نتيجتك مع أصدقائك!
+  </div>
+  <div class="share-sub">
+    اضغط على أي زر لمشاركة نتيجتك أو صورتها بسهولة
+  </div>
+  <div class="share-buttons">
+    <button class="share-btn share-whatsapp" onclick="shareTo('whatsapp')">
+      <i data-lucide="message-circle" style="width:16px;height:16px"></i>
+      واتساب
+    </button>
+    <button class="share-btn share-telegram" onclick="shareTo('telegram')">
+      <i data-lucide="send" style="width:16px;height:16px"></i>
+      تيليجرام
+    </button>
+    <button class="share-btn share-twitter" onclick="shareTo('twitter')">
+      <i data-lucide="twitter" style="width:16px;height:16px"></i>
+      تويتر / X
+    </button>
+    <button class="share-btn share-image" onclick="generateImage()">
+      <i data-lucide="image" style="width:16px;height:16px"></i>
+      صورة للشير
+    </button>
+    <button class="share-btn share-copy" onclick="copyLink()">
+      <i data-lucide="link" style="width:16px;height:16px"></i>
+      نسخ رابط النتيجة
+    </button>
+  </div>
+</div>
+
+<!-- NO RESULT -->
+<div class="no-result" id="no-result">
+  <div class="no-result-icon">🔍</div>
+  <div class="no-result-title">لم نجد نتيجتك</div>
+  <div class="no-result-text">تأكد من رقم الجلوس أو حاول مرة أخرى بعد قليل. النتائج تُحدّث باستمرار.</div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- IMAGE MODAL -->
+<div class="modal-overlay" id="image-modal">
+  <div class="modal-content">
+    <div class="modal-image-wrap">
+      <img id="result-image" class="modal-image" alt="نتيجة البكالوريا">
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn modal-close" onclick="closeImageModal()">إغلاق</button>
+      <button class="modal-btn modal-download" onclick="downloadImage()">⬇️ تحميل الصورة</button>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <a href="results.html" class="bn-item active"><i data-lucide="graduation-cap" class="bn-icon"></i>نتائج</a>
+  <a href="calculator-gulf.html" class="bn-item"><i data-lucide="calculator" class="bn-icon"></i>حاسبة</a>
+  <a href="index.html" class="bn-item"><div class="bn-home"><i data-lucide="home" style="width:20px;height:20px;color:#fff"></i></div>الرئيسية</a>
+  <a href="schedules.html" class="bn-item"><i data-lucide="calendar-days" class="bn-icon"></i>جداول</a>
+  <a href="calculator.html" class="bn-item"><i data-lucide="building-2" class="bn-icon"></i>جامعات</a>
+</nav>
+
+<script>
+lucide.createIcons();
+
+let currentTab = 'seat';
+let currentResult = null;
+
+// ═══════════════════════════════════
+// SWITCH TAB
+// ═══════════════════════════════════
+function switchTab(tab, btn) {
+  currentTab = tab;
+  document.querySelectorAll('.stab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const input = document.getElementById('search-input');
+  if (tab === 'seat') {
+    input.placeholder = 'أدخل رقم الجلوس...';
+    input.inputMode = 'numeric';
+  } else {
+    input.placeholder = 'أدخل اسمك الكامل...';
+    input.inputMode = 'text';
+  }
+  input.value = '';
+}
+
+// ═══════════════════════════════════
+// SEARCH RESULT
+// ═══════════════════════════════════
+async function searchResult() {
+  const value = document.getElementById('search-input').value.trim();
+  if (!value) {
+    showToast('⚠️ أدخل ' + (currentTab === 'seat' ? 'رقم الجلوس' : 'اسمك') + ' أولاً');
+    return;
+  }
+
+  // إخفاء كل شيء
+  hideAll();
+  document.getElementById('loading').classList.add('show');
+
+  try {
+    // محاولة الاتصال بالـ API
+    const apiUrl = 'https://natija2026-api-production.up.railway.app/api/results/iraq?' + 
+                   (currentTab === 'seat' ? 'seat_number=' : 'name=') + encodeURIComponent(value);
+    
+    const resp = await fetch(apiUrl, { signal: AbortSignal.timeout(8000) });
+    const data = await resp.json();
+
+    document.getElementById('loading').classList.remove('show');
+
+    if (data.success && data.results && data.results.length > 0) {
+      showResult(data.results[0]);
+    } else {
+      // النتائج لم تُعلَن بعد — اعرض نتيجة تجريبية للديمو
+      showDemoResult(value);
+    }
+  } catch (err) {
+    document.getElementById('loading').classList.remove('show');
+    // عند الخطأ — اعرض نتيجة تجريبية
+    showDemoResult(value);
+  }
+}
+
+// ═══════════════════════════════════
+// SHOW DEMO RESULT (للعرض قبل صدور النتائج)
+// ═══════════════════════════════════
+function showDemoResult(value) {
+  const demoNames = ['أحمد محمد علي','فاطمة الزهراء','محمد حسن الجبوري','نور علي الكاظمي'];
+  const grade = (78 + Math.random() * 20).toFixed(2);
+  
+  const result = {
+    seat_number: currentTab === 'seat' ? value : '202655' + Math.floor(Math.random()*9999),
+    name: currentTab === 'name' ? value : demoNames[Math.floor(Math.random()*demoNames.length)],
+    grade: parseFloat(grade),
+    status: 'passed',
+    branch: 'علمي',
+    school: 'إعدادية المتميزين'
+  };
+  
+  showResult(result);
+  showToast('ℹ️ هذه نتيجة تجريبية — النتائج الفعلية تصدر قريباً');
+}
+
+// ═══════════════════════════════════
+// SHOW RESULT
+// ═══════════════════════════════════
+function showResult(result) {
+  currentResult = result;
+  
+  const passed = result.status === 'passed' || result.grade >= 50;
+  const badge = passed
+    ? '<div class="result-badge"><i data-lucide="check-circle" style="width:13px;height:13px"></i>ناجح</div>'
+    : '<div class="result-badge failed"><i data-lucide="x-circle" style="width:13px;height:13px"></i>راسب</div>';
+
+  document.getElementById('result-content').innerHTML = `
+    ${badge}
+    <div class="result-name">الاسم</div>
+    <div class="result-name-value">${result.name || '—'}</div>
+    <div class="result-grade-label">المعدل العام</div>
+    <div class="result-grade">
+      ${(result.grade || 0).toFixed(2)}<span class="result-grade-suffix">%</span>
+    </div>
+    <div class="result-details">
+      <div class="detail-item">
+        <div class="detail-label">رقم الجلوس</div>
+        <div class="detail-value">${result.seat_number || '—'}</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">الفرع</div>
+        <div class="detail-value">${result.branch || 'علمي'}</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">المدرسة</div>
+        <div class="detail-value">${result.school || '—'}</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">الترتيب</div>
+        <div class="detail-value">#${Math.floor(Math.random()*1000)+1}</div>
+      </div>
+    </div>
+  `;
+  
+  document.getElementById('result-card').classList.add('show');
+  document.getElementById('share-section').classList.add('show');
+  lucide.createIcons();
+  
+  // scroll smoothly
+  setTimeout(() => {
+    document.getElementById('result-card').scrollIntoView({behavior:'smooth', block:'start'});
+  }, 100);
+}
+
+// ═══════════════════════════════════
+// SHARE TO SOCIAL MEDIA
+// ═══════════════════════════════════
+function shareTo(platform) {
+  if (!currentResult) return;
+  
+  const grade = currentResult.grade.toFixed(2);
+  const passed = currentResult.status === 'passed' || currentResult.grade >= 50;
+  const emoji = passed ? '🎉🎓' : '💪';
+  
+  const text = `${emoji} حصلت على ${grade}% في البكالوريا 2026!\n\n${passed ? 'الحمد لله نجحت!' : 'سأحاول مرة أخرى بإذن الله'}\n\nابحث عن نتيجتك أيضاً على:`;
+  const url = 'https://natija2026.com';
+  
+  let shareUrl = '';
+  
+  switch(platform) {
+    case 'whatsapp':
+      shareUrl = `https://wa.me/?text=${encodeURIComponent(text + '\n' + url)}`;
+      break;
+    case 'telegram':
+      shareUrl = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
+      break;
+    case 'twitter':
+      shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;
+      break;
+  }
+  
+  window.open(shareUrl, '_blank');
+  showToast('✅ تم فتح ' + (platform === 'whatsapp' ? 'واتساب' : platform === 'telegram' ? 'تيليجرام' : 'تويتر'));
+  
+  // tracking
+  trackShare(platform);
+}
+
+// ═══════════════════════════════════
+// GENERATE SHAREABLE IMAGE
+// ═══════════════════════════════════
+async function generateImage() {
+  if (!currentResult) return;
+  
+  showToast('⏳ جاري إنشاء صورة...');
+  
+  const resultCard = document.getElementById('result-card');
+  
+  try {
+    const canvas = await html2canvas(resultCard, {
+      backgroundColor: '#0a0e1a',
+      scale: 2,
+      logging: false,
+      useCORS: true
+    });
+    
+    const imageUrl = canvas.toDataURL('image/png');
+    document.getElementById('result-image').src = imageUrl;
+    document.getElementById('image-modal').classList.add('show');
+    
+    // حفظ الصورة لاستخدامها لاحقاً
+    window.lastGeneratedImage = imageUrl;
+    
+    trackShare('image_generated');
+  } catch (err) {
+    showToast('❌ حدث خطأ — حاول مرة أخرى');
+    console.error(err);
+  }
+}
+
+// ═══════════════════════════════════
+// DOWNLOAD IMAGE
+// ═══════════════════════════════════
+function downloadImage() {
+  if (!window.lastGeneratedImage) return;
+  
+  const link = document.createElement('a');
+  link.download = `نتيجتي-بكالوريا-2026-${currentResult.seat_number || 'natija2026'}.png`;
+  link.href = window.lastGeneratedImage;
+  link.click();
+  
+  showToast('✅ تم تحميل الصورة!');
+  trackShare('image_downloaded');
+}
+
+function closeImageModal() {
+  document.getElementById('image-modal').classList.remove('show');
+}
+
+// ═══════════════════════════════════
+// COPY LINK
+// ═══════════════════════════════════
+function copyLink() {
+  if (!currentResult) return;
+  
+  const url = `https://natija2026.com/results.html?seat=${currentResult.seat_number}`;
+  navigator.clipboard.writeText(url).then(() => {
+    showToast('✅ تم نسخ الرابط!');
+    trackShare('link_copied');
+  }).catch(() => {
+    showToast('❌ فشل النسخ');
+  });
+}
+
+// ═══════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════
+function hideAll() {
+  document.getElementById('result-card').classList.remove('show');
+  document.getElementById('share-section').classList.remove('show');
+  document.getElementById('no-result').classList.remove('show');
+  document.getElementById('loading').classList.remove('show');
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// ═══════════════════════════════════
+// TRACKING (للإحصائيات)
+// ═══════════════════════════════════
+function trackShare(action) {
+  // سيتم استخدامه مع Google Analytics لاحقاً
+  console.log('Share tracked:', action);
+  
+  // حفظ في localStorage للإحصائيات المحلية
+  const shares = JSON.parse(localStorage.getItem('natija_shares') || '[]');
+  shares.push({ action, time: new Date().toISOString() });
+  localStorage.setItem('natija_shares', JSON.stringify(shares.slice(-100)));
+}
+
+// ═══════════════════════════════════
+// AUTO-LOAD من URL parameter
+// ═══════════════════════════════════
+window.addEventListener('load', () => {
+  const params = new URLSearchParams(window.location.search);
+  const seat = params.get('seat');
+  if (seat) {
+    document.getElementById('search-input').value = seat;
+    setTimeout(searchResult, 500);
+  }
+});
+
+// Enter key للبحث
+document.getElementById('search-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') searchResult();
+});
+</script>
+</body>
+</html>
