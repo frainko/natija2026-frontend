@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="حاسبة القبول الجامعي العراق 2026 - أدخل معدلك واكتشف الجامعات والتخصصات المتاحة لك">
+<meta name="keywords" content="حاسبة القبول الجامعي العراق, معدل القبول, جامعات العراق 2026, تخصصات البكالوريا العراق">
+<title>حاسبة القبول الجامعي — العراق 2026 | natija2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<style>
+:root {
+  --bg: #0a0e1a;
+  --bg2: #0f1525;
+  --bg3: #151d35;
+  --surface: #1a2340;
+  --surface2: #1f2a4a;
+  --border: rgba(99,130,255,0.15);
+  --accent: #4f7cff;
+  --accent2: #7c5cff;
+  --accent3: #00d4aa;
+  --gold: #f5c842;
+  --text: #e8edf8;
+  --text2: #a0aec0;
+  --text3: #64748b;
+  --danger: #ff5c5c;
+  --green: #22c55e;
+  --sidebar-w: 240px;
+  --bottom-h: 68px;
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Cairo', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  direction: rtl;
+  overflow-x: hidden;
+}
+
+/* SIDEBAR */
+.sidebar {
+  position: fixed;
+  top: 0; right: 0;
+  width: var(--sidebar-w);
+  height: 100vh;
+  background: var(--bg2);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+}
+.sidebar-logo {
+  padding: 28px 20px 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none; color: inherit;
+}
+.logo-icon {
+  width: 40px; height: 40px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; flex-shrink: 0;
+}
+.logo-name { font-weight: 900; font-size: 17px; }
+.logo-sub { font-size: 11px; color: var(--text3); }
+.sidebar-nav {
+  flex: 1; padding: 16px 12px;
+  display: flex; flex-direction: column; gap: 4px;
+  overflow-y: auto;
+}
+.nav-label {
+  font-size: 10px; font-weight: 700; color: var(--text3);
+  letter-spacing: 1.5px; padding: 12px 10px 6px;
+}
+.nav-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 14px; border-radius: var(--radius-sm);
+  color: var(--text2); text-decoration: none;
+  font-size: 14px; font-weight: 600;
+  transition: all 0.2s; cursor: pointer;
+  position: relative;
+}
+.nav-item:hover { background: var(--surface); color: var(--text); }
+.nav-item.active {
+  background: linear-gradient(135deg,rgba(79,124,255,0.15),rgba(124,92,255,0.1));
+  color: var(--accent);
+  border: 1px solid rgba(79,124,255,0.2);
+}
+.nav-item.active::before {
+  content:''; position:absolute; right:0; top:50%; transform:translateY(-50%);
+  width:3px; height:60%; background:var(--accent); border-radius:2px 0 0 2px;
+}
+.nav-icon { width:18px; height:18px; flex-shrink:0; }
+.sidebar-footer { padding:16px 12px; border-top:1px solid var(--border); }
+.year-badge {
+  background: linear-gradient(135deg,var(--gold),#e5a800);
+  color:var(--bg); padding:10px 14px; border-radius:var(--radius-sm);
+  font-size:13px; font-weight:800; text-align:center;
+}
+
+/* TOPBAR mobile */
+.topbar {
+  display:none; position:sticky; top:0;
+  background:rgba(10,14,26,0.95); backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+  padding:12px 16px; z-index:50;
+  align-items:center; justify-content:space-between;
+}
+.topbar-logo { display:flex; align-items:center; gap:8px; text-decoration:none; color:inherit; }
+.topbar-icon {
+  width:32px; height:32px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:16px;
+}
+.topbar-name { font-weight:900; font-size:16px; }
+.back-btn {
+  display:flex; align-items:center; gap:6px;
+  background:var(--surface); border:1px solid var(--border);
+  color:var(--text2); padding:6px 12px; border-radius:8px;
+  font-size:12px; font-weight:600; text-decoration:none; cursor:pointer;
+}
+
+/* BOTTOM NAV */
+.bottom-nav {
+  display:none; position:fixed; bottom:0; left:0; right:0;
+  height:var(--bottom-h);
+  background:rgba(15,21,37,0.97); backdrop-filter:blur(20px);
+  border-top:1px solid var(--border); z-index:100;
+  padding:0 8px; justify-content:space-around; align-items:center;
+}
+.bn-item {
+  display:flex; flex-direction:column; align-items:center; gap:4px;
+  padding:8px 12px; color:var(--text3); text-decoration:none;
+  font-size:10px; font-weight:600; transition:all 0.2s; flex:1;
+}
+.bn-item.active { color:var(--accent); }
+.bn-icon { width:22px; height:22px; }
+.bn-home {
+  width:44px; height:44px;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  border-radius:50%; display:flex; align-items:center; justify-content:center;
+  box-shadow:0 4px 16px rgba(79,124,255,0.4);
+}
+
+/* MAIN */
+.main {
+  margin-right: var(--sidebar-w);
+  min-height: 100vh;
+  padding: 40px 32px 60px;
+}
+
+/* PAGE HEADER */
+.page-header { margin-bottom: 32px; }
+.page-eyebrow {
+  display:inline-flex; align-items:center; gap:8px;
+  background:rgba(0,212,170,0.08); border:1px solid rgba(0,212,170,0.2);
+  color:var(--accent3); padding:5px 14px; border-radius:40px;
+  font-size:12px; font-weight:700; margin-bottom:14px;
+}
+.page-title {
+  font-size: clamp(28px,4vw,44px);
+  font-weight: 900; line-height:1.1; margin-bottom:10px;
+}
+.page-title .grad {
+  background:linear-gradient(135deg,var(--accent3),var(--accent));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+}
+.page-sub { font-size:15px; color:var(--text2); line-height:1.7; }
+
+/* CALCULATOR CARD */
+.calc-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  margin-bottom: 28px;
+  max-width: 700px;
+}
+.calc-card-title {
+  font-size:16px; font-weight:800; margin-bottom:22px;
+  display:flex; align-items:center; gap:10px; color:var(--accent3);
+}
+
+/* FORM */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.form-group { display:flex; flex-direction:column; gap:8px; }
+.form-group.full { grid-column: 1 / -1; }
+.form-label {
+  font-size:13px; font-weight:700; color:var(--text2);
+  display:flex; align-items:center; gap:6px;
+}
+.form-input, .form-select {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 13px 14px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 15px; font-weight:600;
+  color: var(--text);
+  direction: rtl;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  width: 100%;
+  appearance: none;
+}
+.form-input:focus, .form-select:focus {
+  border-color: rgba(79,124,255,0.5);
+  box-shadow: 0 0 0 3px rgba(79,124,255,0.08);
+}
+.form-input::placeholder { color: var(--text3); font-weight:400; }
+.select-wrap { position:relative; }
+.select-wrap::after {
+  content:'▾'; position:absolute; left:14px; top:50%;
+  transform:translateY(-50%); color:var(--text3); pointer-events:none;
+  font-size:14px;
+}
+
+/* BRANCH SELECTOR */
+.branch-selector {
+  display:grid; grid-template-columns:1fr 1fr; gap:12px;
+}
+.branch-btn {
+  background: var(--bg3);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+  font-family:'Cairo',sans-serif;
+}
+.branch-btn:hover { border-color: rgba(79,124,255,0.3); }
+.branch-btn.selected-sci {
+  border-color: var(--accent);
+  background: rgba(79,124,255,0.1);
+}
+.branch-btn.selected-art {
+  border-color: var(--accent3);
+  background: rgba(0,212,170,0.08);
+}
+.branch-icon { font-size:28px; margin-bottom:6px; }
+.branch-name { font-size:15px; font-weight:800; }
+.branch-desc { font-size:11px; color:var(--text3); margin-top:3px; }
+
+/* GRADE SLIDER */
+.grade-display {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  text-align:center; margin-bottom:12px;
+}
+.grade-num {
+  font-size:42px; font-weight:900; line-height:1;
+}
+.grade-num .grade-dec { font-size:24px; }
+.grade-label { font-size:12px; color:var(--text3); margin-top:4px; }
+.grade-slider {
+  -webkit-appearance:none; appearance:none;
+  width:100%; height:6px;
+  background:var(--surface2); border-radius:3px; outline:none;
+  cursor:pointer;
+}
+.grade-slider::-webkit-slider-thumb {
+  -webkit-appearance:none;
+  width:22px; height:22px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  cursor:pointer;
+  box-shadow:0 2px 8px rgba(79,124,255,0.4);
+}
+.grade-hints {
+  display:flex; justify-content:space-between;
+  font-size:11px; color:var(--text3); margin-top:6px;
+}
+
+/* SEARCH BTN */
+.search-btn {
+  width:100%;
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:#fff; border:none; border-radius:var(--radius-sm);
+  padding:16px; font-family:'Cairo',sans-serif;
+  font-size:16px; font-weight:800; cursor:pointer;
+  transition:opacity 0.2s,transform 0.2s;
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  margin-top:4px;
+}
+.search-btn:hover { opacity:0.9; transform:translateY(-1px); }
+.search-btn:active { transform:translateY(0); }
+.search-btn:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+
+/* RESULTS */
+.results-section { max-width:900px; }
+.results-header {
+  display:flex; align-items:center; justify-content:space-between;
+  margin-bottom:18px; flex-wrap:wrap; gap:12px;
+}
+.results-title {
+  font-size:18px; font-weight:800;
+  display:flex; align-items:center; gap:8px;
+}
+.results-count {
+  background:rgba(79,124,255,0.12); border:1px solid rgba(79,124,255,0.2);
+  color:var(--accent); padding:4px 14px; border-radius:20px;
+  font-size:13px; font-weight:700;
+}
+
+/* FILTER BAR */
+.filter-bar {
+  display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap; align-items:center;
+}
+.filter-label { font-size:12px; color:var(--text3); font-weight:600; }
+.filter-input {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:8px; padding:8px 12px;
+  font-family:'Cairo',sans-serif; font-size:13px; color:var(--text);
+  direction:rtl; outline:none; flex:1; min-width:180px;
+  transition:border-color 0.2s;
+}
+.filter-input:focus { border-color:rgba(79,124,255,0.4); }
+.filter-input::placeholder { color:var(--text3); }
+
+/* RESULTS TABLE */
+.results-table-wrap {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  overflow:hidden;
+}
+.results-table {
+  width:100%; border-collapse:collapse;
+  font-size:14px;
+}
+.results-table th {
+  background:var(--bg3);
+  padding:13px 16px;
+  text-align:right;
+  font-size:12px; font-weight:700; color:var(--text3);
+  border-bottom:1px solid var(--border);
+  white-space:nowrap;
+}
+.results-table td {
+  padding:13px 16px;
+  border-bottom:1px solid rgba(99,130,255,0.07);
+  vertical-align:middle;
+}
+.results-table tr:last-child td { border-bottom:none; }
+.results-table tr:hover td { background:rgba(79,124,255,0.04); }
+
+.college-name { font-weight:700; font-size:14px; line-height:1.4; }
+.college-sub { font-size:12px; color:var(--text3); margin-top:2px; }
+
+.grade-pill {
+  display:inline-flex; align-items:center; gap:5px;
+  padding:5px 12px; border-radius:20px;
+  font-size:13px; font-weight:800; white-space:nowrap;
+}
+.grade-green { background:rgba(34,197,94,0.12); color:var(--green); }
+.grade-yellow { background:rgba(245,200,66,0.12); color:var(--gold); }
+.grade-red { background:rgba(255,92,92,0.12); color:var(--danger); }
+.grade-blue { background:rgba(79,124,255,0.12); color:var(--accent); }
+
+.rank-num {
+  width:32px; height:32px; border-radius:8px;
+  background:var(--surface2);
+  display:inline-flex; align-items:center; justify-content:center;
+  font-size:12px; font-weight:800; color:var(--text3);
+}
+.rank-1 { background:rgba(245,200,66,0.15); color:var(--gold); }
+.rank-2 { background:rgba(160,160,170,0.15); color:#a0a0aa; }
+.rank-3 { background:rgba(205,127,50,0.15); color:#cd7f32; }
+
+.diff-badge {
+  font-size:11px; font-weight:700; padding:3px 8px; border-radius:6px;
+  white-space:nowrap;
+}
+.diff-ok { background:rgba(34,197,94,0.1); color:var(--green); }
+.diff-close { background:rgba(245,200,66,0.1); color:var(--gold); }
+.diff-no { background:rgba(255,92,92,0.1); color:var(--danger); }
+
+/* PAGINATION */
+.pagination {
+  display:flex; align-items:center; justify-content:center;
+  gap:8px; margin-top:20px; flex-wrap:wrap;
+}
+.page-btn {
+  min-width:36px; height:36px; border-radius:8px;
+  background:var(--surface); border:1px solid var(--border);
+  color:var(--text2); font-family:'Cairo',sans-serif;
+  font-size:13px; font-weight:700; cursor:pointer;
+  transition:all 0.2s; padding:0 10px;
+  display:flex; align-items:center; justify-content:center;
+}
+.page-btn:hover { border-color:rgba(79,124,255,0.3); color:var(--accent); }
+.page-btn.active { background:var(--accent); border-color:var(--accent); color:#fff; }
+.page-btn:disabled { opacity:0.3; cursor:not-allowed; }
+
+/* EMPTY / ERROR */
+.empty-state {
+  text-align:center; padding:60px 24px; color:var(--text3);
+}
+.empty-icon { font-size:48px; margin-bottom:12px; }
+.empty-title { font-size:16px; font-weight:700; color:var(--text2); margin-bottom:6px; }
+
+/* STATS MINI */
+.mini-stats {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:12px;
+  margin-bottom:24px; max-width:700px;
+}
+.mini-stat {
+  background:var(--surface); border:1px solid var(--border);
+  border-radius:var(--radius-sm); padding:16px;
+  text-align:center;
+}
+.mini-stat-num { font-size:24px; font-weight:900; }
+.mini-stat-label { font-size:11px; color:var(--text3); margin-top:2px; }
+
+/* MOBILE */
+@media (max-width:768px) {
+  .sidebar { display:none; }
+  .bottom-nav { display:flex; }
+  .topbar { display:flex; }
+  .main { margin-right:0; padding:16px 16px 80px; }
+  .form-grid { grid-template-columns:1fr; }
+  .calc-card { padding:20px 16px; }
+  .results-table th:nth-child(1),
+  .results-table td:nth-child(1) { display:none; }
+  .results-table th:last-child,
+  .results-table td:last-child { display:none; }
+  .mini-stats { grid-template-columns:1fr 1fr 1fr; }
+  .mini-stat { padding:12px 8px; }
+  .mini-stat-num { font-size:18px; }
+}
+@media (max-width:400px) {
+  .branch-selector { grid-template-columns:1fr 1fr; }
+}
+
+::-webkit-scrollbar { width:6px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:var(--surface2); border-radius:3px; }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <a href="index.html" class="sidebar-logo">
+    <div class="logo-icon">🎓</div>
+    <div>
+      <div class="logo-name">natija2026</div>
+      <div class="logo-sub">بوابة البكالوريا العربية</div>
+    </div>
+  </a>
+  <nav class="sidebar-nav">
+    <div class="nav-label">الأقسام</div>
+    <a href="results.html" class="nav-item">
+      <i data-lucide="graduation-cap" class="nav-icon"></i>نتائج البكالوريا
+    </a>
+    <a href="calculator-gulf.html" class="nav-item active">
+      <i data-lucide="calculator" class="nav-icon"></i>حاسبة القبول
+    </a>
+    <a href="schedules.html" class="nav-item">
+      <i data-lucide="calendar-days" class="nav-icon"></i>جداول الامتحانات
+    </a>
+    <a href="calculator.html" class="nav-item">
+      <i data-lucide="building-2" class="nav-icon"></i>قاعدة الجامعات
+    </a>
+    <div class="nav-label" style="margin-top:8px;">الدول</div>
+    <a href="#" class="nav-item" style="color:var(--accent3);">
+      <span style="font-size:16px;">🇮🇶</span>العراق
+      <span style="margin-right:auto;background:rgba(0,212,170,0.12);color:var(--accent3);font-size:10px;font-weight:800;padding:2px 7px;border-radius:10px;">متاح</span>
+    </a>
+    <a href="#" class="nav-item" style="opacity:0.5;">
+      <span style="font-size:16px;">🇩🇿</span>الجزائر
+      <span style="margin-right:auto;font-size:10px;color:var(--text3);">قريباً</span>
+    </a>
+    <a href="#" class="nav-item" style="opacity:0.5;">
+      <span style="font-size:16px;">🇲🇦</span>المغرب
+      <span style="margin-right:auto;font-size:10px;color:var(--text3);">قريباً</span>
+    </a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="year-badge">🏆 موسم 2025 — 2026</div>
+  </div>
+</aside>
+
+<!-- TOPBAR mobile -->
+<div class="topbar">
+  <a href="index.html" class="topbar-logo">
+    <div class="topbar-icon">🎓</div>
+    <div class="topbar-name">natija2026</div>
+  </a>
+  <a href="index.html" class="back-btn">
+    <i data-lucide="home" style="width:14px;height:14px;"></i>الرئيسية
+  </a>
+</div>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- PAGE HEADER -->
+  <div class="page-header">
+    <div class="page-eyebrow">🇮🇶 العراق — بيانات 2025/2026</div>
+    <h1 class="page-title">حاسبة <span class="grad">القبول الجامعي</span></h1>
+    <p class="page-sub">أدخل معدلك وفرعك — نعرض لك كل التخصصات المتاحة فوراً من بيانات وزارة التعليم العالي العراقية</p>
+  </div>
+
+  <!-- CALCULATOR -->
+  <div class="calc-card">
+    <div class="calc-card-title">
+      <i data-lucide="sliders-horizontal" style="width:18px;height:18px;"></i>
+      بيانات الطالب
+    </div>
+
+    <!-- BRANCH -->
+    <div class="form-group" style="margin-bottom:20px;">
+      <div class="form-label">
+        <i data-lucide="git-branch" style="width:14px;height:14px;"></i>
+        الفرع الدراسي
+      </div>
+      <div class="branch-selector">
+        <button class="branch-btn" id="btn-sci" onclick="selectBranch('علمي')">
+          <div class="branch-icon">🔬</div>
+          <div class="branch-name">علمي</div>
+          <div class="branch-desc">فيزياء، رياضيات، كيمياء</div>
+        </button>
+        <button class="branch-btn" id="btn-art" onclick="selectBranch('ادبي')">
+          <div class="branch-icon">📚</div>
+          <div class="branch-name">أدبي</div>
+          <div class="branch-desc">تاريخ، جغرافيا، لغات</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- GRADE -->
+    <div class="form-group" style="margin-bottom:20px;">
+      <div class="form-label">
+        <i data-lucide="percent" style="width:14px;height:14px;"></i>
+        معدلك التراكمي
+      </div>
+      <div class="grade-display">
+        <div class="grade-num" id="grade-display">
+          <span id="grade-int">--</span><span class="grade-dec" id="grade-dec"></span>
+          <span style="font-size:20px;color:var(--text3);">%</span>
+        </div>
+        <div class="grade-label" id="grade-category">حرّك الشريط لتحديد معدلك</div>
+      </div>
+      <input type="range" class="grade-slider" id="grade-slider"
+             min="50" max="100" step="0.01" value="75"
+             oninput="updateGrade(this.value)">
+      <div class="grade-hints">
+        <span>50%</span>
+        <span>60%</span>
+        <span>70%</span>
+        <span>80%</span>
+        <span>90%</span>
+        <span>100%</span>
+      </div>
+    </div>
+
+    <!-- OR TYPE -->
+    <div class="form-group" style="margin-bottom:22px;">
+      <div class="form-label" style="font-size:12px;color:var(--text3);">أو اكتب معدلك مباشرة</div>
+      <input type="number" class="form-input" id="grade-input"
+             placeholder="مثال: 87.50" min="50" max="100" step="0.01"
+             oninput="syncFromInput(this.value)">
+    </div>
+
+    <button class="search-btn" id="calc-btn" onclick="calculate()" disabled>
+      <i data-lucide="search" style="width:18px;height:18px;"></i>
+      ابحث عن تخصصاتي
+    </button>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results-section" id="results-section" style="display:none;">
+
+    <!-- MINI STATS -->
+    <div class="mini-stats" id="mini-stats"></div>
+
+    <div class="results-header">
+      <div class="results-title">
+        <i data-lucide="list-checks" style="width:20px;height:20px;color:var(--accent);"></i>
+        التخصصات المتاحة
+        <span class="results-count" id="results-count">0</span>
+      </div>
+    </div>
+
+    <!-- FILTER -->
+    <div class="filter-bar">
+      <span class="filter-label">🔍 بحث:</span>
+      <input type="text" class="filter-input" id="filter-input"
+             placeholder="ابحث في اسم الجامعة أو الكلية..."
+             oninput="filterResults(this.value)">
+    </div>
+
+    <!-- TABLE -->
+    <div class="results-table-wrap">
+      <table class="results-table">
+        <thead>
+          <tr>
+            <th style="width:48px;">#</th>
+            <th>الجامعة / الكلية / القسم</th>
+            <th style="width:110px;">أدنى معدل</th>
+            <th style="width:100px;">الفارق</th>
+          </tr>
+        </thead>
+        <tbody id="results-body"></tbody>
+      </table>
+    </div>
+
+    <div class="pagination" id="pagination"></div>
+
+    <div class="empty-state" id="empty-state" style="display:none;">
+      <div class="empty-icon">😔</div>
+      <div class="empty-title">لا توجد نتائج</div>
+      <div>جرّب كلمة بحث مختلفة</div>
+    </div>
+
+  </div>
+
+  <!-- INITIAL EMPTY -->
+  <div id="initial-hint" style="max-width:700px;">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:32px;text-align:center;">
+      <div style="font-size:52px;margin-bottom:12px;">🎯</div>
+      <div style="font-size:17px;font-weight:800;margin-bottom:8px;">كيف تعمل الحاسبة؟</div>
+      <div style="font-size:14px;color:var(--text2);line-height:1.8;max-width:400px;margin:0 auto 20px;">
+        اختر فرعك (علمي / أدبي) ثم حدد معدلك — ستظهر لك جميع التخصصات التي معدل قبولها أقل من أو يساوي معدلك، مرتبة من الأعلى للأدنى.
+      </div>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 16px;font-size:13px;">
+          📊 <strong>1,049</strong> تخصص
+        </div>
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 16px;font-size:13px;">
+          🏛️ بيانات <strong>رسمية</strong> من الوزارة
+        </div>
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 16px;font-size:13px;">
+          ⚡ نتائج <strong>فورية</strong> بدون انترنت
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <a href="results.html" class="bn-item">
+    <i data-lucide="graduation-cap" class="bn-icon"></i>نتائج
+  </a>
+  <a href="calculator-gulf.html" class="bn-item active">
+    <i data-lucide="calculator" class="bn-icon"></i>حاسبة
+  </a>
+  <a href="index.html" class="bn-item" style="color:var(--accent);">
+    <div class="bn-home"><i data-lucide="home" style="width:20px;height:20px;color:#fff;"></i></div>
+    الرئيسية
+  </a>
+  <a href="schedules.html" class="bn-item">
+    <i data-lucide="calendar-days" class="bn-icon"></i>جداول
+  </a>
+  <a href="calculator.html" class="bn-item">
+    <i data-lucide="building-2" class="bn-icon"></i>جامعات
+  </a>
+</nav>
+
+<script>
+lucide.createIcons();
+
+// ══════════════════════════════════════
+// EMBEDDED DATA (وزارة التعليم العالي العراق)
+// ══════════════════════════════════════
+const IRAQ_DATA = [{"branch": "علمي", "grade": 100.89, "total": 706.24, "college": "جامعة بغداد/كلية الطب", "gender": "مختلط"}, {"branch": "علمي", "grade": 100.45, "total": 703.12, "college": "جامعة بغداد/كلية طب الكندي", "gender": "مختلط"}, {"branch": "علمي", "grade": 100.38, "total": 702.68, "college": "جامعة النهرين/كلية الطب", "gender": "مختلط"}, {"branch": "علمي", "grade": 100.14, "total": 701.0, "college": "جامعة الكوفة/كلية الطب", "gender": "مختلط"}, {"branch": "علمي", "grade": 100.14, "total": 700.96, "college": "جامعة كربلاء/كلية الطب", "gender": "مختلط"}, {"branch": "علمي", "grade": 100.0, "total": 700.0, "college": "جامعة كركوك/كلية الطب", "gender": "مختلط"}, {"branch": "علمي", "grade": 100.0, "total": 700.0, "college": "جامعة الموصل/كلية طب الموصل", "gender": "مختلط"}, {"branch": "علمي", "grade": 99.99, "total": 699.96, "college": "جامعة بابل/كلية الطب", "gender": "مختلط"}, {"branch": "علمي", "grade": 99.96, "total": 699.72, "college": "الجامعة المستنصرية/كلية الطب", "gender": "مختلط"}, {"branch": "علمي", "grade": 99.74, "total": 698.2, "college": "جامعة ابن سينا للعلوم الطبية والصيدلانية/كلية الطب", "gender": "مختلط"}, {"branch": "علمي", "grade": 99.72, "total": 698.04, "college": "الجامعة العراقية/كلية الطب", "gender": "مختلط"}, {"branch": "علمي", "grade": 99.69, "total": 697.84, "college": "جامعة بابل/كلية طب حمورابي", "gender": "مختلط"}, {"branch": "علمي", "grade": 99.57, "total": 697.0, "college": "جامعة الفلوجة/كلية الطب", "gender": "مختلط"}, {"branch": "علمي", "grade": 99.57, "total": 697.0, "college": "جامعة جابر بن حيان للعلوم الطبية والصيدلانية/كلية الطب", "gender": "مختلط"}, {"branch": "علمي", "grade": 99.48, "total": 696.36, "college": "جامعة ديالى/كلية الطب", "gender": "مختلط"}, {"branch": "علمي", "grade": 99.43, "total": 696.0, "college": "جامعة القادسية/كلية الطب", "gender": "مختلط"}, {"branch": "علمي", "grade": 99.35, "total": 695.44, "college": "جامعة واسط/كلية الطب", "gender": "مختلط"}, {"branch": "علمي", "grade": 99.29, "total": 695.0, "college": "جامعة نينوى/كلية الطب", "gender": "مختلط"}, {"branch": "علمي", "grade": 99.29, "total": 695.0, "college": "جامعة المثنى/كلية الطب", "gender": "مختلط"}, {"branch": "علمي", "grade": 99.29, "total": 695.0, "college": "جامعة الانبار/كلية الطب", "gender": "مختلط"}, {"branch": "علمي", "grade": 99.29, "total": 695.0, "college": "جامعة البصرة/كلية الطب", "gender": "مختلط"}, {"branch": "علمي", "grade": 99.29, "total": 695.0, "college": "جامعة المثنى/كلية الطب/ابناء المحافظة", "gender": "مختلط"}, {"branch": "علمي", "grade": 99.29, "total": 695.0, "college": "جامعة ذي قار/كلية الطب", "gender": "مختلط"}, {"branch": "علمي", "grade": 99.17, "total": 694.2, "college": "جامعة تكريت/كلية الطب", "gender": "مختلط"}, {"branch": "علمي", "grade": 99.15, "total": 694.04, "college": "جامعة البصرة/كلية طب الزهراء", "gender": "مختلط"}, {"branch": "علمي", "grade": 99.14, "total": 694.0, "college": "جامعة تكريت/كلية الطب/ابناء المحافظة", "gender": "مختلط"}, {"branch": "علمي", "grade": 99.14, "total": 694.0, "college": "جامعة ميسان/كلية الطب", "gender": "مختلط"}, {"branch": "علمي", "grade": 99.14, "total": 694.0, "college": "جامعة سومر/كلية الطب", "gender": "مختلط"}, {"branch": "علمي", "grade": 99.07, "total": 693.52, "college": "جامعة بغداد/كلية طب الاسنان", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.86, "total": 692.0, "college": "جامعة ميسان/كلية الطب/ابناء المحافظة", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.86, "total": 692.0, "college": "الجامعة المستنصرية/كلية طب الاسنان", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.86, "total": 692.0, "college": "جامعة بغداد/كلية الصيدلة", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.71, "total": 691.0, "college": "جامعة الكوفة/كلية طب الاسنان", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.71, "total": 691.0, "college": "الجامعة العراقية/كلية طب الاسنان", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.67, "total": 690.68, "college": "جامعة ابن سينا للعلوم الطبية والصيدلانية/كلية طب الاسنان", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.65, "total": 690.52, "college": "جامعة ذي قار/كلية طب الاسنان", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.57, "total": 690.0, "college": "جامعة ديالى/كلية طب الاسنان", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.5, "total": 689.52, "college": "جامعة بابل/كلية طب الاسنان", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.45, "total": 689.12, "college": "جامعة النهرين/كلية الصيدلة", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.43, "total": 689.0, "college": "جامعة القادسية/كلية طب الاسنان", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.43, "total": 689.0, "college": "جامعة البصرة/كلية طب الاسنان", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.43, "total": 689.0, "college": "جامعة كربلاء/كلية طب الاسنان", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.43, "total": 689.0, "college": "جامعة كركوك/كلية طب الاسنان", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.43, "total": 689.0, "college": "جامعة الموصل/كلية طب الاسنان", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.41, "total": 688.88, "college": "الجامعة المستنصرية/كلية الصيدلة", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.39, "total": 688.72, "college": "جامعة تكريت/كلية طب الاسنان", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.35, "total": 688.44, "college": "جامعة واسط/كلية طب الاسنان", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.29, "total": 688.0, "college": "جامعة ميسان/كلية طب الاسنان", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.29, "total": 688.0, "college": "جامعة الانبار/كلية طب الاسنان", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.29, "total": 688.0, "college": "جامعة المثنى/كلية طب الاسنان", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.29, "total": 688.0, "college": "جامعة الموصل/كلية الصيدلة", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.29, "total": 688.0, "college": "جامعة البصرة/كلية الصيدلة", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.24, "total": 687.68, "college": "جامعة الكوفة/كلية الصيدلة", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.14, "total": 687.0, "college": "جامعة الانبار/كلية الصيدلة", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.14, "total": 687.0, "college": "جامعة القادسية/كلية الصيدلة", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.14, "total": 687.0, "college": "جامعة كركوك/كلية الصيدلة", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.14, "total": 687.0, "college": "جامعة تكريت/كلية الصيدلة", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.14, "total": 687.0, "college": "جامعة ذي قار/كلية الصيدلة", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.14, "total": 687.0, "college": "جامعة كربلاء/كلية الصيدلة", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.14, "total": 687.0, "college": "جامعة جابر بن حيان للعلوم الطبية والصيدلانية/كلية الصيدلة", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.14, "total": 687.0, "college": "جامعة بابل/كلية الصيدلة", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.07, "total": 686.48, "college": "جامعة نينوى/كلية الصيدلة", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.07, "total": 686.48, "college": "جامعة المثنى/كلية الصيدلة", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.04, "total": 686.28, "college": "جامعة ميسان/كلية الصيدلة", "gender": "مختلط"}, {"branch": "علمي", "grade": 98.0, "total": 686.0, "college": "جامعة بغداد/كلية الهندسة-قسم العمارة", "gender": "مختلط"}, {"branch": "علمي", "grade": 97.86, "total": 685.0, "college": "جامعة البصرة للنفط والغاز/كلية هندسة النفط والغاز-قسم هندسة النفط والغاز", "gender": "مختلط"}, {"branch": "علمي", "grade": 97.71, "total": 684.0, "college": "جامعة بغداد/كلية الهندسة-الخوارزمي-قسم الطب الحياتي", "gender": "مختلط"}, {"branch": "علمي", "grade": 97.71, "total": 684.0, "college": "الجامعة التقنية الوسطى/كلية التقنيات الصحية والطبية/بغداد", "gender": "مختلط"}, {"branch": "علمي", "grade": 97.57, "total": 683.0, "college": "جامعة النهرين/كلية الهندسة-قسم الطب الحياتي", "gender": "مختلط"}, {"branch": "علمي", "grade": 97.43, "total": 682.0, "college": "جامعة النهرين/كلية الهندسة-قسم العمارة", "gender": "مختلط"}, {"branch": "علمي", "grade": 97.43, "total": 682.0, "college": "جامعة كربلاء/كلية الهندسة-قسم الطب الحياتي", "gender": "مختلط"}, {"branch": "علمي", "grade": 97.43, "total": 682.0, "college": "الجامعة التقنية الوسطى/كلية التقنيات الصحية والطبية/بغداد-قسم التقنيات البصرية", "gender": "مختلط"}, {"branch": "علمي", "grade": 97.29, "total": 681.0, "college": "الجامعة المستنصرية/كلية الهندسة-قسم العمارة", "gender": "مختلط"}, {"branch": "علمي", "grade": 97.29, "total": 681.0, "college": "الجامعة التقنية الجنوبية/الكلية التقنية الصحية والطبية/البصرة-قسم تقنيات المختبرات الطبية", "gender": "مختلط"}, {"branch": "علمي", "grade": 97.2, "total": 680.4, "college": "جامعة البصرة/كلية الهندسة-قسم النفط", "gender": "مختلط"}, {"branch": "علمي", "grade": 97.14, "total": 680.0, "college": "الجامعة التكنولوجية/هندسة العمارة-التصميم المعماري", "gender": "مختلط"}, {"branch": "علمي", "grade": 97.14, "total": 680.0, "college": "جامعة كربلاء/كلية الهندسة-قسم النفط", "gender": "مختلط"}, {"branch": "علمي", "grade": 97.14, "total": 680.0, "college": "جامعة بغداد/كلية الهندسة-قسم النفط", "gender": "مختلط"}, {"branch": "علمي", "grade": 97.14, "total": 680.0, "college": "جامعة الفرات الاوسط التقنية/الكلية التقنية الصحية والطبية/الكوفة", "gender": "مختلط"}, {"branch": "علمي", "grade": 97.0, "total": 679.0, "college": "الجامعة التقنية الوسطى/كلية التقنيات الصحية والطبية/بغداد-قسم تقنيات صحة المجتمع", "gender": "مختلط"}, {"branch": "علمي", "grade": 96.86, "total": 678.0, "college": "الجامعة التكنولوجية/هندسة الطب الحياتي", "gender": "مختلط"}, {"branch": "علمي", "grade": 96.71, "total": 677.0, "college": "جامعة بغداد/كلية الهندسة-قسم الطيران", "gender": "مختلط"}, {"branch": "علمي", "grade": 96.71, "total": 677.0, "college": "الجامعة التقنية الوسطى/كلية التقنيات الصحية والطبية/بغداد-قسم تقنيات العلاج الطبيعي", "gender": "مختلط"}, {"branch": "علمي", "grade": 96.59, "total": 676.16, "college": "جامعة كربلاء/كلية الهندسة-قسم العمارة", "gender": "مختلط"}, {"branch": "علمي", "grade": 96.57, "total": 676.0, "college": "جامعة البصرة/كلية الهندسة-قسم العمارة", "gender": "مختلط"}, {"branch": "علمي", "grade": 96.43, "total": 675.0, "college": "جامعة النهرين/كلية الهندسة-قسم الاطراف والمساند الصناعية", "gender": "مختلط"}, {"branch": "علمي", "grade": 96.43, "total": 675.0, "college": "جامعة ميسان/كلية الهندسة-قسم النفط", "gender": "مختلط"}, {"branch": "علمي", "grade": 96.43, "total": 675.0, "college": "جامعة البصرة للنفط والغاز/كلية هندسة النفط والغاز-قسم الهندسة الكيميائية وتكرير النفط", "gender": "مختلط"}, {"branch": "علمي", "grade": 96.43, "total": 675.0, "college": "جامعة بابل/كلية الهندسة-قسم الطب الحياتي", "gender": "مختلط"}, {"branch": "علمي", "grade": 96.29, "total": 674.04, "college": "جامعة كربلاء/كلية الهندسة-قسم الاطراف والمساند الصناعية", "gender": "مختلط"}, {"branch": "علمي", "grade": 96.29, "total": 674.0, "college": "جامعة بغداد/كلية الهندسة-قسم المدني", "gender": "مختلط"}, {"branch": "علمي", "grade": 96.29, "total": 674.0, "college": "الجامعة التقنية الوسطى/الكلية التقنية بعقوبة/التخصصات الطبية-قسم تقنيات المختبرات الطبية", "gender": "مختلط"}, {"branch": "علمي", "grade": 96.27, "total": 673.88, "college": "الجامعة التكنولوجية/هندسة العمارة-التصميم الحضري", "gender": "مختلط"}, {"branch": "علمي", "grade": 96.23, "total": 673.6, "college": "جامعة النهرين/كلية الهندسة-قسم الليزر", "gender": "مختلط"}, {"branch": "علمي", "grade": 96.16, "total": 673.12, "college": "جامعة الكوفة/كلية الهندسة-قسم العمارة", "gender": "مختلط"}, {"branch": "علمي", "grade": 96.13, "total": 672.88, "college": "جامعة بابل/كلية الهندسة-قسم العمارة", "gender": "مختلط"}, {"branch": "علمي", "grade": 96.0, "total": 672.0, "college": "جامعة ذي قار/كلية الهندسة-قسم الطب الحياتي", "gender": "مختلط"}, {"branch": "علمي", "grade": 95.95, "total": 671.64, "college": "الجامعة التقنية الوسطى/المعهد التقني الطبي/بغداد المنصور", "gender": "مختلط"}, {"branch": "علمي", "grade": 95.94, "total": 671.6, "college": "الجامعة التكنولوجية/هندسة النفط والغاز", "gender": "مختلط"}, {"branch": "علمي", "grade": 95.86, "total": 671.0, "college": "جامعة ذي قار/كلية الهندسة-قسم النفط والغاز", "gender": "مختلط"}, {"branch": "علمي", "grade": 95.71, "total": 670.0, "college": "الجامعة التقنية الجنوبية/الكلية التقنية الصحية والطبية/البصرة-قسم تقنيات العلاج الطبيعي", "gender": "مختلط"}, {"branch": "علمي", "grade": 95.57, "total": 669.0, "college": "جامعة بغداد/كلية الهندسة-قسم الحاسوب", "gender": "مختلط"}, {"branch": "علمي", "grade": 95.57, "total": 669.0, "college": "جامعة بغداد/كلية التمريض", "gender": "انثى"}, {"branch": "علمي", "grade": 95.57, "total": 669.0, "college": "الجامعة التقنية الشمالية/كلية التقنيات الصحية والطبية/كركوك-قسم تقنيات المختبرات الطبية", "gender": "مختلط"}, {"branch": "علمي", "grade": 95.43, "total": 668.0, "college": "جامعة ديالى/كلية الهندسة-قسم العمارة", "gender": "مختلط"}, {"branch": "علمي", "grade": 95.43, "total": 668.0, "college": "الجامعة التقنية الجنوبية/الكلية التقنية الشطرة/الاقسام الطبية-قسم تقنيات المختبرات الطبية", "gender": "مختلط"}, {"branch": "علمي", "grade": 95.43, "total": 668.0, "college": "جامعة الفرات الاوسط التقنية/الكلية التقنية الاقسام الطبية/المسيب", "gender": "مختلط"}, {"branch": "علمي", "grade": 95.29, "total": 667.0, "college": "جامعة النهرين/كلية هندسة المعلومات-قسم الامن السيبراني", "gender": "مختلط"}, {"branch": "علمي", "grade": 95.29, "total": 667.0, "college": "جامعة الموصل/كلية الهندسة-قسم العمارة", "gender": "مختلط"}, {"branch": "علمي", "grade": 95.29, "total": 667.0, "college": "جامعة النهرين/كلية الهندسة-قسم المدني", "gender": "مختلط"}, {"branch": "علمي", "grade": 95.14, "total": 666.0, "college": "جامعة الفرات الاوسط التقنية/الكلية التقنية الصحية والطبية/الكوفة-قسم تقنيات صحة المجتمع", "gender": "مختلط"}, {"branch": "علمي", "grade": 95.14, "total": 666.0, "college": "الجامعة التقنية الوسطى/المعهد الطبي/بغداد باب المعظم", "gender": "مختلط"}, {"branch": "علمي", "grade": 95.05, "total": 665.32, "college": "جامعة البصرة للنفط والغاز/كلية هندسة النفط والغاز-قسم الهندسة البوليمرات والبتروكيمياويات", "gender": "مختلط"}, {"branch": "علمي", "grade": 95.0, "total": 665.0, "college": "الجامعة التكنولوجية/هندسة الليزر والالكترونيات البصرية", "gender": "مختلط"}, {"branch": "علمي", "grade": 95.0, "total": 665.0, "college": "الجامعة التقنية الجنوبية/الكلية التقنية الصحية والطبية/البصرة-قسم تقنيات صحة المجتمع", "gender": "مختلط"}, {"branch": "علمي", "grade": 95.0, "total": 665.0, "college": "الجامعة التقنية الوسطى/الكلية التقنية الهندسية الكهربائية/بغداد-قسم هندسة تقنيات الاجهزة الطبية", "gender": "مختلط"}, {"branch": "علمي", "grade": 94.92, "total": 664.44, "college": "جامعة نينوى/كلية هندسة الالكترونيات-قسم الطب الحياتي", "gender": "مختلط"}, {"branch": "علمي", "grade": 94.86, "total": 664.0, "college": "جامعة النهرين/كلية الهندسة-قسم الذكاء الاصطناعي والانسان الآلي", "gender": "مختلط"}, {"branch": "علمي", "grade": 94.86, "total": 664.0, "college": "جامعة بغداد/كلية الهندسة-الخوارزمي-قسم الكيميائية الاحيائية", "gender": "مختلط"}, {"branch": "علمي", "grade": 94.86, "total": 664.0, "college": "جامعة بابل/كلية التمريض", "gender": "انثى"}, {"branch": "علمي", "grade": 94.71, "total": 663.0, "college": "جامعة البصرة/كلية الهندسة-قسم الكيمياوية", "gender": "مختلط"}, {"branch": "علمي", "grade": 94.71, "total": 663.0, "college": "جامعة كربلاء/كلية التمريض", "gender": "انثى"}, {"branch": "علمي", "grade": 94.57, "total": 662.0, "college": "الجامعة التكنولوجية/الهندسة الكيميائية-قسم الهندسة الكيمياوية وتكرير النفط", "gender": "مختلط"}, {"branch": "علمي", "grade": 94.57, "total": 662.0, "college": "جامعة واسط/كلية الهندسة-قسم العمارة", "gender": "مختلط"}, {"branch": "علمي", "grade": 94.57, "total": 662.0, "college": "جامعة المثنى/كلية الهندسة-قسم العمارة", "gender": "مختلط"}, {"branch": "علمي", "grade": 94.57, "total": 662.0, "college": "الجامعة التقنية الوسطى/المعهد التقني الطبي/بغداد المنصور-قسم تقنيات الادلة الجنائية والعدلية", "gender": "مختلط"}, {"branch": "علمي", "grade": 94.5, "total": 661.52, "college": "جامعة سامراء/كلية الهندسة-قسم العمارة", "gender": "مختلط"}, {"branch": "علمي", "grade": 94.43, "total": 661.0, "college": "جامعة بغداد/كلية الهندسة-قسم الالكترونيك والاتصالات", "gender": "مختلط"}, {"branch": "علمي", "grade": 94.43, "total": 661.0, "college": "جامعة النهرين/كلية الهندسة-قسم الحاسوب", "gender": "مختلط"}, {"branch": "علمي", "grade": 94.43, "total": 661.0, "college": "جامعة ذي قار/كلية التمريض", "gender": "انثى"}, {"branch": "علمي", "grade": 94.34, "total": 660.36, "college": "الجامعة التقنية الشمالية/كلية التقنيات الصحية والطبية/الدور-قسم تقنيات البصريات", "gender": "مختلط"}, {"branch": "علمي", "grade": 94.2, "total": 659.4, "college": "الجامعة المستنصرية/كلية الهندسة-قسم المدني", "gender": "مختلط"}, {"branch": "علمي", "grade": 94.14, "total": 659.0, "college": "جامعة كركوك/كلية الهندسة-قسم النفط", "gender": "مختلط"}, {"branch": "علمي", "grade": 94.14, "total": 659.0, "college": "جامعة ميسان/كلية الهندسة-قسم الكيمياوية", "gender": "مختلط"}, {"branch": "علمي", "grade": 94.14, "total": 659.0, "college": "جامعة القادسية/كلية التمريض", "gender": "انثى"}, {"branch": "علمي", "grade": 94.14, "total": 659.0, "college": "جامعة الكوفة/كلية التمريض", "gender": "انثى"}, {"branch": "علمي", "grade": 94.0, "total": 658.0, "college": "جامعة البصرة/كلية الهندسة-قسم المدني", "gender": "مختلط"}, {"branch": "علمي", "grade": 94.0, "total": 658.0, "college": "الجامعة التقنية الجنوبية/المعهد التقني الطبي/البصرة", "gender": "مختلط"}, {"branch": "علمي", "grade": 93.86, "total": 657.0, "college": "جامعة النهرين/كلية هندسة المعلومات-قسم الاتمتة والذكاء الاصطناعي", "gender": "مختلط"}, {"branch": "علمي", "grade": 93.86, "total": 657.0, "college": "جامعة المثنى/كلية التمريض", "gender": "انثى"}, {"branch": "علمي", "grade": 93.63, "total": 655.4, "college": "جامعة البصرة/كلية الهندسة-قسم الحاسوب", "gender": "مختلط"}, {"branch": "علمي", "grade": 93.59, "total": 655.13, "college": "جامعة الانبار/كلية الهندسة-قسم المدني", "gender": "مختلط"}, {"branch": "علمي", "grade": 93.57, "total": 655.0, "college": "جامعة بغداد/كلية الهندسة-قسم الكيمياوية", "gender": "مختلط"}, {"branch": "علمي", "grade": 93.43, "total": 654.0, "college": "جامعة بغداد/كلية الهندسة-قسم الكهرباء", "gender": "مختلط"}, {"branch": "علمي", "grade": 93.43, "total": 654.0, "college": "جامعة كركوك/كلية التمريض", "gender": "انثى"}, {"branch": "علمي", "grade": 93.39, "total": 653.72, "college": "الجامعة العراقية/كلية الهندسة-قسم الشبكات والامن السيبراني", "gender": "مختلط"}, {"branch": "علمي", "grade": 93.29, "total": 653.0, "college": "الجامعة المستنصرية/كلية الهندسة-قسم الحاسوب", "gender": "مختلط"}, {"branch": "علمي", "grade": 93.14, "total": 652.0, "college": "جامعة بغداد/كلية الهندسة-الخوارزمي-قسم المعلومات والاتصالات", "gender": "مختلط"}, {"branch": "علمي", "grade": 93.14, "total": 652.0, "college": "جامعة بغداد/كلية الهندسة-قسم الطاقة", "gender": "مختلط"}, {"branch": "علمي", "grade": 93.14, "total": 652.0, "college": "الجامعة التقنية الشمالية/كلية التقنيات الصحية والطبية/كركوك-قسم تقنيات الكلية الصناعية", "gender": "مختلط"}, {"branch": "علمي", "grade": 93.14, "total": 652.0, "college": "الجامعة التقنية الوسطى/الكلية التقنية الهندسية الكهربائية/بغداد-قسم تقنيات هندسة الامن السيبراني", "gender": "مختلط"}, {"branch": "علمي", "grade": 93.0, "total": 651.0, "college": "جامعة النهرين/كلية الهندسة-قسم الكيمياوي", "gender": "مختلط"}, {"branch": "علمي", "grade": 93.0, "total": 651.0, "college": "جامعة ميسان/كلية التمريض", "gender": "انثى"}, {"branch": "علمي", "grade": 92.98, "total": 650.88, "college": "الجامعة التقنية الوسطى/المعهد الطبي/بغداد باب المعظم-قسم تقنيات وقاية الاسنان", "gender": "مختلط"}, {"branch": "علمي", "grade": 92.86, "total": 650.0, "college": "جامعة النهرين/كلية الهندسة-قسم الالكترونية والاتصالات", "gender": "مختلط"}, {"branch": "علمي", "grade": 92.86, "total": 650.0, "college": "جامعة البصرة/كلية الهندسة-قسم الميكانيك", "gender": "مختلط"}, {"branch": "علمي", "grade": 92.86, "total": 650.0, "college": "جامعة النهرين/كلية هندسة المعلومات-قسم المعلومات والاتصالات", "gender": "مختلط"}, {"branch": "علمي", "grade": 92.86, "total": 650.0, "college": "جامعة الموصل/كلية هندسة النفط والتعدين-قسم النفط والتكرير", "gender": "مختلط"}, {"branch": "علمي", "grade": 92.71, "total": 649.0, "college": "جامعة الموصل/كلية التمريض", "gender": "انثى"}, {"branch": "علمي", "grade": 92.71, "total": 649.0, "college": "جامعة البصرة/كلية التمريض", "gender": "انثى"}, {"branch": "علمي", "grade": 92.71, "total": 649.0, "college": "الجامعة التقنية الوسطى/المعهد التقني الطبي/بغداد المنصور-قسم تقنيات المختبرات الطبية", "gender": "مختلط"}, {"branch": "علمي", "grade": 92.57, "total": 648.0, "college": "الجامعة العراقية/كلية الهندسة-قسم المدني", "gender": "مختلط"}, {"branch": "علمي", "grade": 92.57, "total": 648.0, "college": "جامعة النهرين/كلية هندسة المعلومات-قسم شبكات الحاسوب", "gender": "مختلط"}, {"branch": "علمي", "grade": 92.57, "total": 648.0, "college": "الجامعة التكنولوجية/الهندسة المدنية", "gender": "مختلط"}, {"branch": "علمي", "grade": 92.51, "total": 647.56, "college": "جامعة كربلاء/كلية الهندسة-قسم المدني", "gender": "مختلط"}, {"branch": "علمي", "grade": 92.43, "total": 647.0, "college": "جامعة الشطرة/كلية الهندسة-قسم الطب الحياتي", "gender": "مختلط"}, {"branch": "علمي", "grade": 92.43, "total": 647.0, "college": "جامعة تكريت/كلية التمريض", "gender": "انثى"}, {"branch": "علمي", "grade": 92.29, "total": 646.0, "college": "جامعة ميسان/كلية الهندسة-قسم المدني", "gender": "مختلط"}, {"branch": "علمي", "grade": 92.29, "total": 646.0, "college": "الجامعة التكنولوجية/هندسة الحاسوب-قسم المعلومات", "gender": "مختلط"}, {"branch": "علمي", "grade": 92.14, "total": 645.0, "college": "جامعة البصرة/كلية الهندسة-قسم الكهرباء", "gender": "مختلط"}, {"branch": "علمي", "grade": 92.14, "total": 645.0, "college": "جامعة البصرة/كلية الهندسة-قسم الميكاترونكس", "gender": "مختلط"}, {"branch": "علمي", "grade": 92.12, "total": 644.84, "college": "الجامعة التقنية الوسطى/المعهد الطبي/بغداد باب المعظم-قسم تقنيات الاطراف والمساند", "gender": "مختلط"}, {"branch": "علمي", "grade": 92.05, "total": 644.32, "college": "جامعة بابل/كلية الهندسة-قسم المدني", "gender": "مختلط"}, {"branch": "علمي", "grade": 92.0, "total": 644.0, "college": "جامعة تكريت/كلية هندسة العمليات النفطية-قسم هندسة تكرير النفط والغاز", "gender": "مختلط"}, {"branch": "علمي", "grade": 92.0, "total": 644.0, "college": "الجامعة التقنية الجنوبية/الكلية التقنية الهندسية/البصرة-قسم هندسة تقنيات الوقود والطاقة", "gender": "مختلط"}, {"branch": "علمي", "grade": 92.0, "total": 644.0, "college": "الجامعة التقنية الوسطى/المعهد الطبي/بغداد باب المعظم-قسم تقنيات العلاج الطبيعي", "gender": "مختلط"}, {"branch": "علمي", "grade": 91.86, "total": 643.0, "college": "الجامعة العراقية/كلية الهندسة-قسم الحاسوب", "gender": "مختلط"}, {"branch": "علمي", "grade": 91.86, "total": 643.0, "college": "جامعة الكوفة/كلية الهندسة-قسم المدني", "gender": "مختلط"}, {"branch": "علمي", "grade": 91.71, "total": 642.0, "college": "الجامعة التكنولوجية/هندسة السيطرة والنظم-قسم هندسة الحاسوب والسيطرة", "gender": "مختلط"}, {"branch": "علمي", "grade": 91.71, "total": 642.0, "college": "الجامعة التكنولوجية/الهندسة الميكانيكية-قسم الطائرات", "gender": "مختلط"}, {"branch": "علمي", "grade": 91.71, "total": 642.0, "college": "الجامعة التكنولوجية/هندسة الحاسوب-قسم شبكات الحاسوب", "gender": "مختلط"}, {"branch": "علمي", "grade": 91.71, "total": 641.96, "college": "الجامعة التكنولوجية/الهندسة الكيميائية-قسم الهندسة الكيمياوية والتلوث النفطي", "gender": "مختلط"}, {"branch": "علمي", "grade": 91.71, "total": 642.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني الكوفة/التخصصات الطبية", "gender": "مختلط"}, {"branch": "علمي", "grade": 91.57, "total": 641.0, "college": "جامعة بغداد/كلية القانون", "gender": "مختلط"}, {"branch": "علمي", "grade": 91.57, "total": 641.0, "college": "الجامعة التقنية الشمالية/كلية التقنيات الصحية والطبية/الدور-قسم تقنيات العلاج الطبيعي", "gender": "مختلط"}, {"branch": "علمي", "grade": 91.43, "total": 640.0, "college": "جامعة نينوى/كلية التمريض", "gender": "انثى"}, {"branch": "علمي", "grade": 91.29, "total": 639.0, "college": "جامعة القادسية/كلية الهندسة-قسم المدني", "gender": "مختلط"}, {"branch": "علمي", "grade": 91.29, "total": 639.0, "college": "الجامعة التقنية الشمالية/الكلية التقنية الهندسية/الموصل-قسم هندسة تقنيات الاجهزة الطبية", "gender": "مختلط"}, {"branch": "علمي", "grade": 91.14, "total": 638.0, "college": "جامعة ذي قار/كلية الهندسة-قسم المدني", "gender": "مختلط"}, {"branch": "علمي", "grade": 91.14, "total": 638.0, "college": "جامعة البصرة/كلية الهندسة-قسم المواد", "gender": "مختلط"}, {"branch": "علمي", "grade": 91.14, "total": 638.0, "college": "جامعة واسط/كلية الهندسة-قسم المدني", "gender": "مختلط"}, {"branch": "علمي", "grade": 91.14, "total": 638.0, "college": "جامعة جابر بن حيان للعلوم الطبية والصيدلانية/كلية العلوم الطبية", "gender": "مختلط"}, {"branch": "علمي", "grade": 91.14, "total": 638.0, "college": "جامعة المثنى/كلية التربية للعلوم الانسانية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "علمي", "grade": 91.0, "total": 637.0, "college": "جامعة الكوفة/كلية الهندسة-قسم الالكترون والاتصالات", "gender": "مختلط"}, {"branch": "علمي", "grade": 90.97, "total": 636.8, "college": "جامعة الموصل/كلية الهندسة-قسم المدني", "gender": "مختلط"}, {"branch": "علمي", "grade": 90.97, "total": 636.76, "college": "جامعة ديالى/كلية الهندسة-قسم المدني", "gender": "مختلط"}, {"branch": "علمي", "grade": 90.86, "total": 636.0, "college": "الجامعة التكنولوجية/الهندسة الكيميائية-قسم هندسة العمليات الكيمياوية", "gender": "مختلط"}, {"branch": "علمي", "grade": 90.71, "total": 635.0, "college": "جامعة بغداد/كلية الهندسة-قسم الميكانيك", "gender": "مختلط"}, {"branch": "علمي", "grade": 90.71, "total": 635.0, "college": "الجامعة التكنولوجية/هندسة الكهروميكانيك-قسم معدات النفط والغاز", "gender": "مختلط"}, {"branch": "علمي", "grade": 90.71, "total": 635.0, "college": "جامعة الانبار/كلية الهندسة-قسم الكيميائية والبتروكيميائية", "gender": "مختلط"}, {"branch": "علمي", "grade": 90.71, "total": 635.0, "college": "الجامعة التكنولوجية/هندسة السيطرة والنظم-قسم السيطرة", "gender": "مختلط"}, {"branch": "علمي", "grade": 90.71, "total": 635.0, "college": "جامعة الفرات الاوسط التقنية/الكلية التقنية الهندسية/النجف-قسم هندسة تقنيات الليزر والالكترونيات البصرية", "gender": "مختلط"}, {"branch": "علمي", "grade": 90.68, "total": 634.76, "college": "جامعة بغداد/كلية الهندسة-الخوارزمي-قسم الميكاترونكس", "gender": "مختلط"}, {"branch": "علمي", "grade": 90.57, "total": 634.0, "college": "جامعة النهرين/كلية التقنيات الاحيائية", "gender": "مختلط"}, {"branch": "علمي", "grade": 90.57, "total": 634.0, "college": "الجامعة التقنية الجنوبية/الكلية التقنية الهندسية/البصرة-قسم التقنيات الكيميائية والبتروكيميائية", "gender": "مختلط"}, {"branch": "علمي", "grade": 90.57, "total": 634.0, "college": "الجامعة التقنية الوسطى/المعهد الطبي/بغداد باب المعظم-قسم تقنيات التمريض", "gender": "انثى"}, {"branch": "علمي", "grade": 90.43, "total": 633.0, "college": "جامعة بغداد/كلية التربية ابن رشد للعلوم الانسانية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "علمي", "grade": 90.43, "total": 633.0, "college": "الجامعة التقنية الوسطى/المعهد التقني الانبار/التخصصات الطبية-قسم تقنيات التمريض", "gender": "انثى"}, {"branch": "علمي", "grade": 90.29, "total": 632.0, "college": "الجامعة المستنصرية/كلية الهندسة-قسم الكهرباء", "gender": "مختلط"}, {"branch": "علمي", "grade": 90.29, "total": 632.0, "college": "الجامعة التقنية الشمالية/كلية التقنيات الصحية والطبية/كركوك-قسم تقنيات التغذية العلاجية", "gender": "مختلط"}, {"branch": "علمي", "grade": 90.14, "total": 631.0, "college": "جامعة ميسان/كلية الهندسة-قسم الكهرباء", "gender": "مختلط"}, {"branch": "علمي", "grade": 90.14, "total": 631.0, "college": "الجامعة التكنولوجية/هندسة السيطرة والنظم-قسم الميكاترونكس والانسان الالي", "gender": "مختلط"}, {"branch": "علمي", "grade": 90.14, "total": 631.0, "college": "الجامعة التقنية الشمالية/الكلية التقنية الهندسية للحاسوب والذكاء الاصطناعي/الموصل-قسم هندسة تقنيات الامن السيبراني والحوسبة السحابية", "gender": "مختلط"}, {"branch": "علمي", "grade": 90.14, "total": 631.0, "college": "الجامعة التقنية الجنوبية/المعهد التقني الطبي/البصرة-قسم تقنيات التمريض", "gender": "انثى"}, {"branch": "علمي", "grade": 90.14, "total": 631.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني بابل/التخصصات الطبية", "gender": "مختلط"}, {"branch": "علمي", "grade": 90.05, "total": 630.36, "college": "جامعة الموصل/كلية الهندسة-قسم الحاسوب", "gender": "مختلط"}, {"branch": "علمي", "grade": 90.0, "total": 630.0, "college": "جامعة كربلاء/كلية الهندسة-قسم الكهرباء والالكترونيك", "gender": "مختلط"}, {"branch": "علمي", "grade": 89.71, "total": 628.0, "college": "الجامعة التكنولوجية/هندسة الاتصالات-قسم نظم الاتصالات اللاسلكية", "gender": "مختلط"}, {"branch": "علمي", "grade": 89.71, "total": 628.0, "college": "جامعة الموصل/كلية هندسة النفط والتعدين-قسم المكامن النفطية", "gender": "مختلط"}, {"branch": "علمي", "grade": 89.57, "total": 627.0, "college": "الجامعة التكنولوجية/الهندسة الكهربائية-قسم الكهرباء", "gender": "مختلط"}, {"branch": "علمي", "grade": 89.57, "total": 627.0, "college": "الجامعة التكنولوجية/هندسة الكهروميكانيك-قسم هندسة نظم الطائرات بدون طيار", "gender": "مختلط"}, {"branch": "علمي", "grade": 89.57, "total": 627.0, "college": "جامعة تلعفر/كلية التمريض", "gender": "انثى"}, {"branch": "علمي", "grade": 89.57, "total": 627.0, "college": "جامعة الفرات الاوسط التقنية/الكلية التقنية الهندسية للنفط والطاقة/السماوة-قسم هندسة تقنيات النفط والغاز", "gender": "مختلط"}, {"branch": "علمي", "grade": 89.57, "total": 627.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني كربلاء/التخصصات الطبية", "gender": "مختلط"}, {"branch": "علمي", "grade": 89.47, "total": 626.32, "college": "الجامعة التقنية الجنوبية/المعهد التقني العمارة/التخصصات الطبية", "gender": "مختلط"}, {"branch": "علمي", "grade": 89.43, "total": 626.0, "college": "جامعة كركوك/كلية الهندسة-قسم المدني", "gender": "مختلط"}, {"branch": "علمي", "grade": 89.43, "total": 626.0, "college": "جامعة ميسان/كلية الهندسة-قسم الميكانيكية", "gender": "مختلط"}, {"branch": "علمي", "grade": 89.29, "total": 625.0, "college": "الجامعة التقنية الشمالية/كلية التقنيات الصحية والطبية/كركوك-قسم تقنيات السلامة المهنية والطب المهني", "gender": "مختلط"}, {"branch": "علمي", "grade": 89.29, "total": 625.0, "college": "الجامعة التقنية الجنوبية/المعهد التقني الناصرية/التخصصات الطبية-قسم تقنيات التمريض", "gender": "انثى"}, {"branch": "علمي", "grade": 89.14, "total": 624.0, "college": "جامعة الكوفة/كلية الهندسة-قسم الكيمياوية", "gender": "مختلط"}, {"branch": "علمي", "grade": 89.14, "total": 624.0, "college": "الجامعة التقنية الجنوبية/الكلية التقنية الهندسية/البصرة-قسم تقنيات الهندسة الكهربائية", "gender": "مختلط"}, {"branch": "علمي", "grade": 89.14, "total": 624.0, "college": "الجامعة التقنية الشمالية/المعهد التقني الطبي/الموصل", "gender": "مختلط"}, {"branch": "علمي", "grade": 89.0, "total": 623.0, "college": "الجامعة التقنية الجنوبية/الكلية التقنية الهندسية/البصرة-قسم هندسة تقنيات ميكانيك الحراريات", "gender": "مختلط"}, {"branch": "علمي", "grade": 89.0, "total": 623.0, "college": "الجامعة التقنية الوسطى/المعهد التقني بعقوبة/التخصصات الطبية-قسم تقنيات المختبرات الطبية", "gender": "مختلط"}, {"branch": "علمي", "grade": 88.96, "total": 622.72, "college": "الجامعة التقنية الوسطى/المعهد الطبي/بغداد باب المعظم-قسم تقنيات العلاج الوظيفي", "gender": "مختلط"}, {"branch": "علمي", "grade": 88.86, "total": 622.0, "college": "جامعة الموصل/كلية هندسة النفط والتعدين-قسم التعدين", "gender": "مختلط"}, {"branch": "علمي", "grade": 88.71, "total": 621.0, "college": "جامعة تكريت/كلية هندسة العمليات النفطية-قسم سيطرة المنظومات النفطية", "gender": "مختلط"}, {"branch": "علمي", "grade": 88.71, "total": 621.0, "college": "الجامعة التكنولوجية/هندسة الاتصالات-قسم نظم الاتصالات الضوئية", "gender": "مختلط"}, {"branch": "علمي", "grade": 88.71, "total": 621.0, "college": "الجامعة المستنصرية/كلية القانون", "gender": "مختلط"}, {"branch": "علمي", "grade": 88.71, "total": 621.0, "college": "الجامعة المستنصرية/كلية التربية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "علمي", "grade": 88.71, "total": 621.0, "college": "الجامعة التقنية الجنوبية/المعهد التقني الناصرية/التخصصات الطبية", "gender": "مختلط"}, {"branch": "علمي", "grade": 88.71, "total": 621.0, "college": "الجامعة التقنية الوسطى/المعهد الطبي/بغداد باب المعظم-قسم تقنيات طب الطوارئ والاسعافات الاولية", "gender": "مختلط"}, {"branch": "علمي", "grade": 88.58, "total": 620.08, "college": "جامعة الفرات الاوسط التقنية/الكلية التقنية الهندسية/النجف-قسم هندسة تقنيات الفيزياء الصحية والعلاج الاشعاعي", "gender": "مختلط"}, {"branch": "علمي", "grade": 88.57, "total": 620.0, "college": "جامعة بغداد/كلية الهندسة-قسم المساحة", "gender": "مختلط"}, {"branch": "علمي", "grade": 88.57, "total": 620.0, "college": "جامعة بغداد/كلية الهندسة-الخوارزمي-قسم التصنيع المؤتمت", "gender": "مختلط"}, {"branch": "علمي", "grade": 88.57, "total": 620.0, "college": "جامعة النهرين/كلية الهندسة-قسم الميكانيك", "gender": "مختلط"}, {"branch": "علمي", "grade": 88.57, "total": 620.0, "college": "جامعة البصرة/كلية القانون", "gender": "مختلط"}, {"branch": "علمي", "grade": 88.57, "total": 620.0, "college": "جامعة سومر/كلية التربية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "علمي", "grade": 88.57, "total": 620.0, "college": "الجامعة التقنية الجنوبية/الكلية التقنية الهندسية/البصرة-قسم هندسة تقنيات السيطرة والاتمتة", "gender": "مختلط"}, {"branch": "علمي", "grade": 88.57, "total": 620.0, "college": "الجامعة التقنية الوسطى/المعهد الطبي/بغداد باب المعظم-قسم تقنيات التغذية الصحية", "gender": "مختلط"}, {"branch": "علمي", "grade": 88.43, "total": 619.0, "college": "الجامعة التكنولوجية/الهندسة الكهربائية-قسم الالكترونيك", "gender": "مختلط"}, {"branch": "علمي", "grade": 88.43, "total": 619.0, "college": "جامعة تكريت/كلية الهندسة-قسم المدني", "gender": "مختلط"}, {"branch": "علمي", "grade": 88.43, "total": 619.0, "college": "جامعة بابل/كلية الهندسة-قسم الكيمياوية", "gender": "مختلط"}, {"branch": "علمي", "grade": 88.43, "total": 619.0, "college": "جامعة بابل/كلية التربية للعلوم الانسانية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "علمي", "grade": 88.43, "total": 619.0, "college": "جامعة واسط/كلية التربية للعلوم الانسانية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "علمي", "grade": 88.29, "total": 618.0, "college": "جامعة ديالى/كلية الهندسة-قسم الحاسوب", "gender": "مختلط"}, {"branch": "علمي", "grade": 88.14, "total": 617.0, "college": "الجامعة العراقية/كلية الهندسة-قسم الكهربائية", "gender": "مختلط"}, {"branch": "علمي", "grade": 88.14, "total": 617.0, "college": "جامعة النهرين/كلية الحقوق", "gender": "مختلط"}, {"branch": "علمي", "grade": 88.0, "total": 616.0, "college": "جامعة تكنولوجيا المعلومات والاتصالات/كلية الهندسة-قسم هندسة الاتصالات والحوسبة المتنقلة", "gender": "مختلط"}, {"branch": "علمي", "grade": 88.0, "total": 616.0, "college": "جامعة سامراء/كلية الهندسة-قسم المدنية", "gender": "مختلط"}, {"branch": "علمي", "grade": 88.0, "total": 616.0, "college": "جامعة المثنى/كلية الهندسة-قسم المدني", "gender": "مختلط"}, {"branch": "علمي", "grade": 88.0, "total": 616.0, "college": "الجامعة التقنية الوسطى/المعهد الطبي/بغداد باب المعظم-قسم تقنيات السمع والنطق", "gender": "مختلط"}, {"branch": "علمي", "grade": 87.86, "total": 615.0, "college": "جامعة ديالى/كلية الهندسة-قسم الكيمياوي", "gender": "مختلط"}, {"branch": "علمي", "grade": 87.86, "total": 615.0, "college": "الجامعة التقنية الجنوبية/الكلية التقنية الهندسية/البصرة-قسم هندسة تقنيات البيئة والتلوث", "gender": "مختلط"}, {"branch": "علمي", "grade": 87.71, "total": 614.0, "college": "جامعة كربلاء/كلية الهندسة-قسم الميكانيك", "gender": "مختلط"}, {"branch": "علمي", "grade": 87.71, "total": 614.0, "college": "جامعة تكنولوجيا المعلومات والاتصالات/كلية المعلوماتية الطبية الحيوية", "gender": "مختلط"}, {"branch": "علمي", "grade": 87.71, "total": 614.0, "college": "جامعة البصرة/كلية التربية للعلوم الانسانية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "علمي", "grade": 87.43, "total": 612.0, "college": "جامعة بغداد/كلية التربية للبنات-قسم اللغة الانكليزية", "gender": "انثى"}, {"branch": "علمي", "grade": 87.3, "total": 611.12, "college": "الجامعة العراقية/كلية القانون والعلوم السياسية-قسم القانون", "gender": "مختلط"}, {"branch": "علمي", "grade": 87.29, "total": 611.0, "college": "جامعة القاسم الخضراء/كلية الهندسة-قسم المدنية", "gender": "مختلط"}, {"branch": "علمي", "grade": 87.29, "total": 611.0, "college": "جامعة الكوفة/كلية التربية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "علمي", "grade": 87.29, "total": 611.0, "college": "جامعة القادسية/كلية التربية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "علمي", "grade": 87.29, "total": 611.0, "college": "الجامعة التقنية الوسطى/المعهد التقني الطبي/بغداد المنصور-قسم تقنيات الادارة الصحية", "gender": "مختلط"}, {"branch": "علمي", "grade": 87.14, "total": 610.0, "college": "الجامعة التقنية الشمالية/الكلية التقنية الهندسية/كركوك-قسم هندسة تقنيات الاجهزة الطبية", "gender": "مختلط"}, {"branch": "علمي", "grade": 87.14, "total": 610.0, "college": "الجامعة التقنية الشمالية/المعهد التقني الطبي/كركوك", "gender": "مختلط"}, {"branch": "علمي", "grade": 87.0, "total": 609.0, "college": "جامعة الكوفة/كلية الهندسة-قسم الكهرباء", "gender": "مختلط"}, {"branch": "علمي", "grade": 87.0, "total": 609.0, "college": "جامعة بابل/كلية الهندسة-قسم الكهرباء", "gender": "مختلط"}, {"branch": "علمي", "grade": 87.0, "total": 609.0, "college": "جامعة ذي قار/كلية التربية للعلوم الانسانية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "علمي", "grade": 86.86, "total": 608.0, "college": "الجامعة التكنولوجية/الهندسة الميكانيكية-قسم الميكانيك العام", "gender": "مختلط"}, {"branch": "علمي", "grade": 86.86, "total": 608.0, "college": "جامعة ذي قار/كلية الهندسة-قسم الميكانيك", "gender": "مختلط"}, {"branch": "علمي", "grade": 86.86, "total": 608.0, "college": "جامعة الكوفة/كلية التربية للبنات-قسم اللغة الانكليزية", "gender": "انثى"}, {"branch": "علمي", "grade": 86.77, "total": 607.4, "college": "الجامعة التقنية الشمالية/الكلية التقنية الهندسية للحاسوب والذكاء الاصطناعي/الموصل-قسم هندسة تقنيات الذكاء الاصطناعي", "gender": "مختلط"}, {"branch": "علمي", "grade": 86.71, "total": 607.0, "college": "الجامعة المستنصرية/كلية الهندسة-قسم الميكانيك", "gender": "مختلط"}, {"branch": "علمي", "grade": 86.57, "total": 606.0, "college": "جامعة الانبار/كلية الهندسة-قسم الكهربائية", "gender": "مختلط"}, {"branch": "علمي", "grade": 86.57, "total": 606.0, "college": "جامعة كربلاء/كلية العلوم الطبية التطبيقية", "gender": "مختلط"}, {"branch": "علمي", "grade": 86.43, "total": 605.0, "college": "جامعة القادسية/كلية الهندسة-قسم الكيمياوي", "gender": "مختلط"}, {"branch": "علمي", "grade": 86.43, "total": 605.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني الكوفة/التخصصات الطبية-قسم تقنيات التمريض", "gender": "انثى"}, {"branch": "علمي", "grade": 86.29, "total": 604.0, "college": "جامعة تكنولوجيا المعلومات والاتصالات/كلية الهندسة-قسم هندسة تكنولوجيا الاعلام والاتصالات", "gender": "مختلط"}, {"branch": "علمي", "grade": 86.14, "total": 603.0, "college": "جامعة كربلاء/كلية التربية للعلوم الانسانية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "علمي", "grade": 86.14, "total": 603.0, "college": "جامعة البصرة/كلية التربية/القرنة-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "علمي", "grade": 86.0, "total": 602.0, "college": "الجامعة المستنصرية/كلية التربية الأساسية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "علمي", "grade": 86.0, "total": 602.0, "college": "الجامعة التقنية الجنوبية/المعهد التقني العمارة/التخصصات الطبية-قسم تقنيات التمريض", "gender": "انثى"}, {"branch": "علمي", "grade": 85.86, "total": 601.0, "college": "جامعة الموصل/كلية الهندسة-قسم الميكاترونكس", "gender": "مختلط"}, {"branch": "علمي", "grade": 85.86, "total": 601.0, "college": "الجامعة التقنية الوسطى/المعهد التقني الكوت/التخصصات الطبية-قسم تقنيات التمريض", "gender": "انثى"}, {"branch": "علمي", "grade": 85.71, "total": 600.0, "college": "جامعة ديالى/كلية الهندسة-قسم الاتصالات", "gender": "مختلط"}, {"branch": "علمي", "grade": 85.71, "total": 600.0, "college": "الجامعة المستنصرية/كلية الهندسة-قسم الطرق", "gender": "مختلط"}, {"branch": "علمي", "grade": 85.71, "total": 600.0, "college": "جامعة ذي قار/كلية الهندسة-قسم الكهربائية والالكترونية", "gender": "مختلط"}, {"branch": "علمي", "grade": 85.71, "total": 600.0, "college": "الجامعة العراقية/كلية الهندسة-قسم الطاقة والطاقات المتجددة", "gender": "مختلط"}, {"branch": "علمي", "grade": 85.71, "total": 600.0, "college": "جامعة ميسان/كلية التربية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "علمي", "grade": 85.71, "total": 600.0, "college": "الجامعة العراقية/كلية التربية للبنات-قسم اللغة الانكليزية", "gender": "انثى"}, {"branch": "علمي", "grade": 85.71, "total": 600.0, "college": "جامعة بابل/كلية التربية الأساسية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "علمي", "grade": 85.71, "total": 600.0, "college": "الجامعة التقنية الوسطى/المعهد التقني بعقوبة/التخصصات الطبية-قسم تقنيات التمريض", "gender": "انثى"}, {"branch": "علمي", "grade": 85.57, "total": 599.0, "college": "جامعة ديالى/كلية التربية للعلوم الانسانية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "علمي", "grade": 85.43, "total": 598.0, "college": "جامعة الموصل/كلية التربية للعلوم الانسانية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "علمي", "grade": 85.43, "total": 598.0, "college": "الجامعة التقنية الوسطى/الكلية التقنية الهندسية الكهربائية/بغداد-قسم هندسة تقنيات الحاسوب", "gender": "مختلط"}, {"branch": "علمي", "grade": 85.29, "total": 597.0, "college": "جامعة البصرة للنفط والغاز/كلية الادارة الصناعية للنفط والغاز", "gender": "مختلط"}, {"branch": "علمي", "grade": 85.29, "total": 597.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني بابل/التخصصات الطبية-قسم تقنيات التمريض", "gender": "انثى"}, {"branch": "علمي", "grade": 85.14, "total": 596.0, "college": "جامعة واسط/كلية الهندسة-قسم الكهرباء", "gender": "مختلط"}, {"branch": "علمي", "grade": 85.14, "total": 596.0, "college": "جامعة بغداد/كلية الهندسة-قسم البيئة", "gender": "مختلط"}, {"branch": "علمي", "grade": 85.14, "total": 596.0, "college": "جامعة المثنى/كلية الهندسة-قسم الكيمياوي", "gender": "مختلط"}, {"branch": "علمي", "grade": 85.14, "total": 596.0, "college": "جامعة الانبار/كلية التربية للعلوم الانسانية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "علمي", "grade": 85.0, "total": 595.0, "college": "الجامعة التقنية الشمالية/المعهد التقني الطبي/الموصل-قسم تقنيات التمريض", "gender": "انثى"}, {"branch": "علمي", "grade": 84.86, "total": 594.0, "college": "جامعة بغداد/كلية الهندسة-قسم الموارد المائية", "gender": "مختلط"}, {"branch": "علمي", "grade": 84.86, "total": 594.0, "college": "جامعة كركوك/كلية الهندسة-قسم الكيمياوية", "gender": "مختلط"}, {"branch": "علمي", "grade": 84.86, "total": 594.0, "college": "جامعة بغداد/كلية الطب البيطري", "gender": "مختلط"}, {"branch": "علمي", "grade": 84.86, "total": 594.0, "college": "جامعة الشطرة/كلية التربية /الدواية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "علمي", "grade": 84.86, "total": 594.0, "college": "الجامعة التقنية الوسطى/المعهد التقني بعقوبة/التخصصات الطبية-قسم تقنيات صحة المجتمع", "gender": "مختلط"}, {"branch": "علمي", "grade": 84.71, "total": 593.0, "college": "الجامعة التكنولوجية/هندسة الكهروميكانيك-قسم الطاقة والطاقات المتجددة", "gender": "مختلط"}, {"branch": "علمي", "grade": 84.71, "total": 593.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني المسيب/التخصصات الطبية-قسم تقنيات المختبرات الطبية", "gender": "مختلط"}, {"branch": "علمي", "grade": 84.57, "total": 592.0, "college": "الجامعة التقنية الشمالية/المعهد التقني الطبي/كركوك-قسم تقنيات التمريض", "gender": "انثى"}, {"branch": "علمي", "grade": 84.43, "total": 591.0, "college": "جامعة القادسية/كلية الهندسة-قسم الالكترونيك والاتصالات", "gender": "مختلط"}, {"branch": "علمي", "grade": 84.43, "total": 591.0, "college": "جامعة بابل/كلية الهندسة-قسم الميكانيك", "gender": "مختلط"}, {"branch": "علمي", "grade": 84.43, "total": 591.0, "college": "جامعة كركوك/كلية التربية للعلوم الانسانية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "علمي", "grade": 84.38, "total": 590.68, "college": "الجامعة التقنية الوسطى/الكلية التقنية الهندسية/بغداد-قسم هندسة تقنيات الوقود والطاقة", "gender": "مختلط"}, {"branch": "علمي", "grade": 84.29, "total": 590.0, "college": "الجامعة التقنية الجنوبية/المعهد التقني الشطرة/التخصصات الطبية-قسم تقنيات الادارة الصحية", "gender": "مختلط"}, {"branch": "علمي", "grade": 84.14, "total": 589.0, "college": "جامعة الفرات الاوسط التقنية/الكلية التقنية الهندسية/النجف-قسم هندسة تقنيات الطيران", "gender": "مختلط"}, {"branch": "علمي", "grade": 84.0, "total": 588.0, "college": "جامعة تكريت/كلية الهندسة-قسم الكيمياوي", "gender": "مختلط"}, {"branch": "علمي", "grade": 83.93, "total": 587.48, "college": "جامعة بغداد/كلية العلوم السياسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 83.57, "total": 585.0, "college": "جامعة الكوفة/كلية الهندسة-قسم الميكانيك", "gender": "مختلط"}, {"branch": "علمي", "grade": 83.43, "total": 584.0, "college": "جامعة الكوفة/كلية القانون", "gender": "مختلط"}, {"branch": "علمي", "grade": 83.29, "total": 583.0, "college": "الجامعة المستنصرية/كلية الهندسة-قسم المواد", "gender": "مختلط"}, {"branch": "علمي", "grade": 83.29, "total": 583.0, "college": "جامعة البصرة/كلية العلوم", "gender": "مختلط"}, {"branch": "علمي", "grade": 83.29, "total": 583.0, "college": "الجامعة المستنصرية/كلية الآداب-قسم علم النفس", "gender": "مختلط"}, {"branch": "علمي", "grade": 83.14, "total": 582.0, "college": "الجامعة التكنولوجية/هندسة الكهروميكانيك-قسم الهندسة الكهروميكانيكية", "gender": "مختلط"}, {"branch": "علمي", "grade": 83.14, "total": 582.0, "college": "الجامعة التكنولوجية/الهندسة الميكانيكية-قسم ميكانيك محطات القدرة", "gender": "مختلط"}, {"branch": "علمي", "grade": 83.0, "total": 581.0, "college": "الجامعة التكنولوجية/الهندسة الميكانيكية-قسم التكييف والتجميد", "gender": "مختلط"}, {"branch": "علمي", "grade": 83.0, "total": 581.0, "college": "جامعة كربلاء/كلية القانون", "gender": "مختلط"}, {"branch": "علمي", "grade": 82.86, "total": 580.0, "college": "جامعة الموصل/كلية الهندسة-قسم الكهرباء", "gender": "مختلط"}, {"branch": "علمي", "grade": 82.86, "total": 580.0, "college": "جامعة ذي قار/كلية الهندسة-قسم المساحة والجيوماتيك", "gender": "مختلط"}, {"branch": "علمي", "grade": 82.86, "total": 580.0, "college": "الجامعة العراقية/كلية الآداب-قسم الترجمة", "gender": "مختلط"}, {"branch": "علمي", "grade": 82.43, "total": 577.0, "college": "جامعة الحمدانية/كلية التربية للعلوم الانسانية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "علمي", "grade": 82.43, "total": 577.0, "college": "جامعة الفرات الاوسط التقنية/الكلية التقنية الهندسية للنفط والطاقة/السماوة-قسم هندسة تقنيات الوقود والطاقة", "gender": "مختلط"}, {"branch": "علمي", "grade": 82.43, "total": 577.0, "college": "الجامعة التقنية الوسطى/الكلية التقنية الهندسية الكهربائية/بغداد-قسم تقنيات الهندسة الكهربائية", "gender": "مختلط"}, {"branch": "علمي", "grade": 82.43, "total": 577.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني النجف/التخصصات الطبية", "gender": "مختلط"}, {"branch": "علمي", "grade": 82.14, "total": 575.0, "college": "جامعة كركوك/كلية الهندسة-قسم الكهرباء", "gender": "مختلط"}, {"branch": "علمي", "grade": 82.14, "total": 575.0, "college": "جامعة القادسية/كلية الهندسة-قسم الميكانيك", "gender": "مختلط"}, {"branch": "علمي", "grade": 82.14, "total": 575.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني القادسية/التخصصات الطبية", "gender": "مختلط"}, {"branch": "علمي", "grade": 82.0, "total": 574.0, "college": "الجامعة التكنولوجية/الهندسة الميكانيكية-قسم السيارات", "gender": "مختلط"}, {"branch": "علمي", "grade": 81.86, "total": 573.0, "college": "جامعة المثنى/كلية الهندسة-قسم الاتصالات والالكترونيك", "gender": "مختلط"}, {"branch": "علمي", "grade": 81.86, "total": 573.0, "college": "جامعة بابل/كلية القانون", "gender": "مختلط"}, {"branch": "علمي", "grade": 81.71, "total": 572.0, "college": "جامعة ميسان/كلية العلوم", "gender": "مختلط"}, {"branch": "علمي", "grade": 81.57, "total": 571.0, "college": "جامعة الانبار/كلية التربية للبنات-قسم اللغة الانكليزية", "gender": "انثى"}, {"branch": "علمي", "grade": 81.46, "total": 570.24, "college": "جامعة نينوى/كلية هندسة الالكترونيات-قسم الاتصالات", "gender": "مختلط"}, {"branch": "علمي", "grade": 81.43, "total": 570.0, "college": "جامعة الكوفة/كلية الهندسة-قسم المواد", "gender": "مختلط"}, {"branch": "علمي", "grade": 81.43, "total": 570.0, "college": "الجامعة التقنية الوسطى/المعهد التقني الصويرة/التخصصات الطبية-قسم تقنيات المختبرات الطبية", "gender": "مختلط"}, {"branch": "علمي", "grade": 81.33, "total": 569.28, "college": "جامعة واسط/كلية الهندسة-قسم الميكانيك", "gender": "مختلط"}, {"branch": "علمي", "grade": 81.14, "total": 568.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني القادسية/التخصصات الطبية-قسم تقنيات التمريض", "gender": "انثى"}, {"branch": "علمي", "grade": 81.0, "total": 567.0, "college": "جامعة الانبار/كلية الهندسة-قسم الميكانيك", "gender": "مختلط"}, {"branch": "علمي", "grade": 81.0, "total": 567.0, "college": "جامعة سومر/كلية الهندسة-قسم الاتصالات", "gender": "مختلط"}, {"branch": "علمي", "grade": 81.0, "total": 567.0, "college": "جامعة ديالى/كلية الهندسة-قسم الطرق والمطارات", "gender": "مختلط"}, {"branch": "علمي", "grade": 81.0, "total": 567.0, "college": "جامعة تكريت/كلية الهندسة-قسم الكهرباء", "gender": "مختلط"}, {"branch": "علمي", "grade": 81.0, "total": 567.0, "college": "جامعة ميسان/كلية القانون", "gender": "مختلط"}, {"branch": "علمي", "grade": 80.86, "total": 566.0, "college": "الجامعة التقنية الوسطى/المعهد التقني الصويرة/التخصصات الطبية-قسم تقنيات التمريض", "gender": "انثى"}, {"branch": "علمي", "grade": 80.71, "total": 565.0, "college": "الجامعة التكنولوجية/هندسة الانتاج والمعادن-قسم المعادن", "gender": "مختلط"}, {"branch": "علمي", "grade": 80.71, "total": 565.0, "college": "جامعة بغداد/كلية الآداب-قسم علم النفس", "gender": "مختلط"}, {"branch": "علمي", "grade": 80.71, "total": 565.0, "college": "الجامعة التقنية الوسطى/الكلية التقنية الهندسية/بغداد-قسم هندسة تقنيات البناء والانشاءات", "gender": "مختلط"}, {"branch": "علمي", "grade": 80.71, "total": 565.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني السماوة/التخصصات الطبية", "gender": "مختلط"}, {"branch": "علمي", "grade": 80.57, "total": 564.0, "college": "جامعة سومر/كلية الهندسة-قسم الميكانيك", "gender": "مختلط"}, {"branch": "علمي", "grade": 80.57, "total": 564.0, "college": "جامعة البصرة/كلية علوم الحاسوب وتكنولوجيا المعلومات", "gender": "مختلط"}, {"branch": "علمي", "grade": 80.57, "total": 564.0, "college": "جامعة ميسان/كلية التربية الأساسية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "علمي", "grade": 80.43, "total": 563.0, "college": "الجامعة التقنية الوسطى/الكلية التقنية الهندسية الكهربائية/بغداد-قسم هندسة تقنيات السيطرة والاتمتة", "gender": "مختلط"}, {"branch": "علمي", "grade": 80.43, "total": 563.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني السماوة/التخصصات الطبية-قسم تقنيات التمريض", "gender": "انثى"}, {"branch": "علمي", "grade": 80.29, "total": 562.0, "college": "جامعة البصرة/كلية العلوم-قسم الرياضيات", "gender": "مختلط"}, {"branch": "علمي", "grade": 80.14, "total": 561.0, "college": "جامعة بغداد/كلية العلوم", "gender": "مختلط"}, {"branch": "علمي", "grade": 80.14, "total": 561.0, "college": "الجامعة التقنية الوسطى/المعهد التقني الانبار/التخصصات الطبية-قسم تقنيات صحة المجتمع", "gender": "مختلط"}, {"branch": "علمي", "grade": 80.0, "total": 560.0, "college": "جامعة تكريت/كلية التربية للبنات-قسم اللغة الانكليزية", "gender": "انثى"}, {"branch": "علمي", "grade": 80.0, "total": 560.0, "college": "جامعة تلعفر/كلية التربية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "علمي", "grade": 80.0, "total": 560.0, "college": "جامعة الموصل/كلية التربية الأساسية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "علمي", "grade": 80.0, "total": 560.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني الرميثة/التخصصات الطبية-قسم تقنيات الادارة الصحية", "gender": "مختلط"}, {"branch": "علمي", "grade": 79.86, "total": 559.0, "college": "الجامعة المستنصرية/كلية الهندسة-قسم البيئة", "gender": "مختلط"}, {"branch": "علمي", "grade": 79.86, "total": 559.0, "college": "الجامعة التكنولوجية/علوم الحاسوب", "gender": "مختلط"}, {"branch": "علمي", "grade": 79.86, "total": 559.0, "college": "جامعة كربلاء/كلية علوم الحاسوب وتكنولوجيا المعلومات", "gender": "مختلط"}, {"branch": "علمي", "grade": 79.86, "total": 559.0, "college": "جامعة الفرات الاوسط التقنية/الكلية التقنية الهندسية/النجف-قسم هندسة تقنيات الكترونيات الطيران", "gender": "مختلط"}, {"branch": "علمي", "grade": 79.71, "total": 558.0, "college": "الجامعة التكنولوجية/هندسة الكهروميكانيك-قسم الملاحة والتوجيه", "gender": "مختلط"}, {"branch": "علمي", "grade": 79.71, "total": 558.0, "college": "جامعة القادسية/كلية الهندسة-قسم الطرق والنقل", "gender": "مختلط"}, {"branch": "علمي", "grade": 79.71, "total": 558.0, "college": "جامعة كربلاء/كلية الطب البيطري", "gender": "مختلط"}, {"branch": "علمي", "grade": 79.71, "total": 558.0, "college": "جامعة سامراء/كلية التربية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "علمي", "grade": 79.57, "total": 557.0, "college": "جامعة الشطرة/كلية الهندسة-قسم الحاسوب", "gender": "مختلط"}, {"branch": "علمي", "grade": 79.57, "total": 557.0, "college": "جامعة ديالى/كلية الهندسة-قسم الميكانيك", "gender": "مختلط"}, {"branch": "علمي", "grade": 79.5, "total": 556.52, "college": "الجامعة التكنولوجية/هندسة المواد", "gender": "مختلط"}, {"branch": "علمي", "grade": 79.29, "total": 555.0, "college": "الجامعة المستنصرية/كلية الهندسة-قسم الموارد المائية", "gender": "مختلط"}, {"branch": "علمي", "grade": 79.29, "total": 555.0, "college": "جامعة تكريت/كلية التربية للعلوم الانسانية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "علمي", "grade": 79.14, "total": 554.0, "college": "الجامعة التكنولوجية/هندسة الانتاج والمعادن-قسم الإنتاج", "gender": "مختلط"}, {"branch": "علمي", "grade": 79.14, "total": 554.0, "college": "جامعة القادسية/كلية الهندسة-قسم المواد", "gender": "مختلط"}, {"branch": "علمي", "grade": 79.14, "total": 554.0, "college": "جامعة الفرات الاوسط التقنية/الكلية التقنية الهندسية/النجف-قسم هندسة تقنيات الاتصالات", "gender": "مختلط"}, {"branch": "علمي", "grade": 79.14, "total": 554.0, "college": "الجامعة التقنية الوسطى/الكلية التقنية الهندسية/بغداد-قسم هندسة تقنيات الميكاترونكس", "gender": "مختلط"}, {"branch": "علمي", "grade": 79.0, "total": 553.0, "college": "جامعة بابل/كلية هندسة المواد-قسم المعادن", "gender": "مختلط"}, {"branch": "علمي", "grade": 79.0, "total": 553.0, "college": "جامعة نينوى/كلية هندسة الالكترونيات-قسم الحاسوب والمعلوماتية", "gender": "مختلط"}, {"branch": "علمي", "grade": 79.0, "total": 553.0, "college": "الجامعة التكنولوجية/هندسة الانتاج والمعادن-قسم التصميم والتصنيع المعان بالحاسوب", "gender": "مختلط"}, {"branch": "علمي", "grade": 79.0, "total": 553.0, "college": "الجامعة التقنية الشمالية/الكلية التقنية الهندسية للحاسوب والذكاء الاصطناعي/الموصل-قسم هندسة تقنيات الحاسوب", "gender": "مختلط"}, {"branch": "علمي", "grade": 78.86, "total": 552.0, "college": "جامعة بابل/كلية الهندسة-قسم البيئة", "gender": "مختلط"}, {"branch": "علمي", "grade": 78.86, "total": 552.0, "college": "جامعة ديالى/كلية الهندسة-قسم القدرة والمكائن الكهربائية", "gender": "مختلط"}, {"branch": "علمي", "grade": 78.86, "total": 552.0, "college": "الجامعة التقنية الوسطى/الكلية التقنية الهندسية الكهربائية/بغداد-قسم تقنيات هندسة تكنولوجيا الفضاء", "gender": "مختلط"}, {"branch": "علمي", "grade": 78.86, "total": 552.0, "college": "الجامعة التقنية الشمالية/المعهد التقني الحويجة/التخصصات الطبية", "gender": "مختلط"}, {"branch": "علمي", "grade": 78.71, "total": 551.0, "college": "جامعة الموصل/كلية الهندسة-قسم الميكانيك", "gender": "مختلط"}, {"branch": "علمي", "grade": 78.57, "total": 550.0, "college": "الجامعة التقنية الشمالية/كلية هندسة تقنيات النفط والغاز / كركوك-قسم هندسة تقنيات الوقود والطاقة", "gender": "مختلط"}, {"branch": "علمي", "grade": 78.43, "total": 549.0, "college": "جامعة بابل/كلية الهندسة/المسيب-قسم الطاقة والطاقة المتجددة", "gender": "مختلط"}, {"branch": "علمي", "grade": 78.43, "total": 549.0, "college": "جامعة كربلاء/كلية العلوم", "gender": "مختلط"}, {"branch": "علمي", "grade": 78.43, "total": 549.0, "college": "جامعة الكوفة/كلية اللغات", "gender": "مختلط"}, {"branch": "علمي", "grade": 78.29, "total": 548.0, "college": "جامعة ديالى/كلية الهندسة-قسم الالكترونيك", "gender": "مختلط"}, {"branch": "علمي", "grade": 78.29, "total": 548.0, "college": "جامعة الكوفة/كلية الطب البيطري", "gender": "مختلط"}, {"branch": "علمي", "grade": 78.14, "total": 547.0, "college": "جامعة بغداد/كلية العلوم-قسم الرياضيات", "gender": "مختلط"}, {"branch": "علمي", "grade": 78.14, "total": 547.0, "college": "جامعة الموصل/كلية الحقوق", "gender": "مختلط"}, {"branch": "علمي", "grade": 78.14, "total": 547.0, "college": "جامعة ديالى/كلية القانون والعلوم السياسية-قسم القانون", "gender": "مختلط"}, {"branch": "علمي", "grade": 78.14, "total": 547.0, "college": "الجامعة المستنصرية/كلية العلوم السياسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 78.14, "total": 547.0, "college": "جامعة بغداد/كلية الاعلام", "gender": "مختلط"}, {"branch": "علمي", "grade": 78.0, "total": 546.0, "college": "جامعة الموصل/كلية الهندسة-قسم الطاقة المستدامة", "gender": "مختلط"}, {"branch": "علمي", "grade": 78.0, "total": 546.0, "college": "جامعة كركوك/كلية الهندسة-قسم الميكانيك", "gender": "مختلط"}, {"branch": "علمي", "grade": 77.86, "total": 545.0, "college": "جامعة بابل/كلية هندسة المواد-قسم البوليمرات والصناعات البتروكيمياوية", "gender": "مختلط"}, {"branch": "علمي", "grade": 77.57, "total": 543.0, "college": "الجامعة التكنولوجية/هندسة الانتاج والمعادن-قسم التعدين واستخلاص المعادن", "gender": "مختلط"}, {"branch": "علمي", "grade": 77.57, "total": 543.0, "college": "جامعة الانبار/كلية الهندسة-قسم السدود وموارد المياه", "gender": "مختلط"}, {"branch": "علمي", "grade": 77.43, "total": 542.0, "college": "جامعة القادسية/كلية القانون", "gender": "مختلط"}, {"branch": "علمي", "grade": 77.43, "total": 542.0, "college": "الجامعة التقنية الوسطى/المعهد التقني الكوت/التخصصات الطبية", "gender": "مختلط"}, {"branch": "علمي", "grade": 77.29, "total": 541.0, "college": "جامعة المثنى/كلية القانون", "gender": "مختلط"}, {"branch": "علمي", "grade": 77.29, "total": 541.0, "college": "جامعة بغداد/كلية اللغات", "gender": "مختلط"}, {"branch": "علمي", "grade": 77.29, "total": 541.0, "college": "الجامعة التقنية الوسطى/الكلية التقنية الهندسية/بغداد-قسم هندسة تقنيات المساحة", "gender": "مختلط"}, {"branch": "علمي", "grade": 77.14, "total": 540.0, "college": "الجامعة التقنية الجنوبية/الكلية التقنية الاقسام الهندسية/ميسان-قسم هندسة تقنيات البناء والانشاءات", "gender": "مختلط"}, {"branch": "علمي", "grade": 77.0, "total": 539.0, "college": "جامعة الكوفة/كلية الهندسة-قسم المنشأت والموارد المائية", "gender": "مختلط"}, {"branch": "علمي", "grade": 77.0, "total": 539.0, "college": "جامعة بابل/كلية التربية للعلوم الصرفة", "gender": "مختلط"}, {"branch": "علمي", "grade": 76.86, "total": 538.0, "college": "الجامعة التكنولوجية/هندسة الانتاج والمعادن-قسم الصناعية", "gender": "مختلط"}, {"branch": "علمي", "grade": 76.86, "total": 538.0, "college": "جامعة الانبار/كلية القانون", "gender": "مختلط"}, {"branch": "علمي", "grade": 76.86, "total": 538.0, "college": "جامعة نينوى/كلية القانون", "gender": "مختلط"}, {"branch": "علمي", "grade": 76.71, "total": 537.0, "college": "جامعة النهرين/كلية العلوم السياسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 76.71, "total": 537.0, "college": "الجامعة التقنية الجنوبية/الكلية التقنية الاقسام الهندسية/ميسان-قسم هندسة النظم الكهروميكانيكية", "gender": "مختلط"}, {"branch": "علمي", "grade": 76.57, "total": 536.0, "college": "جامعة النهرين/كلية العلوم", "gender": "مختلط"}, {"branch": "علمي", "grade": 76.43, "total": 535.0, "college": "جامعة سامراء/كلية الهندسة-قسم الكهروميكانيكية", "gender": "مختلط"}, {"branch": "علمي", "grade": 76.14, "total": 533.0, "college": "جامعة المثنى/كلية العلوم الطبية التطبيقية", "gender": "مختلط"}, {"branch": "علمي", "grade": 76.0, "total": 532.0, "college": "جامعة ديالى/كلية الهندسة-قسم المواد", "gender": "مختلط"}, {"branch": "علمي", "grade": 76.0, "total": 532.0, "college": "جامعة ديالى/كلية الطب البيطري", "gender": "مختلط"}, {"branch": "علمي", "grade": 75.86, "total": 531.0, "college": "جامعة تكريت/كلية الهندسة-قسم الميكانيك", "gender": "مختلط"}, {"branch": "علمي", "grade": 75.86, "total": 531.0, "college": "جامعة النهرين/كلية العلوم-قسم الرياضيات وتطبيقات الحاسوب", "gender": "مختلط"}, {"branch": "علمي", "grade": 75.86, "total": 531.0, "college": "الجامعة التقنية الوسطى/المعهد التقني بلد/التخصصات الطبية-قسم تقنيات المختبرات الطبية", "gender": "مختلط"}, {"branch": "علمي", "grade": 75.71, "total": 530.0, "college": "جامعة ذي قار/كلية القانون", "gender": "مختلط"}, {"branch": "علمي", "grade": 75.71, "total": 530.0, "college": "جامعة واسط/كلية القانون", "gender": "مختلط"}, {"branch": "علمي", "grade": 75.57, "total": 529.0, "college": "الجامعة المستنصرية/كلية العلوم", "gender": "مختلط"}, {"branch": "علمي", "grade": 75.57, "total": 529.0, "college": "جامعة النهرين/كلية اقتصاديات الاعمال", "gender": "مختلط"}, {"branch": "علمي", "grade": 75.43, "total": 528.0, "college": "جامعة بابل/كلية هندسة المواد-قسم السيراميك ومواد البناء", "gender": "مختلط"}, {"branch": "علمي", "grade": 75.29, "total": 527.0, "college": "جامعة كركوك/كلية التربية الأساسية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "علمي", "grade": 75.29, "total": 527.0, "college": "الجامعة التقنية الوسطى/الكلية التقنية الهندسية/بغداد-قسم هندسة تقنية المواد", "gender": "مختلط"}, {"branch": "علمي", "grade": 75.29, "total": 527.0, "college": "الجامعة التقنية الشمالية/المعهد التقني الدور(صلاح الدين)/التخصصات الطبية", "gender": "مختلط"}, {"branch": "علمي", "grade": 75.0, "total": 525.0, "college": "جامعة بغداد/كلية العلوم-قسم الفلك والفضاء", "gender": "مختلط"}, {"branch": "علمي", "grade": 74.86, "total": 524.0, "college": "جامعة بغداد/كلية العلوم للبنات", "gender": "انثى"}, {"branch": "علمي", "grade": 74.86, "total": 524.0, "college": "جامعة بغداد/كلية العلوم للبنات-قسم الحاسوب", "gender": "انثى"}, {"branch": "علمي", "grade": 74.71, "total": 523.0, "college": "جامعة القاسم الخضراء/كلية التقانات الاحيائية", "gender": "مختلط"}, {"branch": "علمي", "grade": 74.57, "total": 522.0, "college": "الجامعة التكنولوجية/العلوم التطبيقية", "gender": "مختلط"}, {"branch": "علمي", "grade": 74.57, "total": 522.0, "college": "جامعة ذي قار/كلية التربية للعلوم الصرفة", "gender": "مختلط"}, {"branch": "علمي", "grade": 74.43, "total": 521.0, "college": "جامعة بابل/كلية تكنولوجيا المعلومات", "gender": "مختلط"}, {"branch": "علمي", "grade": 74.29, "total": 520.0, "college": "الجامعة العراقية/كلية القانون والعلوم السياسية-قسم العلوم السياسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 74.29, "total": 520.0, "college": "جامعة كربلاء/كلية التربية للعلوم الانسانية", "gender": "مختلط"}, {"branch": "علمي", "grade": 74.29, "total": 520.0, "college": "جامعة الفرات الاوسط التقنية/الكلية التقنية الهندسية/النجف-قسم هندسة تقنيات البناء والانشاءات", "gender": "مختلط"}, {"branch": "علمي", "grade": 74.14, "total": 519.0, "college": "جامعة البصرة/كلية الآداب", "gender": "مختلط"}, {"branch": "علمي", "grade": 74.0, "total": 518.0, "college": "الجامعة المستنصرية/كلية العلوم-قسم الرياضيات", "gender": "مختلط"}, {"branch": "علمي", "grade": 73.86, "total": 517.0, "college": "جامعة الفلوجة/كلية الطب البيطري", "gender": "مختلط"}, {"branch": "علمي", "grade": 73.57, "total": 515.0, "college": "جامعة الموصل/كلية الطب البيطري", "gender": "مختلط"}, {"branch": "علمي", "grade": 73.57, "total": 515.0, "college": "جامعة كربلاء/كلية التربية للعلوم الصرفة", "gender": "مختلط"}, {"branch": "علمي", "grade": 73.57, "total": 515.0, "college": "جامعة سومر/كلية التربية", "gender": "مختلط"}, {"branch": "علمي", "grade": 73.43, "total": 514.0, "college": "جامعة البصرة/كلية التربية للعلوم الصرفة", "gender": "مختلط"}, {"branch": "علمي", "grade": 73.43, "total": 514.0, "college": "الجامعة التقنية الوسطى/الكلية التقنية الهندسية/بغداد-قسم هندسة تقنيات ميكانيك القوى", "gender": "مختلط"}, {"branch": "علمي", "grade": 73.29, "total": 513.0, "college": "جامعة كركوك/كلية الطب البيطري", "gender": "مختلط"}, {"branch": "علمي", "grade": 73.29, "total": 513.0, "college": "جامعة البصرة/كلية التربية للعلوم الانسانية", "gender": "مختلط"}, {"branch": "علمي", "grade": 73.29, "total": 513.0, "college": "جامعة تكريت/كلية التربية الأساسية/الشرقاط-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "علمي", "grade": 73.14, "total": 512.0, "college": "جامعة الموصل/كلية الهندسة-قسم البيئة", "gender": "مختلط"}, {"branch": "علمي", "grade": 73.14, "total": 512.0, "college": "جامعة ميسان/كلية التربية", "gender": "مختلط"}, {"branch": "علمي", "grade": 73.14, "total": 512.0, "college": "جامعة ديالى/كلية التربية الأساسية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "علمي", "grade": 72.86, "total": 510.0, "college": "الجامعة التقنية الشمالية/كلية هندسة تقنيات النفط والغاز / كركوك-قسم هندسة تقنيات الطاقة المتجددة", "gender": "مختلط"}, {"branch": "علمي", "grade": 72.57, "total": 508.0, "college": "جامعة الفلوجة/كلية العلوم التطبيقية", "gender": "مختلط"}, {"branch": "علمي", "grade": 72.57, "total": 508.0, "college": "الجامعة المستنصرية/كلية الآداب-قسم الفلسفة", "gender": "مختلط"}, {"branch": "علمي", "grade": 72.57, "total": 508.0, "college": "جامعة الفرات الاوسط التقنية/الكلية التقنية الهندسية/النجف-قسم هندسة تقنيات ميكانيك القوى", "gender": "مختلط"}, {"branch": "علمي", "grade": 72.43, "total": 507.0, "college": "جامعة تكريت/كلية الهندسة-قسم البيئة", "gender": "مختلط"}, {"branch": "علمي", "grade": 72.43, "total": 507.0, "college": "جامعة بغداد/كلية العلوم للبنات-قسم الرياضيات", "gender": "انثى"}, {"branch": "علمي", "grade": 72.29, "total": 506.0, "college": "جامعة القاسم الخضراء/كلية الهندسة-قسم ادارة الموارد المائية", "gender": "مختلط"}, {"branch": "علمي", "grade": 72.14, "total": 505.0, "college": "جامعة المثنى/كلية التربية للعلوم الصرفة", "gender": "مختلط"}, {"branch": "علمي", "grade": 72.14, "total": 505.0, "college": "جامعة بابل/كلية التربية للعلوم الانسانية", "gender": "مختلط"}, {"branch": "علمي", "grade": 72.0, "total": 504.0, "college": "جامعة المثنى/كلية التربية للعلوم الانسانية", "gender": "مختلط"}, {"branch": "علمي", "grade": 72.0, "total": 504.0, "college": "الجامعة التقنية الشمالية/الكلية التقنية الهندسية/كركوك-قسم هندسة تقنيات العمارة والبناء", "gender": "مختلط"}, {"branch": "علمي", "grade": 71.86, "total": 503.0, "college": "جامعة الشطرة/كلية الهندسة-قسم المواد", "gender": "مختلط"}, {"branch": "علمي", "grade": 71.86, "total": 503.0, "college": "جامعة البصرة/كلية التربية للبنات", "gender": "انثى"}, {"branch": "علمي", "grade": 71.86, "total": 503.0, "college": "جامعة بغداد/كلية الآداب", "gender": "مختلط"}, {"branch": "علمي", "grade": 71.71, "total": 502.0, "college": "جامعة نينوى/كلية هندسة الالكترونيات-قسم الالكترونيك", "gender": "مختلط"}, {"branch": "علمي", "grade": 71.71, "total": 502.0, "college": "جامعة المثنى/كلية العلوم", "gender": "مختلط"}, {"branch": "علمي", "grade": 71.71, "total": 502.0, "college": "جامعة بابل/كلية العلوم", "gender": "مختلط"}, {"branch": "علمي", "grade": 71.57, "total": 501.0, "college": "جامعة ذي قار/كلية العلوم", "gender": "مختلط"}, {"branch": "علمي", "grade": 71.57, "total": 501.0, "college": "جامعة الكرخ للعلوم/كلية العلوم", "gender": "مختلط"}, {"branch": "علمي", "grade": 71.57, "total": 501.0, "college": "جامعة الفلوجة/كلية القانون", "gender": "مختلط"}, {"branch": "علمي", "grade": 71.57, "total": 501.0, "college": "جامعة المثنى/كلية التربية الأساسية-قسم معلم الصفوف الاولى", "gender": "مختلط"}, {"branch": "علمي", "grade": 71.57, "total": 501.0, "college": "الجامعة العراقية/كلية الاعلام", "gender": "مختلط"}, {"branch": "علمي", "grade": 71.57, "total": 501.0, "college": "الجامعة التقنية الوسطى/الكلية التقنية الهندسية/بغداد-قسم هندسة تقنيات الميكانيك التطبيقي", "gender": "مختلط"}, {"branch": "علمي", "grade": 71.43, "total": 500.0, "college": "جامعة الموصل/كلية الهندسة-قسم السدود والموارد المائية", "gender": "مختلط"}, {"branch": "علمي", "grade": 71.43, "total": 500.0, "college": "جامعة تكنولوجيا المعلومات والاتصالات/كلية معلوماتية الاعمال", "gender": "مختلط"}, {"branch": "علمي", "grade": 71.43, "total": 500.0, "college": "جامعة البصرة/كلية الطب البيطري", "gender": "مختلط"}, {"branch": "علمي", "grade": 71.43, "total": 500.0, "college": "جامعة الشطرة/كلية التربية /الدواية-قسم الفيزياء", "gender": "مختلط"}, {"branch": "علمي", "grade": 71.29, "total": 499.0, "college": "جامعة تكريت/كلية الطب البيطري", "gender": "مختلط"}, {"branch": "علمي", "grade": 71.14, "total": 498.0, "college": "جامعة سومر/كلية القانون", "gender": "مختلط"}, {"branch": "علمي", "grade": 71.14, "total": 498.0, "college": "جامعة بغداد/كلية التربية ابن رشد للعلوم الانسانية", "gender": "مختلط"}, {"branch": "علمي", "grade": 71.14, "total": 498.0, "college": "جامعة واسط/كلية الآداب-قسم الترجمة", "gender": "مختلط"}, {"branch": "علمي", "grade": 71.0, "total": 497.0, "college": "جامعة نينوى/كلية هندسة الالكترونيات-قسم النظم والسيطرة", "gender": "مختلط"}, {"branch": "علمي", "grade": 71.0, "total": 497.0, "college": "جامعة تكريت/كلية القانون", "gender": "مختلط"}, {"branch": "علمي", "grade": 70.86, "total": 496.0, "college": "جامعة ذي قار/كلية علوم الحاسوب والرياضيات-قسم الرياضيات", "gender": "مختلط"}, {"branch": "علمي", "grade": 70.86, "total": 496.0, "college": "الجامعة التقنية الشمالية/الكلية التقنية الهندسية/الموصل-قسم هندسة تقنيات البناء والانشاءات", "gender": "مختلط"}, {"branch": "علمي", "grade": 70.57, "total": 494.0, "college": "جامعة الشطرة/كلية الطب البيطري", "gender": "مختلط"}, {"branch": "علمي", "grade": 70.57, "total": 494.0, "college": "جامعة واسط/كلية الطب البيطري/الحي", "gender": "مختلط"}, {"branch": "علمي", "grade": 70.57, "total": 494.0, "college": "جامعة ذي قار/كلية التربية الأساسية/سوق الشيوخ-قسم معلم الصفوف الأولى", "gender": "مختلط"}, {"branch": "علمي", "grade": 70.43, "total": 493.0, "college": "جامعة واسط/كلية العلوم", "gender": "مختلط"}, {"branch": "علمي", "grade": 70.43, "total": 493.0, "college": "جامعة الكوفة/كلية التربية", "gender": "مختلط"}, {"branch": "علمي", "grade": 70.43, "total": 493.0, "college": "الجامعة التقنية الشمالية/الكلية التقنية الهندسية/كركوك-قسم هندسة تقنيات الحاسوب", "gender": "مختلط"}, {"branch": "علمي", "grade": 70.43, "total": 493.0, "college": "الجامعة التقنية الجنوبية/المعهد التقني القرنة/التخصصات الهندسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 70.39, "total": 492.72, "college": "جامعة بابل/كلية الهندسة/المسيب-قسم تكييف الهواء والتجميد", "gender": "مختلط"}, {"branch": "علمي", "grade": 70.29, "total": 492.0, "college": "جامعة ذي قار/كلية علوم الحاسوب والرياضيات-قسم الحاسوب", "gender": "مختلط"}, {"branch": "علمي", "grade": 70.29, "total": 492.0, "college": "جامعة سامراء/كلية القانون", "gender": "مختلط"}, {"branch": "علمي", "grade": 70.29, "total": 492.0, "college": "جامعة القادسية/كلية الطب البيطري", "gender": "مختلط"}, {"branch": "علمي", "grade": 70.29, "total": 492.0, "college": "جامعة القاسم الخضراء/كلية الطب البيطري", "gender": "مختلط"}, {"branch": "علمي", "grade": 70.14, "total": 491.0, "college": "جامعة كركوك/كلية القانون والعلوم السياسية-قسم القانون", "gender": "مختلط"}, {"branch": "علمي", "grade": 70.14, "total": 491.0, "college": "جامعة القادسية/كلية التربية", "gender": "مختلط"}, {"branch": "علمي", "grade": 70.14, "total": 491.0, "college": "جامعة كركوك/كلية التربية للعلوم الصرفة", "gender": "مختلط"}, {"branch": "علمي", "grade": 70.14, "total": 491.0, "college": "جامعة بغداد/كلية الآداب-قسم الفلسفة", "gender": "مختلط"}, {"branch": "علمي", "grade": 70.0, "total": 490.0, "college": "جامعة المثنى/كلية الطب البيطري", "gender": "مختلط"}, {"branch": "علمي", "grade": 69.86, "total": 489.0, "college": "جامعة بابل/كلية الهندسة/المسيب-قسم السيارات", "gender": "مختلط"}, {"branch": "علمي", "grade": 69.86, "total": 489.0, "college": "جامعة ذي قار/كلية التربية للعلوم الانسانية", "gender": "مختلط"}, {"branch": "علمي", "grade": 69.86, "total": 489.0, "college": "جامعة ميسان/كلية التربية الأساسية-قسم معلم الصفوف الاولى", "gender": "مختلط"}, {"branch": "علمي", "grade": 69.57, "total": 487.0, "college": "جامعة تكريت/كلية العلوم السياسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 69.57, "total": 487.0, "college": "الجامعة التقنية الوسطى/الكلية التقنية بعقوبة/التخصصات الهندسية-قسم التقنيات الكهروميكانيكية", "gender": "مختلط"}, {"branch": "علمي", "grade": 69.43, "total": 486.0, "college": "جامعة ديالى/كلية القانون والعلوم السياسية-قسم العلوم السياسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 69.43, "total": 486.0, "college": "الجامعة المستنصرية/كلية الآداب", "gender": "مختلط"}, {"branch": "علمي", "grade": 69.43, "total": 486.0, "college": "الجامعة التقنية الشمالية/الكلية التقنية الهندسية/الموصل-قسم هندسة تقنيات الصناعات الكيمياوية والنفطية", "gender": "مختلط"}, {"branch": "علمي", "grade": 69.29, "total": 485.0, "college": "جامعة القادسية/كلية التربية للبنات", "gender": "انثى"}, {"branch": "علمي", "grade": 69.14, "total": 484.0, "college": "جامعة المثنى/كلية العلوم-قسم الرياضيات وتطبيقات الحاسوب", "gender": "مختلط"}, {"branch": "علمي", "grade": 69.14, "total": 484.0, "college": "جامعة البصرة/كلية التربية/القرنة", "gender": "مختلط"}, {"branch": "علمي", "grade": 68.86, "total": 482.0, "college": "جامعة الكوفة/كلية العلوم السياسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 68.86, "total": 482.0, "college": "جامعة بغداد/كلية التربية للبنات", "gender": "انثى"}, {"branch": "علمي", "grade": 68.71, "total": 481.0, "college": "جامعة ذي قار/كلية علوم الحاسوب والرياضيات-قسم تكنولوجيا المعلومات", "gender": "مختلط"}, {"branch": "علمي", "grade": 68.71, "total": 481.0, "college": "جامعة سومر/كلية التربية الأساسية-قسم معلم الصفوف الاولى", "gender": "مختلط"}, {"branch": "علمي", "grade": 68.57, "total": 480.0, "college": "جامعة بغداد/كلية التربية للعلوم الصرفة/ابن الهيثم", "gender": "مختلط"}, {"branch": "علمي", "grade": 68.43, "total": 479.0, "college": "جامعة سومر/كلية العلوم", "gender": "مختلط"}, {"branch": "علمي", "grade": 68.43, "total": 479.0, "college": "جامعة واسط/كلية التربية للعلوم الصرفة", "gender": "مختلط"}, {"branch": "علمي", "grade": 68.43, "total": 479.0, "college": "جامعة ذي قار/كلية التربية الأساسية/سوق الشيوخ-قسم التربية الخاصة", "gender": "مختلط"}, {"branch": "علمي", "grade": 68.29, "total": 478.0, "college": "جامعة ديالى/كلية العلوم", "gender": "مختلط"}, {"branch": "علمي", "grade": 68.29, "total": 478.0, "college": "جامعة الكوفة/كلية علوم الحاسوب والرياضيات", "gender": "مختلط"}, {"branch": "علمي", "grade": 68.29, "total": 478.0, "college": "جامعة بغداد/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "علمي", "grade": 68.14, "total": 477.0, "college": "جامعة تكريت/كلية العلوم", "gender": "مختلط"}, {"branch": "علمي", "grade": 68.14, "total": 477.0, "college": "جامعة الموصل/كلية العلوم السياسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 68.14, "total": 477.0, "college": "الجامعة التقنية الجنوبية/الكلية التقنية الاقسام الهندسية/ذي قار-قسم هندسة تقنيات النظم الكهروميكانيكية", "gender": "مختلط"}, {"branch": "علمي", "grade": 68.0, "total": 476.0, "college": "جامعة المثنى/كلية التربية الأساسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 67.86, "total": 475.0, "college": "جامعة الموصل/كلية العلوم", "gender": "مختلط"}, {"branch": "علمي", "grade": 67.86, "total": 475.0, "college": "جامعة واسط/كلية التربية للعلوم الانسانية", "gender": "مختلط"}, {"branch": "علمي", "grade": 67.71, "total": 474.0, "college": "جامعة تكريت/كلية علوم الحاسوب والرياضيات", "gender": "مختلط"}, {"branch": "علمي", "grade": 67.71, "total": 474.0, "college": "جامعة واسط/كلية التربية للعلوم الانسانية-قسم العلوم التربوية والنفسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 67.71, "total": 474.0, "college": "الجامعة المستنصرية/كلية التربية الأساسية-قسم معلم الصفوف الاولى", "gender": "مختلط"}, {"branch": "علمي", "grade": 67.57, "total": 473.0, "college": "جامعة القادسية/كلية العلوم-قسم الرياضيات", "gender": "مختلط"}, {"branch": "علمي", "grade": 67.57, "total": 473.0, "college": "جامعة بغداد/كلية التربية للبنات-قسم الاقتصاد المنزلي", "gender": "انثى"}, {"branch": "علمي", "grade": 67.57, "total": 473.0, "college": "جامعة سومر/كلية التربية الأساسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 67.43, "total": 472.0, "college": "جامعة ميسان/كلية العلوم السياسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 67.43, "total": 472.0, "college": "جامعة الموصل/كلية الآداب", "gender": "مختلط"}, {"branch": "علمي", "grade": 67.43, "total": 472.0, "college": "الجامعة التقنية الشمالية/الكلية التقنية الهندسية/الموصل-قسم تقنيات الهندسة الكهربائية", "gender": "مختلط"}, {"branch": "علمي", "grade": 67.14, "total": 470.0, "college": "جامعة ديالى/كلية التربية للعلوم الصرفة", "gender": "مختلط"}, {"branch": "علمي", "grade": 67.14, "total": 470.0, "college": "الجامعة المستنصرية/كلية التربية", "gender": "مختلط"}, {"branch": "علمي", "grade": 67.0, "total": 469.0, "college": "جامعة تكريت/كلية الهندسة/الشرقاط-قسم الكهربائية", "gender": "مختلط"}, {"branch": "علمي", "grade": 67.0, "total": 469.0, "college": "جامعة تكريت/كلية الهندسة/الشرقاط-قسم الميكانيكية", "gender": "مختلط"}, {"branch": "علمي", "grade": 67.0, "total": 469.0, "college": "جامعة بغداد/كلية التربية للبنات-قسم رياض الاطفال", "gender": "انثى"}, {"branch": "علمي", "grade": 67.0, "total": 469.0, "college": "الجامعة العراقية/كلية التربية للبنات", "gender": "انثى"}, {"branch": "علمي", "grade": 67.0, "total": 469.0, "college": "جامعة بابل/كلية التربية الأساسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 66.71, "total": 467.0, "college": "جامعة القادسية/كلية العلوم", "gender": "مختلط"}, {"branch": "علمي", "grade": 66.71, "total": 467.0, "college": "جامعة القاسم الخضراء/كلية التربية", "gender": "مختلط"}, {"branch": "علمي", "grade": 66.71, "total": 467.0, "college": "جامعة الكوفة/كلية التربية للبنات", "gender": "انثى"}, {"branch": "علمي", "grade": 66.71, "total": 467.0, "college": "الجامعة العراقية/كلية الآداب", "gender": "مختلط"}, {"branch": "علمي", "grade": 66.43, "total": 465.0, "college": "جامعة الكوفة/كلية العلوم", "gender": "مختلط"}, {"branch": "علمي", "grade": 66.29, "total": 464.0, "college": "جامعة تكريت/كلية التربية للعلوم الصرفة", "gender": "مختلط"}, {"branch": "علمي", "grade": 65.86, "total": 461.0, "college": "جامعة كركوك/كلية العلوم", "gender": "مختلط"}, {"branch": "علمي", "grade": 65.86, "total": 461.0, "college": "جامعة ديالى/كلية التربية للعلوم الانسانية", "gender": "مختلط"}, {"branch": "علمي", "grade": 65.71, "total": 460.0, "college": "جامعة القاسم الخضراء/كلية العلوم", "gender": "مختلط"}, {"branch": "علمي", "grade": 65.71, "total": 460.0, "college": "جامعة تكريت/كلية علوم الحاسوب والرياضيات-قسم الرياضيات", "gender": "مختلط"}, {"branch": "علمي", "grade": 65.71, "total": 460.0, "college": "الجامعة المستنصرية/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "علمي", "grade": 65.71, "total": 460.0, "college": "جامعة الانبار/كلية التربية/القائم", "gender": "مختلط"}, {"branch": "علمي", "grade": 65.57, "total": 459.0, "college": "جامعة سامراء/كلية العلوم التطبيقية", "gender": "مختلط"}, {"branch": "علمي", "grade": 65.57, "total": 459.0, "college": "جامعة الانبار/كلية العلوم", "gender": "مختلط"}, {"branch": "علمي", "grade": 65.43, "total": 458.0, "college": "جامعة البصرة/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "علمي", "grade": 65.14, "total": 456.0, "college": "جامعة الانبار/كلية التربية للعلوم الصرفة", "gender": "مختلط"}, {"branch": "علمي", "grade": 65.14, "total": 456.0, "college": "الجامعة التقنية الجنوبية/الكلية التقنية الادارية/البصرة", "gender": "مختلط"}, {"branch": "علمي", "grade": 65.0, "total": 455.0, "college": "جامعة بابل/كلية العلوم للبنات", "gender": "انثى"}, {"branch": "علمي", "grade": 65.0, "total": 455.0, "college": "جامعة بغداد/كلية الآداب-قسم الاثار", "gender": "مختلط"}, {"branch": "علمي", "grade": 64.86, "total": 454.0, "college": "جامعة نينوى/كلية تكنولوجيا المعلومات", "gender": "مختلط"}, {"branch": "علمي", "grade": 64.86, "total": 454.0, "college": "جامعة المثنى/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "علمي", "grade": 64.86, "total": 454.0, "college": "جامعة الكوفة/كلية الآداب", "gender": "مختلط"}, {"branch": "علمي", "grade": 64.86, "total": 454.0, "college": "جامعة الكوفة/كلية التربية الاساسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 64.86, "total": 454.0, "college": "جامعة الانبار/كلية التربية الأساسية/حديثة-قسم معلم الصفوف الاولى", "gender": "مختلط"}, {"branch": "علمي", "grade": 64.71, "total": 453.0, "college": "جامعة ديالى/كلية التربية المقداد/المقدادية", "gender": "مختلط"}, {"branch": "علمي", "grade": 64.71, "total": 453.0, "college": "الجامعة التقنية الشمالية/الكلية التقنية الهندسية/كركوك-قسم هندسة تقنيات المساحة", "gender": "مختلط"}, {"branch": "علمي", "grade": 64.57, "total": 452.0, "college": "جامعة البصرة/كلية الادارة والاقتصاد/القرنة", "gender": "مختلط"}, {"branch": "علمي", "grade": 64.57, "total": 452.0, "college": "جامعة الموصل/كلية التربية للعلوم الصرفة", "gender": "مختلط"}, {"branch": "علمي", "grade": 64.57, "total": 452.0, "college": "الجامعة العراقية/كلية التربية للبنات-قسم رياض الاطفال والتربية الخاصة", "gender": "انثى"}, {"branch": "علمي", "grade": 64.57, "total": 452.0, "college": "جامعة كركوك/كلية التربية للعلوم الانسانية", "gender": "مختلط"}, {"branch": "علمي", "grade": 64.57, "total": 452.0, "college": "جامعة القادسية/كلية الآداب", "gender": "مختلط"}, {"branch": "علمي", "grade": 64.43, "total": 451.0, "college": "الجامعة العراقية/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "علمي", "grade": 64.43, "total": 451.0, "college": "جامعة بابل/كلية الآداب", "gender": "مختلط"}, {"branch": "علمي", "grade": 64.43, "total": 451.0, "college": "جامعة البصرة/كلية علوم البحار", "gender": "مختلط"}, {"branch": "علمي", "grade": 64.29, "total": 450.0, "college": "جامعة الانبار/كلية العلوم التطبيقية/هيت", "gender": "مختلط"}, {"branch": "علمي", "grade": 64.29, "total": 450.0, "college": "جامعة الموصل/كلية التربية الأساسية-قسم معلم الصفوف الاولى", "gender": "مختلط"}, {"branch": "علمي", "grade": 64.14, "total": 449.0, "college": "جامعة كركوك/كلية الاعلام", "gender": "مختلط"}, {"branch": "علمي", "grade": 64.14, "total": 449.0, "college": "جامعة الفرات الاوسط التقنية/الكلية التقنية الاقسام الهندسية/المسيب-قسم هندسة تقنيات ميكانيك القدرة", "gender": "مختلط"}, {"branch": "علمي", "grade": 64.14, "total": 449.0, "college": "الجامعة التقنية الشمالية/الكلية التقنية الحويجة/التخصصات الهندسية-قسم هندسة تقنيات الميكاترونكس", "gender": "مختلط"}, {"branch": "علمي", "grade": 64.14, "total": 449.0, "college": "جامعة الفرات الاوسط التقنية/الكلية التقنية الاقسام الهندسية/المسيب-قسم هندسة تقنيات المكائن والمعدات", "gender": "مختلط"}, {"branch": "علمي", "grade": 64.0, "total": 448.0, "college": "جامعة الانبار/كلية العلوم السياسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 64.0, "total": 448.0, "college": "جامعة القادسية/كلية الآداب-قسم علم النفس", "gender": "مختلط"}, {"branch": "علمي", "grade": 64.0, "total": 448.0, "college": "جامعة الكوفة/كلية التربية الاساسية-قسم رياض الاطفال", "gender": "انثى"}, {"branch": "علمي", "grade": 64.0, "total": 448.0, "college": "الجامعة التقنية الجنوبية/الكلية التقنية الشطرة/الاقسام الهندسية-قسم هندسة تقنيات البيئة والتلوث", "gender": "مختلط"}, {"branch": "علمي", "grade": 64.0, "total": 448.0, "college": "الجامعة التقنية الشمالية/الكلية التقنية الهندسية/الموصل-قسم هندسة تقنيات ميكانيك القوى", "gender": "مختلط"}, {"branch": "علمي", "grade": 64.0, "total": 448.0, "college": "الجامعة التقنية الشمالية/الكلية التقنية الهندسية/الموصل-قسم هندسة تقنيات الجيوماتكس", "gender": "مختلط"}, {"branch": "علمي", "grade": 64.0, "total": 448.0, "college": "الجامعة التقنية الشمالية/الكلية التقنية الهندسية/الموصل-قسم هندسة تقنيات الميكانيك التطبيقي", "gender": "مختلط"}, {"branch": "علمي", "grade": 64.0, "total": 448.0, "college": "الجامعة التقنية الشمالية/الكلية التقنية الهندسية/كركوك-قسم هندسة تقنيات ميكانيك القوى", "gender": "مختلط"}, {"branch": "علمي", "grade": 64.0, "total": 448.0, "college": "الجامعة التقنية الشمالية/الكلية التقنية الهندسية/كركوك-قسم هندسة تقنيات البيئة والتلوث", "gender": "مختلط"}, {"branch": "علمي", "grade": 64.0, "total": 448.0, "college": "الجامعة التقنية الشمالية/الكلية التقنية الهندسية/كركوك-قسم هندسة تقنيات الالكترونيك والسيطرة", "gender": "مختلط"}, {"branch": "علمي", "grade": 64.0, "total": 448.0, "college": "جامعة الفرات الاوسط التقنية/الكلية التقنية الاقسام الهندسية/المسيب-قسم تقنيات الهندسة الكهربائية", "gender": "مختلط"}, {"branch": "علمي", "grade": 64.0, "total": 448.0, "college": "جامعة الفرات الاوسط التقنية/الكلية التقنية الاقسام الهندسية/المسيب-قسم هندسة تقنيات البناء والانشاءات", "gender": "مختلط"}, {"branch": "علمي", "grade": 63.86, "total": 447.0, "college": "جامعة كركوك/كلية القانون والعلوم السياسية-قسم العلوم السياسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 63.71, "total": 446.0, "college": "جامعة ذي قار/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "علمي", "grade": 63.71, "total": 446.0, "college": "جامعة ميسان/كلية التربية الأساسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 63.57, "total": 445.0, "college": "جامعة كربلاء/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "علمي", "grade": 63.57, "total": 445.0, "college": "جامعة سامراء/كلية التربية", "gender": "مختلط"}, {"branch": "علمي", "grade": 63.57, "total": 445.0, "college": "جامعة واسط/كلية التربية الأساسية/العزيزية", "gender": "مختلط"}, {"branch": "علمي", "grade": 63.57, "total": 445.0, "college": "جامعة الكرخ للعلوم/كلية التحسس النائي والجيوفيزياء", "gender": "مختلط"}, {"branch": "علمي", "grade": 63.43, "total": 444.0, "college": "جامعة واسط/كلية علوم الحاسوب وتكنولوجيا المعلومات", "gender": "مختلط"}, {"branch": "علمي", "grade": 63.43, "total": 444.0, "college": "جامعة بابل/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "علمي", "grade": 63.43, "total": 444.0, "college": "جامعة القادسية/كلية التربية للبنات-قسم رياض الاطفال", "gender": "انثى"}, {"branch": "علمي", "grade": 63.43, "total": 444.0, "college": "جامعة الانبار/كلية التربية للعلوم الانسانية", "gender": "مختلط"}, {"branch": "علمي", "grade": 63.43, "total": 444.0, "college": "جامعة كربلاء/كلية العلوم الاسلامية", "gender": "مختلط"}, {"branch": "علمي", "grade": 63.29, "total": 443.0, "college": "جامعة الكرخ للعلوم/كلية علوم الطاقة والبيئة", "gender": "مختلط"}, {"branch": "علمي", "grade": 63.29, "total": 443.0, "college": "جامعة الشطرة/كلية التربية للبنات", "gender": "انثى"}, {"branch": "علمي", "grade": 63.29, "total": 443.0, "college": "جامعة واسط/كلية التربية الأساسية/العزيزية-قسم رياض الاطفال", "gender": "انثى"}, {"branch": "علمي", "grade": 63.29, "total": 443.0, "college": "الجامعة التقنية الجنوبية/المعهد التقني العمارة/التخصصات الادارية-قسم تقنيات المحاسبة", "gender": "مختلط"}, {"branch": "علمي", "grade": 63.29, "total": 443.0, "college": "الجامعة التقنية الجنوبية/المعهد التقني الاداري/البصرة", "gender": "مختلط"}, {"branch": "علمي", "grade": 63.14, "total": 442.0, "college": "جامعة الحمدانية/كلية التربية للعلوم الانسانية", "gender": "مختلط"}, {"branch": "علمي", "grade": 63.14, "total": 442.0, "college": "جامعة الفلوجة/كلية التربية", "gender": "مختلط"}, {"branch": "علمي", "grade": 63.14, "total": 442.0, "college": "الجامعة المستنصرية/كلية التربية الأساسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 63.14, "total": 442.0, "college": "الجامعة المستنصرية/كلية التربية الأساسية-قسم رياض الاطفال", "gender": "انثى"}, {"branch": "علمي", "grade": 63.14, "total": 442.0, "college": "الجامعة التقنية الوسطى/الكلية التقنية بعقوبة/التخصصات الادارية-قسم تقنيات المحاسبة", "gender": "مختلط"}, {"branch": "علمي", "grade": 63.0, "total": 441.0, "college": "جامعة الشطرة/كلية العلوم التطبيقية", "gender": "مختلط"}, {"branch": "علمي", "grade": 63.0, "total": 441.0, "college": "جامعة كركوك/كلية علوم الحاسوب وتكنولوجيا المعلومات", "gender": "مختلط"}, {"branch": "علمي", "grade": 63.0, "total": 441.0, "college": "جامعة الموصل/كلية علوم الحاسوب والرياضيات", "gender": "مختلط"}, {"branch": "علمي", "grade": 63.0, "total": 441.0, "college": "جامعة سومر/كلية علوم الحاسوب وتكنولوجيا المعلومات", "gender": "مختلط"}, {"branch": "علمي", "grade": 63.0, "total": 441.0, "college": "جامعة الانبار/كلية علوم الحاسوب وتكنولوجيا المعلومات", "gender": "مختلط"}, {"branch": "علمي", "grade": 63.0, "total": 441.0, "college": "جامعة القادسية/كلية علوم الحاسوب وتكنولوجيا المعلومات", "gender": "مختلط"}, {"branch": "علمي", "grade": 63.0, "total": 441.0, "college": "جامعة القادسية/كلية التقانات الاحيائية", "gender": "مختلط"}, {"branch": "علمي", "grade": 63.0, "total": 441.0, "college": "جامعة ميسان/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "علمي", "grade": 63.0, "total": 441.0, "college": "جامعة الكوفة/كلية التخطيط العمراني", "gender": "مختلط"}, {"branch": "علمي", "grade": 63.0, "total": 441.0, "college": "الجامعة التقنية الجنوبية/الكلية التقنية الاقسام الادارية/ذي قار-قسم تقنيات المحاسبة", "gender": "مختلط"}, {"branch": "علمي", "grade": 62.86, "total": 440.0, "college": "الجامعة العراقية/كلية التربية/الطارمية", "gender": "مختلط"}, {"branch": "علمي", "grade": 62.86, "total": 440.0, "college": "جامعة الموصل/كلية التربية للعلوم الانسانية", "gender": "مختلط"}, {"branch": "علمي", "grade": 62.86, "total": 440.0, "college": "جامعة بابل/كلية العلوم الاسلامية", "gender": "مختلط"}, {"branch": "علمي", "grade": 62.71, "total": 439.0, "college": "جامعة الشطرة/كلية التربية للبنات-قسم رياض الاطفال", "gender": "انثى"}, {"branch": "علمي", "grade": 62.71, "total": 439.0, "college": "جامعة تكريت/كلية التربية الأساسية/الشرقاط", "gender": "مختلط"}, {"branch": "علمي", "grade": 62.71, "total": 439.0, "college": "جامعة البصرة/كلية الفنون الجميلة", "gender": "مختلط"}, {"branch": "علمي", "grade": 62.57, "total": 438.0, "college": "جامعة بغداد/علوم الهندسة الزراعية", "gender": "مختلط"}, {"branch": "علمي", "grade": 62.57, "total": 438.0, "college": "جامعة الموصل/كلية التربية الأساسية-قسم رياض الاطفال للبنات", "gender": "انثى"}, {"branch": "علمي", "grade": 62.57, "total": 438.0, "college": "جامعة ذي قار/كلية العلوم الاسلامية", "gender": "مختلط"}, {"branch": "علمي", "grade": 62.43, "total": 437.0, "college": "جامعة الكوفة/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "علمي", "grade": 62.43, "total": 437.0, "college": "جامعة سامراء/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "علمي", "grade": 62.43, "total": 437.0, "college": "جامعة ديالى/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "علمي", "grade": 62.43, "total": 437.0, "college": "جامعة كركوك/كلية التربية الأساسية-قسم معلم الصفوف الاولى", "gender": "مختلط"}, {"branch": "علمي", "grade": 62.29, "total": 436.0, "college": "جامعة الموصل/كلية التربية الأساسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 62.29, "total": 436.0, "college": "جامعة كركوك/كلية التربية الأساسية-قسم رياض الاطفال", "gender": "انثى"}, {"branch": "علمي", "grade": 62.29, "total": 436.0, "college": "جامعة الموصل/كلية التربية الأساسية-قسم التربية الخاصة", "gender": "مختلط"}, {"branch": "علمي", "grade": 62.29, "total": 436.0, "college": "جامعة بغداد/كلية الفنون الجميلة", "gender": "مختلط"}, {"branch": "علمي", "grade": 62.14, "total": 435.0, "college": "جامعة ذي قار/كلية الآداب", "gender": "مختلط"}, {"branch": "علمي", "grade": 62.14, "total": 435.0, "college": "الجامعة التقنية الجنوبية/المعهد التقني التكنولوجي/البصرة", "gender": "مختلط"}, {"branch": "علمي", "grade": 62.0, "total": 434.0, "college": "جامعة تكريت/كلية التربية/طوزخورماتو", "gender": "مختلط"}, {"branch": "علمي", "grade": 62.0, "total": 434.0, "college": "جامعة تكريت/كلية التربية للعلوم الانسانية", "gender": "مختلط"}, {"branch": "علمي", "grade": 62.0, "total": 434.0, "college": "جامعة تلعفر/كلية التربية-قسم علوم الحاسوب", "gender": "مختلط"}, {"branch": "علمي", "grade": 62.0, "total": 434.0, "college": "جامعة تكريت/كلية التربية للبنات", "gender": "انثى"}, {"branch": "علمي", "grade": 62.0, "total": 434.0, "college": "جامعة كركوك/كلية التربية للبنات", "gender": "انثى"}, {"branch": "علمي", "grade": 62.0, "total": 434.0, "college": "جامعة الموصل/كلية التربية للبنات", "gender": "انثى"}, {"branch": "علمي", "grade": 62.0, "total": 434.0, "college": "جامعة الانبار/كلية التربية للبنات", "gender": "انثى"}, {"branch": "علمي", "grade": 62.0, "total": 434.0, "college": "جامعة الحمدانية/كلية التربية للعلوم الصرفة", "gender": "مختلط"}, {"branch": "علمي", "grade": 62.0, "total": 434.0, "college": "جامعة الموصل/كلية الآداب-قسم المعلومات وتقنيات المعرفة", "gender": "مختلط"}, {"branch": "علمي", "grade": 62.0, "total": 434.0, "college": "جامعة كركوك/كلية التربية الأساسية-قسم التاريخ", "gender": "مختلط"}, {"branch": "علمي", "grade": 62.0, "total": 434.0, "college": "جامعة الانبار/كلية التربية الأساسية/حديثة", "gender": "مختلط"}, {"branch": "علمي", "grade": 62.0, "total": 434.0, "college": "جامعة تلعفر/كلية التربية الأساسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 62.0, "total": 434.0, "college": "جامعة ديالى/كلية التربية الأساسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 61.71, "total": 432.0, "college": "جامعة البصرة/كلية الزراعة", "gender": "مختلط"}, {"branch": "علمي", "grade": 61.57, "total": 431.0, "college": "جامعة سومر/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "علمي", "grade": 61.57, "total": 431.0, "college": "جامعة كركوك/كلية الآداب", "gender": "مختلط"}, {"branch": "علمي", "grade": 61.43, "total": 430.0, "college": "جامعة الانبار/كلية الآداب", "gender": "مختلط"}, {"branch": "علمي", "grade": 61.43, "total": 430.0, "college": "الجامعة التقنية الجنوبية/المعهد التقني الناصرية/تخصصات الفنون التطبيقية-قسم تقنيات الفنون التطبيقية", "gender": "مختلط"}, {"branch": "علمي", "grade": 61.29, "total": 429.0, "college": "جامعة واسط/كلية الآداب-قسم الاعلام", "gender": "مختلط"}, {"branch": "علمي", "grade": 61.29, "total": 429.0, "college": "جامعة واسط/كلية الآداب", "gender": "مختلط"}, {"branch": "علمي", "grade": 61.0, "total": 427.0, "college": "جامعة القادسية/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "علمي", "grade": 60.86, "total": 426.0, "college": "جامعة واسط/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "علمي", "grade": 60.86, "total": 426.0, "college": "جامعة الانبار/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "علمي", "grade": 60.86, "total": 426.0, "college": "جامعة بغداد/كلية العلوم الاسلامية", "gender": "مختلط"}, {"branch": "علمي", "grade": 60.86, "total": 426.0, "college": "الجامعة التقنية الجنوبية/المعهد التقني العمارة/التخصصات الهندسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 60.71, "total": 425.0, "college": "جامعة الكوفة/كلية الفقه", "gender": "مختلط"}, {"branch": "علمي", "grade": 60.71, "total": 425.0, "college": "جامعة بابل/كلية الفنون الجميلة", "gender": "مختلط"}, {"branch": "علمي", "grade": 60.71, "total": 425.0, "college": "جامعة واسط/كلية الفنون الجميلة", "gender": "مختلط"}, {"branch": "علمي", "grade": 60.57, "total": 424.0, "college": "جامعة الموصل/كلية الفنون الجميلة", "gender": "مختلط"}, {"branch": "علمي", "grade": 60.57, "total": 424.0, "college": "الجامعة التقنية الوسطى/الكلية التقنية الادارية/بغداد-الرصافة", "gender": "مختلط"}, {"branch": "علمي", "grade": 60.29, "total": 422.0, "college": "جامعة كركوك/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "علمي", "grade": 60.29, "total": 422.0, "college": "الجامعة التقنية الجنوبية/المعهد التقني الناصرية/التخصصات الادارية", "gender": "مختلط"}, {"branch": "علمي", "grade": 60.14, "total": 421.0, "college": "جامعة تكريت/كلية علوم الاغذية/الشرقاط", "gender": "مختلط"}, {"branch": "علمي", "grade": 60.0, "total": 420.0, "college": "جامعة الموصل/كلية العلوم البيئية", "gender": "مختلط"}, {"branch": "علمي", "grade": 60.0, "total": 420.0, "college": "جامعة القاسم الخضراء/كلية علوم البيئة", "gender": "مختلط"}, {"branch": "علمي", "grade": 60.0, "total": 420.0, "college": "جامعة الموصل/كلية العلوم البيئية-قسم تقانات البيئة", "gender": "مختلط"}, {"branch": "علمي", "grade": 60.0, "total": 420.0, "college": "جامعة الحمدانية/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "علمي", "grade": 60.0, "total": 420.0, "college": "جامعة الموصل/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "علمي", "grade": 60.0, "total": 420.0, "college": "جامعة الفلوجة/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "علمي", "grade": 60.0, "total": 420.0, "college": "جامعة تكريت/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "علمي", "grade": 60.0, "total": 420.0, "college": "جامعة تكريت/كلية الآداب", "gender": "مختلط"}, {"branch": "علمي", "grade": 60.0, "total": 420.0, "college": "جامعة سامراء/كلية الآداب", "gender": "مختلط"}, {"branch": "علمي", "grade": 60.0, "total": 420.0, "college": "الجامعة العراقية/كلية العلوم الاسلامية", "gender": "مختلط"}, {"branch": "علمي", "grade": 60.0, "total": 420.0, "college": "جامعة القاسم الخضراء/كلية علوم الاغذية", "gender": "مختلط"}, {"branch": "علمي", "grade": 60.0, "total": 420.0, "college": "جامعة ذي قار/كلية الاعلام", "gender": "مختلط"}, {"branch": "علمي", "grade": 60.0, "total": 420.0, "college": "جامعة القادسية/كلية الفنون الجميلة", "gender": "مختلط"}, {"branch": "علمي", "grade": 60.0, "total": 420.0, "college": "جامعة ديالى/كلية الفنون الجميلة", "gender": "مختلط"}, {"branch": "علمي", "grade": 60.0, "total": 420.0, "college": "جامعة الفرات الاوسط التقنية/الكلية التقنية الادارية/الكوفة", "gender": "مختلط"}, {"branch": "علمي", "grade": 60.0, "total": 420.0, "college": "الجامعة التقنية الشمالية/الكلية التقنية الحويجة/التخصصات الادارية", "gender": "مختلط"}, {"branch": "علمي", "grade": 60.0, "total": 420.0, "college": "الجامعة التقنية الشمالية/الكلية التقنية الادارية/الموصل", "gender": "مختلط"}, {"branch": "علمي", "grade": 60.0, "total": 420.0, "college": "الجامعة التقنية الوسطى/كلية الفنون التطبيقية", "gender": "مختلط"}, {"branch": "علمي", "grade": 59.86, "total": 419.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني النجف/تخصصات الفنون التطبيقية- قسم تقنيات التصميم والتزيين المعماري", "gender": "مختلط"}, {"branch": "علمي", "grade": 59.57, "total": 417.0, "college": "الجامعة المستنصرية/كلية العلوم السياحية", "gender": "مختلط"}, {"branch": "علمي", "grade": 59.43, "total": 416.0, "college": "جامعة ديالى/كلية العلوم الاسلامية", "gender": "مختلط"}, {"branch": "علمي", "grade": 59.43, "total": 416.0, "college": "الجامعة التقنية الجنوبية/المعهد التقني الناصرية/التخصصات الهندسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 59.0, "total": 413.0, "college": "جامعة كربلاء/كلية العلوم السياحية", "gender": "مختلط"}, {"branch": "علمي", "grade": 59.0, "total": 413.0, "college": "الجامعة التقنية الجنوبية/المعهد التقني الشطرة/التخصصات الادارية-قسم تقنيات ادارة المواد", "gender": "مختلط"}, {"branch": "علمي", "grade": 58.57, "total": 410.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني الكوفة/التخصصات الهندسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 58.43, "total": 409.0, "college": "الجامعة التقنية الوسطى/معهد التكنلوجيا/بغداد", "gender": "مختلط"}, {"branch": "علمي", "grade": 58.29, "total": 408.0, "college": "جامعة الكوفة/كلية الاثار", "gender": "مختلط"}, {"branch": "علمي", "grade": 58.0, "total": 406.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني الكوفة/التخصصات الادارية-قسم تقنيات ادارة المواد", "gender": "مختلط"}, {"branch": "علمي", "grade": 57.86, "total": 405.0, "college": "جامعة كربلاء/كلية الزراعة", "gender": "مختلط"}, {"branch": "علمي", "grade": 57.86, "total": 405.0, "college": "جامعة ذي قار/كلية الاثار/سوق الشيوخ", "gender": "مختلط"}, {"branch": "علمي", "grade": 57.71, "total": 404.0, "college": "جامعة ديالى/كلية الزراعة", "gender": "مختلط"}, {"branch": "علمي", "grade": 57.57, "total": 403.0, "college": "جامعة ميسان/كلية الزراعة", "gender": "مختلط"}, {"branch": "علمي", "grade": 57.57, "total": 403.0, "college": "جامعة سامراء/كلية العلوم الاسلامية", "gender": "مختلط"}, {"branch": "علمي", "grade": 57.43, "total": 402.0, "college": "جامعة كركوك/النباتات الطبية والصناعية", "gender": "مختلط"}, {"branch": "علمي", "grade": 57.29, "total": 401.0, "college": "جامعة تكريت/كلية العلوم الاسلامية", "gender": "مختلط"}, {"branch": "علمي", "grade": 56.71, "total": 397.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني الرميثة/التخصصات الادارية-قسم تقنيات المحاسبة", "gender": "مختلط"}, {"branch": "علمي", "grade": 56.57, "total": 396.0, "college": "جامعة القاسم الخضراء/كلية الزراعة", "gender": "مختلط"}, {"branch": "علمي", "grade": 56.43, "total": 395.0, "college": "جامعة الانبار/كلية العلوم الاسلامية", "gender": "مختلط"}, {"branch": "علمي", "grade": 56.29, "total": 394.0, "college": "الجامعة التقنية الوسطى/معهد الادارة/الرصافة", "gender": "مختلط"}, {"branch": "علمي", "grade": 56.14, "total": 393.0, "college": "جامعة القادسية/كلية الاثار", "gender": "مختلط"}, {"branch": "علمي", "grade": 55.71, "total": 390.0, "college": "الجامعة التقنية الوسطى/معهد الادارة التقني/بغداد", "gender": "مختلط"}, {"branch": "علمي", "grade": 55.43, "total": 388.0, "college": "جامعة سومر/كلية الزراعة", "gender": "مختلط"}, {"branch": "علمي", "grade": 55.29, "total": 387.0, "college": "جامعة تلعفر/كلية الزراعة", "gender": "مختلط"}, {"branch": "علمي", "grade": 55.29, "total": 387.0, "college": "جامعة الفرات الاوسط التقنية/الكلية التقنية الاقسام الزراعية/المسيب", "gender": "مختلط"}, {"branch": "علمي", "grade": 55.29, "total": 387.0, "college": "الجامعة التقنية الشمالية/الكلية التقنية الزراعية / الموصل", "gender": "مختلط"}, {"branch": "علمي", "grade": 55.14, "total": 386.0, "college": "جامعة تكريت/كلية الزراعة", "gender": "مختلط"}, {"branch": "علمي", "grade": 55.14, "total": 386.0, "college": "جامعة ذي قار/كلية الزراعة والاهوار", "gender": "مختلط"}, {"branch": "علمي", "grade": 55.14, "total": 386.0, "college": "جامعة سامراء/كلية الزراعة/بلد", "gender": "مختلط"}, {"branch": "علمي", "grade": 55.14, "total": 386.0, "college": "جامعة الموصل/كلية العلوم الاسلامية", "gender": "مختلط"}, {"branch": "علمي", "grade": 55.14, "total": 386.0, "college": "الجامعة التقنية الوسطى/معهد الفنون التطبيقية/بغداد", "gender": "مختلط"}, {"branch": "علمي", "grade": 55.0, "total": 385.0, "college": "جامعة الانبار/كلية الزراعة", "gender": "مختلط"}, {"branch": "علمي", "grade": 55.0, "total": 385.0, "college": "جامعة الموصل/كلية الزراعة والغابات", "gender": "مختلط"}, {"branch": "علمي", "grade": 55.0, "total": 385.0, "college": "جامعة القادسية/كلية الزراعة", "gender": "مختلط"}, {"branch": "علمي", "grade": 55.0, "total": 385.0, "college": "جامعة الكوفة/كلية الزراعة", "gender": "مختلط"}, {"branch": "علمي", "grade": 55.0, "total": 385.0, "college": "جامعة كركوك/كلية الزراعة", "gender": "مختلط"}, {"branch": "علمي", "grade": 55.0, "total": 385.0, "college": "جامعة المثنى/كلية الزراعة", "gender": "مختلط"}, {"branch": "علمي", "grade": 55.0, "total": 385.0, "college": "جامعة واسط/كلية الزراعة", "gender": "مختلط"}, {"branch": "علمي", "grade": 55.0, "total": 385.0, "college": "جامعة الموصل/كلية الاثار", "gender": "مختلط"}, {"branch": "علمي", "grade": 55.0, "total": 385.0, "college": "جامعة الفلوجة/كلية العلوم الاسلامية", "gender": "مختلط"}, {"branch": "علمي", "grade": 54.71, "total": 383.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني المسيب/التخصصات الزراعية", "gender": "مختلط"}, {"branch": "علمي", "grade": 54.71, "total": 383.0, "college": "الجامعة التقنية الوسطى/المعهد التقني الصويرة/التخصصات الزراعية-قسم تقنيات الانتاج النباتي", "gender": "مختلط"}, {"branch": "علمي", "grade": 54.0, "total": 378.0, "college": "الجامعة التقنية الوسطى/المعهد التقني الكوت/التخصصات الزراعية-قسم تقنيات الاحيائية الزراعية", "gender": "مختلط"}, {"branch": "علمي", "grade": 53.71, "total": 376.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني كربلاء/التخصصات الهندسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 53.71, "total": 376.0, "college": "الجامعة التقنية الوسطى/المعهد التقني الصويرة/التخصصات الادارية", "gender": "مختلط"}, {"branch": "علمي", "grade": 53.57, "total": 375.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني كربلاء/التخصصات الادارية", "gender": "مختلط"}, {"branch": "علمي", "grade": 53.29, "total": 373.0, "college": "الجامعة التقنية الشمالية/المعهد التقني الحويجة/التخصصات الهندسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 53.14, "total": 372.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني القادسية/التخصصات الهندسية-قسم تقنيات الميكانيك", "gender": "مختلط"}, {"branch": "علمي", "grade": 53.0, "total": 371.0, "college": "الجامعة التقنية الوسطى/المعهد التقني بعقوبة/التخصصات الهندسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 52.86, "total": 370.0, "college": "الجامعة التقنية الشمالية/المعهد التقني الحويجة/التخصصات الادارية", "gender": "مختلط"}, {"branch": "علمي", "grade": 52.57, "total": 368.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني السماوة/التخصصات الهندسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 52.57, "total": 368.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني بابل/التخصصات الادارية", "gender": "مختلط"}, {"branch": "علمي", "grade": 52.43, "total": 367.0, "college": "الجامعة التقنية الشمالية/المعهد التقني الدور(صلاح الدين)/التخصصات الهندسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 52.43, "total": 367.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني الرميثة/التخصصات الهندسية-قسم تقنيات الكهرباء", "gender": "مختلط"}, {"branch": "علمي", "grade": 52.29, "total": 366.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني المسيب/التخصصات الهندسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 52.29, "total": 366.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني الكوفة/التخصصات الزراعية", "gender": "مختلط"}, {"branch": "علمي", "grade": 52.29, "total": 366.0, "college": "الجامعة التقنية الشمالية/المعهد التقني الحويجة/التخصصات الزراعية-قسم تقنيات الانتاج النباتي", "gender": "مختلط"}, {"branch": "علمي", "grade": 52.29, "total": 366.0, "college": "الجامعة التقنية الوسطى/المعهد التقني الانبار/التخصصات الادارية", "gender": "مختلط"}, {"branch": "علمي", "grade": 51.71, "total": 362.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني النجف/التخصصات الهندسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 51.71, "total": 362.0, "college": "الجامعة التقنية الجنوبية/المعهد التقني الشطرة/التخصصات الزراعية", "gender": "مختلط"}, {"branch": "علمي", "grade": 51.71, "total": 362.0, "college": "الجامعة التقنية الوسطى/المعهد التقني بلد/التخصصات الادارية-قسم تقنيات المحاسبة", "gender": "مختلط"}, {"branch": "علمي", "grade": 51.43, "total": 360.0, "college": "الجامعة التقنية الجنوبية/المعهد التقني الشطرة/التخصصات الهندسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 51.43, "total": 360.0, "college": "الجامعة التقنية الوسطى/المعهد التقني الكوت/التخصصات الادارية", "gender": "مختلط"}, {"branch": "علمي", "grade": 51.14, "total": 358.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني بابل/التخصصات الهندسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 51.14, "total": 358.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني النجف/التخصصات الادارية", "gender": "مختلط"}, {"branch": "علمي", "grade": 51.14, "total": 358.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني القادسية/التخصصات الادارية", "gender": "مختلط"}, {"branch": "علمي", "grade": 51.0, "total": 357.0, "college": "الجامعة التقنية الوسطى/المعهد التقني الانبار/التخصصات الهندسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 51.0, "total": 357.0, "college": "الجامعة التقنية الوسطى/المعهد التقني الكوت/التخصصات الهندسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 51.0, "total": 357.0, "college": "الجامعة التقنية الشمالية/المعهد التقني الدور(صلاح الدين)/التخصصات الادارية", "gender": "مختلط"}, {"branch": "علمي", "grade": 51.0, "total": 357.0, "college": "الجامعة التقنية الوسطى/المعهد التقني بعقوبة/التخصصات الادارية", "gender": "مختلط"}, {"branch": "علمي", "grade": 50.71, "total": 355.0, "college": "الجامعة التقنية الشمالية/المعهد التقني الموصل/التخصصات الهندسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 50.71, "total": 355.0, "college": "الجامعة التقنية الشمالية/معهد الادارة التقني/نينوى", "gender": "مختلط"}, {"branch": "علمي", "grade": 50.57, "total": 354.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني المسيب/التخصصات الادارية", "gender": "مختلط"}, {"branch": "علمي", "grade": 50.57, "total": 354.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني السماوة/التخصصات الادارية", "gender": "مختلط"}, {"branch": "علمي", "grade": 50.43, "total": 353.0, "college": "الجامعة التقنية الشمالية/المعهد التقني كركوك/التخصصات الادارية", "gender": "مختلط"}, {"branch": "علمي", "grade": 50.0, "total": 350.0, "college": "الجامعة التقنية الشمالية/المعهد التقني كركوك/التخصصات الهندسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 50.0, "total": 350.0, "college": "الجامعة التقنية الوسطى/المعهد التقني الصويرة/التخصصات الهندسية", "gender": "مختلط"}, {"branch": "علمي", "grade": 50.0, "total": 350.0, "college": "الجامعة التقنية الوسطى/معهد اعداد المدربين التقنيين/بغداد", "gender": "مختلط"}, {"branch": "ادبي", "grade": 91.43, "total": 640.0, "college": "جامعة بغداد/كلية القانون", "gender": "مختلط"}, {"branch": "ادبي", "grade": 85.71, "total": 600.0, "college": "جامعة النهرين/كلية الحقوق", "gender": "مختلط"}, {"branch": "ادبي", "grade": 85.14, "total": 596.0, "college": "الجامعة المستنصرية/كلية القانون", "gender": "مختلط"}, {"branch": "ادبي", "grade": 85.14, "total": 596.0, "college": "جامعة بغداد/كلية التربية ابن رشد للعلوم الانسانية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 82.86, "total": 580.0, "college": "الجامعة المستنصرية/كلية التربية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 82.43, "total": 577.0, "college": "جامعة الحمدانية/كلية التربية للعلوم الانسانية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 82.0, "total": 574.0, "college": "الجامعة العراقية/كلية القانون والعلوم السياسية-قسم القانون", "gender": "مختلط"}, {"branch": "ادبي", "grade": 79.86, "total": 559.0, "college": "جامعة البصرة/كلية القانون", "gender": "مختلط"}, {"branch": "ادبي", "grade": 79.86, "total": 559.0, "college": "جامعة كركوك/كلية التربية للعلوم الانسانية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 77.29, "total": 541.0, "college": "جامعة بغداد/كلية التربية للبنات-قسم اللغة الانكليزية", "gender": "انثى"}, {"branch": "ادبي", "grade": 76.14, "total": 533.0, "college": "جامعة ديالى/كلية التربية للعلوم الانسانية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 75.86, "total": 531.0, "college": "جامعة النهرين/كلية اقتصاديات الاعمال", "gender": "مختلط"}, {"branch": "ادبي", "grade": 75.29, "total": 527.0, "college": "جامعة المثنى/كلية التربية للعلوم الانسانية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 74.0, "total": 518.0, "college": "جامعة الشطرة/كلية التربية للبنات-قسم رياض الاطفال", "gender": "انثى"}, {"branch": "ادبي", "grade": 73.86, "total": 517.0, "college": "جامعة واسط/كلية التربية للعلوم الانسانية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 72.86, "total": 510.0, "college": "جامعة تلعفر/كلية التربية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 72.57, "total": 508.0, "college": "الجامعة العراقية/كلية التربية للبنات-قسم اللغة الانكليزية", "gender": "انثى"}, {"branch": "ادبي", "grade": 72.57, "total": 508.0, "college": "جامعة البصرة/كلية التربية للعلوم الانسانية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 72.29, "total": 506.0, "college": "جامعة ميسان/كلية التربية الأساسية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 72.29, "total": 506.0, "college": "الجامعة المستنصرية/كلية التربية الأساسية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 72.0, "total": 504.0, "college": "جامعة الموصل/كلية الحقوق", "gender": "مختلط"}, {"branch": "ادبي", "grade": 71.71, "total": 502.0, "college": "جامعة ذي قار/كلية التربية للعلوم الانسانية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 71.57, "total": 501.0, "college": "جامعة الانبار/كلية التربية للعلوم الانسانية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 71.29, "total": 499.0, "college": "جامعة سومر/كلية القانون", "gender": "مختلط"}, {"branch": "ادبي", "grade": 71.29, "total": 499.0, "college": "جامعة تكريت/كلية التربية الأساسية/الشرقاط-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 71.29, "total": 499.0, "college": "جامعة بابل/كلية التربية الأساسية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 71.0, "total": 497.0, "college": "جامعة سامراء/كلية التربية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 70.86, "total": 496.0, "college": "جامعة القادسية/كلية التربية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 70.86, "total": 496.0, "college": "جامعة ميسان/كلية التربية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 70.71, "total": 495.0, "college": "جامعة الانبار/كلية التربية للبنات-قسم اللغة الانكليزية", "gender": "انثى"}, {"branch": "ادبي", "grade": 70.71, "total": 495.0, "college": "جامعة سومر/كلية التربية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 70.57, "total": 494.0, "college": "جامعة كركوك/كلية التربية الأساسية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 70.43, "total": 493.0, "college": "جامعة الموصل/كلية التربية الأساسية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 70.29, "total": 492.0, "college": "جامعة القادسية/كلية القانون", "gender": "مختلط"}, {"branch": "ادبي", "grade": 70.29, "total": 492.0, "college": "جامعة الكوفة/كلية التربية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 70.25, "total": 491.75, "college": "جامعة تكريت/كلية التربية للبنات-قسم اللغة الانكليزية", "gender": "انثى"}, {"branch": "ادبي", "grade": 70.14, "total": 491.0, "college": "جامعة سامراء/كلية القانون", "gender": "مختلط"}, {"branch": "ادبي", "grade": 70.14, "total": 491.0, "college": "جامعة الفلوجة/كلية القانون", "gender": "مختلط"}, {"branch": "ادبي", "grade": 70.14, "total": 491.0, "college": "جامعة تكريت/كلية التربية للعلوم الانسانية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 70.14, "total": 491.0, "college": "جامعة بابل/كلية التربية للعلوم الانسانية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 70.14, "total": 491.0, "college": "جامعة البصرة/كلية التربية/القرنة-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 70.0, "total": 490.0, "college": "جامعة ذي قار/كلية القانون", "gender": "مختلط"}, {"branch": "ادبي", "grade": 70.0, "total": 490.0, "college": "جامعة كربلاء/كلية القانون", "gender": "مختلط"}, {"branch": "ادبي", "grade": 70.0, "total": 490.0, "college": "جامعة ديالى/كلية القانون والعلوم السياسية-قسم القانون", "gender": "مختلط"}, {"branch": "ادبي", "grade": 70.0, "total": 490.0, "college": "جامعة بابل/كلية القانون", "gender": "مختلط"}, {"branch": "ادبي", "grade": 70.0, "total": 490.0, "college": "جامعة نينوى/كلية القانون", "gender": "مختلط"}, {"branch": "ادبي", "grade": 70.0, "total": 490.0, "college": "جامعة المثنى/كلية القانون", "gender": "مختلط"}, {"branch": "ادبي", "grade": 70.0, "total": 490.0, "college": "جامعة ميسان/كلية القانون", "gender": "مختلط"}, {"branch": "ادبي", "grade": 70.0, "total": 490.0, "college": "جامعة واسط/كلية القانون", "gender": "مختلط"}, {"branch": "ادبي", "grade": 70.0, "total": 490.0, "college": "جامعة الانبار/كلية القانون", "gender": "مختلط"}, {"branch": "ادبي", "grade": 70.0, "total": 490.0, "college": "جامعة تكريت/كلية القانون", "gender": "مختلط"}, {"branch": "ادبي", "grade": 70.0, "total": 490.0, "college": "جامعة كركوك/كلية القانون والعلوم السياسية-قسم القانون", "gender": "مختلط"}, {"branch": "ادبي", "grade": 70.0, "total": 490.0, "college": "جامعة الكوفة/كلية القانون", "gender": "مختلط"}, {"branch": "ادبي", "grade": 70.0, "total": 490.0, "college": "جامعة كربلاء/كلية التربية للعلوم الانسانية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 70.0, "total": 490.0, "college": "جامعة المثنى/كلية التربية للعلوم الانسانية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 70.0, "total": 490.0, "college": "جامعة الكوفة/كلية التربية للبنات-قسم اللغة الانكليزية", "gender": "انثى"}, {"branch": "ادبي", "grade": 70.0, "total": 490.0, "college": "جامعة الموصل/كلية التربية للعلوم الانسانية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 70.0, "total": 490.0, "college": "جامعة ديالى/كلية التربية الأساسية-قسم اللغة الانكليزية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 69.14, "total": 484.0, "college": "جامعة بغداد/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "ادبي", "grade": 68.0, "total": 476.0, "college": "الجامعة العراقية/كلية الآداب-قسم الترجمة", "gender": "مختلط"}, {"branch": "ادبي", "grade": 67.14, "total": 470.0, "college": "جامعة المثنى/كلية التربية الأساسية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 67.0, "total": 469.0, "college": "جامعة المثنى/كلية التربية الأساسية-قسم معلم الصفوف الاولى", "gender": "مختلط"}, {"branch": "ادبي", "grade": 66.14, "total": 463.0, "college": "الجامعة المستنصرية/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "ادبي", "grade": 66.0, "total": 462.0, "college": "جامعة بغداد/كلية العلوم السياسية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 65.29, "total": 457.0, "college": "جامعة الكوفة/كلية التربية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 64.86, "total": 454.0, "college": "جامعة ذي قار/كلية الاعلام", "gender": "مختلط"}, {"branch": "ادبي", "grade": 64.29, "total": 450.0, "college": "جامعة بغداد/كلية التربية ابن رشد للعلوم الانسانية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 64.0, "total": 448.0, "college": "جامعة ميسان/كلية العلوم السياسية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 63.86, "total": 447.0, "college": "جامعة كركوك/كلية التربية للعلوم الانسانية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 63.71, "total": 446.0, "college": "جامعة القادسية/كلية الفنون الجميلة", "gender": "مختلط"}, {"branch": "ادبي", "grade": 63.43, "total": 444.0, "college": "جامعة بغداد/كلية التربية للبنات-قسم الاقتصاد المنزلي", "gender": "انثى"}, {"branch": "ادبي", "grade": 63.14, "total": 442.0, "college": "جامعة البصرة/كلية التربية/القرنة", "gender": "مختلط"}, {"branch": "ادبي", "grade": 62.71, "total": 439.0, "college": "جامعة الموصل/كلية الفنون الجميلة", "gender": "مختلط"}, {"branch": "ادبي", "grade": 62.57, "total": 438.0, "college": "الجامعة العراقية/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "ادبي", "grade": 62.57, "total": 438.0, "college": "جامعة ميسان/كلية التربية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 62.43, "total": 437.0, "college": "جامعة الكوفة/كلية العلوم السياسية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 62.43, "total": 437.0, "college": "الجامعة المستنصرية/كلية العلوم السياسية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 62.0, "total": 434.0, "college": "جامعة تكريت/كلية العلوم السياسية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 62.0, "total": 434.0, "college": "جامعة الانبار/كلية العلوم السياسية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 62.0, "total": 434.0, "college": "جامعة ديالى/كلية القانون والعلوم السياسية-قسم العلوم السياسية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 62.0, "total": 434.0, "college": "جامعة كركوك/كلية القانون والعلوم السياسية-قسم العلوم السياسية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 62.0, "total": 434.0, "college": "جامعة الموصل/كلية العلوم السياسية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 62.0, "total": 434.0, "college": "الجامعة العراقية/كلية القانون والعلوم السياسية-قسم العلوم السياسية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 62.0, "total": 434.0, "college": "جامعة النهرين/كلية العلوم السياسية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 61.86, "total": 433.0, "college": "جامعة المثنى/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "ادبي", "grade": 61.86, "total": 433.0, "college": "جامعة ديالى/كلية التربية للعلوم الانسانية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 61.86, "total": 433.0, "college": "جامعة سومر/كلية التربية الأساسية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 61.71, "total": 432.0, "college": "جامعة واسط/كلية الآداب-قسم الاعلام", "gender": "مختلط"}, {"branch": "ادبي", "grade": 61.71, "total": 432.0, "college": "جامعة بغداد/كلية الاعلام", "gender": "مختلط"}, {"branch": "ادبي", "grade": 61.43, "total": 430.0, "college": "جامعة البصرة/كلية التربية للعلوم الانسانية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 61.43, "total": 430.0, "college": "جامعة القادسية/كلية التربية للبنات-قسم رياض الاطفال", "gender": "انثى"}, {"branch": "ادبي", "grade": 61.43, "total": 430.0, "college": "الجامعة المستنصرية/كلية التربية الأساسية-قسم معلم الصفوف الاولى", "gender": "مختلط"}, {"branch": "ادبي", "grade": 61.43, "total": 430.0, "college": "جامعة تكريت/كلية التربية الأساسية/الشرقاط", "gender": "مختلط"}, {"branch": "ادبي", "grade": 61.43, "total": 430.0, "college": "الجامعة التقنية الشمالية/الكلية التقنية الحويجة/التخصصات الادارية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 61.14, "total": 428.0, "college": "جامعة بغداد/كلية التربية للبنات", "gender": "انثى"}, {"branch": "ادبي", "grade": 61.14, "total": 428.0, "college": "الجامعة التقنية الجنوبية/الكلية التقنية الاقسام الادارية/ذي قار-قسم تقنيات المحاسبة", "gender": "مختلط"}, {"branch": "ادبي", "grade": 61.0, "total": 427.0, "college": "الجامعة المستنصرية/كلية التربية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 61.0, "total": 427.0, "college": "جامعة كركوك/كلية التربية الأساسية-قسم رياض الاطفال", "gender": "انثى"}, {"branch": "ادبي", "grade": 61.0, "total": 427.0, "college": "جامعة الموصل/كلية التربية الأساسية-قسم معلم الصفوف الاولى", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.86, "total": 426.0, "college": "جامعة بغداد/كلية الآداب-قسم علم النفس", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.86, "total": 426.0, "college": "جامعة الموصل/كلية الآداب-قسم المعلومات وتقنيات المعرفة", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.86, "total": 426.0, "college": "جامعة الموصل/كلية التربية الأساسية-قسم رياض الاطفال للبنات", "gender": "انثى"}, {"branch": "ادبي", "grade": 60.86, "total": 426.0, "college": "جامعة البصرة/كلية الفنون الجميلة", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.86, "total": 426.0, "college": "الجامعة التقنية الوسطى/الكلية التقنية بعقوبة/التخصصات الادارية-قسم تقنيات المحاسبة", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.71, "total": 425.0, "college": "جامعة ديالى/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.71, "total": 425.0, "college": "جامعة واسط/كلية التربية الأساسية/العزيزية-قسم رياض الاطفال", "gender": "انثى"}, {"branch": "ادبي", "grade": 60.71, "total": 425.0, "college": "جامعة الانبار/كلية التربية الأساسية/حديثة-قسم معلم الصفوف الاولى", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.57, "total": 424.0, "college": "الجامعة العراقية/كلية التربية للبنات-قسم رياض الاطفال والتربية الخاصة", "gender": "انثى"}, {"branch": "ادبي", "grade": 60.57, "total": 424.0, "college": "الجامعة المستنصرية/كلية الآداب-قسم علم النفس", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.57, "total": 424.0, "college": "جامعة الانبار/كلية التربية الأساسية/حديثة", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.57, "total": 424.0, "college": "جامعة الموصل/كلية التربية الأساسية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.43, "total": 423.0, "college": "جامعة القادسية/كلية التربية للبنات", "gender": "انثى"}, {"branch": "ادبي", "grade": 60.43, "total": 423.0, "college": "جامعة القاسم الخضراء/كلية التربية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.43, "total": 423.0, "college": "الجامعة التقنية الوسطى/كلية الفنون التطبيقية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.29, "total": 422.0, "college": "جامعة ميسان/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.29, "total": 422.0, "college": "جامعة سومر/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.29, "total": 422.0, "college": "جامعة القادسية/كلية الآداب", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.29, "total": 422.0, "college": "جامعة ذي قار/كلية التربية الأساسية/سوق الشيوخ-قسم التربية الخاصة", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.29, "total": 422.0, "college": "الجامعة المستنصرية/كلية التربية الأساسية-قسم رياض الاطفال", "gender": "انثى"}, {"branch": "ادبي", "grade": 60.29, "total": 422.0, "college": "جامعة سومر/كلية التربية الأساسية-قسم معلم الصفوف الاولى", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.29, "total": 422.0, "college": "جامعة واسط/كلية الفنون الجميلة", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.29, "total": 422.0, "college": "الجامعة التقنية الجنوبية/الكلية التقنية الادارية/البصرة", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.14, "total": 421.0, "college": "جامعة الانبار/كلية التربية/القائم", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.14, "total": 421.0, "college": "جامعة الحمدانية/كلية التربية للعلوم الانسانية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.14, "total": 421.0, "college": "جامعة الموصل/كلية التربية للبنات", "gender": "انثى"}, {"branch": "ادبي", "grade": 60.14, "total": 421.0, "college": "جامعة ديالى/كلية التربية المقداد/المقدادية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.14, "total": 421.0, "college": "جامعة واسط/كلية التربية للعلوم الانسانية-قسم العلوم التربوية والنفسية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.14, "total": 421.0, "college": "جامعة بغداد/كلية التربية للبنات-قسم رياض الاطفال", "gender": "انثى"}, {"branch": "ادبي", "grade": 60.14, "total": 421.0, "college": "جامعة بغداد/كلية الآداب-قسم الاثار", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.14, "total": 421.0, "college": "الجامعة المستنصرية/كلية الآداب-قسم الفلسفة", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.14, "total": 421.0, "college": "جامعة كركوك/كلية التربية الأساسية-قسم معلم الصفوف الاولى", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.14, "total": 421.0, "college": "جامعة كركوك/كلية التربية الأساسية-قسم التاريخ", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.14, "total": 421.0, "college": "الجامعة التقنية الشمالية/الكلية التقنية الادارية/الموصل", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة الكوفة/كلية اللغات", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة بغداد/كلية اللغات", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة واسط/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة الانبار/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة الموصل/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة سامراء/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة البصرة/كلية الادارة والاقتصاد/القرنة", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة ذي قار/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة البصرة/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة بابل/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة القادسية/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة تكريت/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة كربلاء/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة الكوفة/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة الفلوجة/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة كركوك/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة الحمدانية/كلية الادارة والاقتصاد", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة القادسية/كلية التربية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة تكريت/كلية التربية للبنات", "gender": "انثى"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة تكريت/كلية التربية للعلوم الانسانية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة تكريت/كلية التربية/طوزخورماتو", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة الكوفة/كلية التربية للبنات", "gender": "انثى"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة سامراء/كلية التربية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة الشطرة/كلية التربية للبنات", "gender": "انثى"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة الفلوجة/كلية التربية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة واسط/كلية التربية للعلوم الانسانية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "الجامعة العراقية/كلية التربية للبنات", "gender": "انثى"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة الانبار/كلية التربية للبنات", "gender": "انثى"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة الانبار/كلية التربية للعلوم الانسانية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة كركوك/كلية التربية للبنات", "gender": "انثى"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة ذي قار/كلية التربية للعلوم الانسانية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة كربلاء/كلية التربية للعلوم الانسانية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة بابل/كلية التربية للعلوم الانسانية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة الموصل/كلية التربية للعلوم الانسانية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة البصرة/كلية التربية للبنات", "gender": "انثى"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "الجامعة العراقية/كلية التربية/الطارمية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة واسط/كلية الآداب-قسم الترجمة", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة واسط/كلية الآداب", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة الانبار/كلية الآداب", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة القادسية/كلية الآداب-قسم علم النفس", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "الجامعة المستنصرية/كلية الآداب", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة الموصل/كلية الآداب", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة البصرة/كلية الآداب", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة بغداد/كلية الآداب-قسم الفلسفة", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة كركوك/كلية الآداب", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة ذي قار/كلية الآداب", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة الكوفة/كلية الآداب", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة بابل/كلية الآداب", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة سامراء/كلية الآداب", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة بغداد/كلية الآداب", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "الجامعة العراقية/كلية الآداب", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة تكريت/كلية الآداب", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة ذي قار/كلية التربية الأساسية/سوق الشيوخ-قسم معلم الصفوف الأولى", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة تلعفر/كلية التربية الأساسية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة ميسان/كلية التربية الأساسية-قسم معلم الصفوف الاولى", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة ميسان/كلية التربية الأساسية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة واسط/كلية التربية الأساسية/العزيزية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة الموصل/كلية التربية الأساسية-قسم التربية الخاصة", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة الكوفة/كلية التربية الاساسية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "الجامعة المستنصرية/كلية التربية الأساسية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة بابل/كلية التربية الأساسية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة ديالى/كلية التربية الأساسية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة الكوفة/كلية التربية الاساسية-قسم رياض الاطفال", "gender": "انثى"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة كركوك/كلية الاعلام", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "الجامعة العراقية/كلية الاعلام", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة بابل/كلية الفنون الجميلة", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة بغداد/كلية الفنون الجميلة", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "جامعة ديالى/كلية الفنون الجميلة", "gender": "مختلط"}, {"branch": "ادبي", "grade": 60.0, "total": 420.0, "college": "الجامعة التقنية الوسطى/الكلية التقنية الادارية/بغداد-الرصافة", "gender": "مختلط"}, {"branch": "ادبي", "grade": 58.57, "total": 410.0, "college": "جامعة بابل/كلية العلوم الاسلامية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 58.29, "total": 408.0, "college": "جامعة تكريت/كلية العلوم الاسلامية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 58.29, "total": 408.0, "college": "الجامعة التقنية الجنوبية/المعهد التقني العمارة/التخصصات الادارية-قسم تقنيات المحاسبة", "gender": "مختلط"}, {"branch": "ادبي", "grade": 58.29, "total": 408.0, "college": "الجامعة التقنية الجنوبية/المعهد التقني الاداري/البصرة", "gender": "مختلط"}, {"branch": "ادبي", "grade": 57.86, "total": 405.0, "college": "جامعة الموصل/كلية الاثار", "gender": "مختلط"}, {"branch": "ادبي", "grade": 57.43, "total": 402.0, "college": "جامعة بغداد/كلية العلوم الاسلامية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 57.0, "total": 399.0, "college": "جامعة سامراء/كلية العلوم الاسلامية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 56.86, "total": 398.0, "college": "جامعة ذي قار/كلية العلوم الاسلامية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 56.86, "total": 398.0, "college": "الجامعة التقنية الجنوبية/المعهد التقني الناصرية/التخصصات الادارية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 56.57, "total": 396.0, "college": "جامعة كربلاء/كلية العلوم الاسلامية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 56.43, "total": 395.0, "college": "جامعة الموصل/كلية العلوم الاسلامية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 56.29, "total": 394.0, "college": "جامعة ديالى/كلية العلوم الاسلامية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 56.0, "total": 392.0, "college": "الجامعة المستنصرية/كلية العلوم السياحية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 56.0, "total": 392.0, "college": "الجامعة العراقية/كلية العلوم الاسلامية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 55.71, "total": 390.0, "college": "جامعة ذي قار/كلية الاثار/سوق الشيوخ", "gender": "مختلط"}, {"branch": "ادبي", "grade": 55.57, "total": 389.0, "college": "جامعة الانبار/كلية العلوم الاسلامية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 55.57, "total": 389.0, "college": "الجامعة التقنية الجنوبية/المعهد التقني الناصرية/تخصصات الفنون التطبيقية-قسم تقنيات الفنون التطبيقية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 55.43, "total": 388.0, "college": "جامعة الكوفة/كلية الاثار", "gender": "مختلط"}, {"branch": "ادبي", "grade": 55.43, "total": 388.0, "college": "جامعة القادسية/كلية الاثار", "gender": "مختلط"}, {"branch": "ادبي", "grade": 55.0, "total": 385.0, "college": "جامعة كربلاء/كلية العلوم السياحية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 55.0, "total": 385.0, "college": "جامعة الفلوجة/كلية العلوم الاسلامية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 55.0, "total": 385.0, "college": "جامعة الكوفة/كلية الفقه", "gender": "مختلط"}, {"branch": "ادبي", "grade": 54.86, "total": 384.0, "college": "الجامعة التقنية الجنوبية/المعهد التقني الشطرة/التخصصات الادارية-قسم تقنيات ادارة المواد", "gender": "مختلط"}, {"branch": "ادبي", "grade": 54.29, "total": 380.0, "college": "الجامعة التقنية الشمالية/المعهد التقني كركوك/التخصصات الادارية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 53.71, "total": 376.0, "college": "الجامعة التقنية الوسطى/المعهد التقني الصويرة/التخصصات الادارية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 53.71, "total": 376.0, "college": "الجامعة التقنية الوسطى/معهد الادارة/الرصافة", "gender": "مختلط"}, {"branch": "ادبي", "grade": 51.29, "total": 359.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني الرميثة/التخصصات الادارية-قسم تقنيات المحاسبة", "gender": "مختلط"}, {"branch": "ادبي", "grade": 51.14, "total": 358.0, "college": "الجامعة التقنية الوسطى/المعهد التقني بعقوبة/التخصصات الادارية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 50.71, "total": 355.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني المسيب/التخصصات الادارية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 50.57, "total": 354.0, "college": "الجامعة التقنية الشمالية/المعهد التقني الحويجة/التخصصات الادارية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 50.43, "total": 353.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني الكوفة/التخصصات الادارية-قسم تقنيات ادارة المواد", "gender": "مختلط"}, {"branch": "ادبي", "grade": 50.29, "total": 352.0, "college": "الجامعة التقنية الوسطى/المعهد التقني بلد/التخصصات الادارية-قسم تقنيات المحاسبة", "gender": "مختلط"}, {"branch": "ادبي", "grade": 50.29, "total": 352.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني النجف/تخصصات الفنون التطبيقية- قسم تقنيات التصميم والتزيين المعماري", "gender": "مختلط"}, {"branch": "ادبي", "grade": 50.14, "total": 351.0, "college": "الجامعة التقنية الوسطى/المعهد التقني الانبار/التخصصات الادارية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 50.14, "total": 351.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني السماوة/التخصصات الادارية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 50.14, "total": 351.0, "college": "الجامعة التقنية الوسطى/معهد الفنون التطبيقية/بغداد", "gender": "مختلط"}, {"branch": "ادبي", "grade": 50.0, "total": 350.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني كربلاء/التخصصات الادارية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 50.0, "total": 350.0, "college": "الجامعة التقنية الوسطى/المعهد التقني الكوت/التخصصات الادارية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 50.0, "total": 350.0, "college": "الجامعة التقنية الوسطى/معهد الادارة التقني/بغداد", "gender": "مختلط"}, {"branch": "ادبي", "grade": 50.0, "total": 350.0, "college": "الجامعة التقنية الشمالية/المعهد التقني الدور(صلاح الدين)/التخصصات الادارية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 50.0, "total": 350.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني بابل/التخصصات الادارية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 50.0, "total": 350.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني النجف/التخصصات الادارية", "gender": "مختلط"}, {"branch": "ادبي", "grade": 50.0, "total": 350.0, "college": "الجامعة التقنية الشمالية/معهد الادارة التقني/نينوى", "gender": "مختلط"}, {"branch": "ادبي", "grade": 50.0, "total": 350.0, "college": "جامعة الفرات الاوسط التقنية/المعهد التقني القادسية/التخصصات الادارية", "gender": "مختلط"}];
+
+// ══════════════════════════════════════
+// STATE
+// ══════════════════════════════════════
+let selectedBranch = null;
+let selectedGrade = null;
+let allResults = [];
+let filteredResults = [];
+let currentPage = 1;
+const PER_PAGE = 20;
+
+// ══════════════════════════════════════
+// BRANCH SELECTION
+// ══════════════════════════════════════
+function selectBranch(branch) {
+  selectedBranch = branch;
+  document.getElementById('btn-sci').className = 'branch-btn' + (branch === 'علمي' ? ' selected-sci' : '');
+  document.getElementById('btn-art').className = 'branch-btn' + (branch === 'ادبي' ? ' selected-art' : '');
+  checkReady();
+}
+
+// ══════════════════════════════════════
+// GRADE SLIDER
+// ══════════════════════════════════════
+function updateGrade(val) {
+  const v = parseFloat(val);
+  selectedGrade = v;
+  const intPart = Math.floor(v);
+  const decPart = (v % 1).toFixed(2).substring(1);
+  document.getElementById('grade-int').textContent = intPart;
+  document.getElementById('grade-dec').textContent = decPart;
+  document.getElementById('grade-input').value = v.toFixed(2);
+  updateCategory(v);
+  checkReady();
+}
+
+function syncFromInput(val) {
+  const v = parseFloat(val);
+  if (isNaN(v) || v < 50 || v > 100) return;
+  selectedGrade = v;
+  document.getElementById('grade-slider').value = v;
+  const intPart = Math.floor(v);
+  const decPart = (v % 1).toFixed(2).substring(1);
+  document.getElementById('grade-int').textContent = intPart;
+  document.getElementById('grade-dec').textContent = decPart;
+  updateCategory(v);
+  checkReady();
+}
+
+function updateCategory(v) {
+  const el = document.getElementById('grade-category');
+  const numEl = document.getElementById('grade-int');
+  if (v >= 95) { el.textContent = '🏆 ممتاز جداً — أعلى التخصصات متاحة'; numEl.style.color = '#f5c842'; }
+  else if (v >= 85) { el.textContent = '🌟 ممتاز — تخصصات متميزة متاحة'; numEl.style.color = '#22c55e'; }
+  else if (v >= 75) { el.textContent = '✅ جيد جداً — تخصصات جيدة متاحة'; numEl.style.color = '#4f7cff'; }
+  else if (v >= 65) { el.textContent = '📘 جيد — خيارات متعددة متاحة'; numEl.style.color = '#a0aec0'; }
+  else { el.textContent = '📋 مقبول — تخصصات إدارية وتقنية متاحة'; numEl.style.color = '#ff5c5c'; }
+}
+
+function checkReady() {
+  document.getElementById('calc-btn').disabled = !(selectedBranch && selectedGrade);
+}
+
+// ══════════════════════════════════════
+// CALCULATE
+// ══════════════════════════════════════
+function calculate() {
+  allResults = IRAQ_DATA.filter(r =>
+    r.branch === selectedBranch && r.grade <= selectedGrade
+  ).sort((a, b) => b.grade - a.grade);
+
+  filteredResults = [...allResults];
+  currentPage = 1;
+
+  document.getElementById('initial-hint').style.display = 'none';
+  document.getElementById('results-section').style.display = 'block';
+  document.getElementById('filter-input').value = '';
+
+  renderMiniStats();
+  renderResults();
+
+  // Scroll to results
+  document.getElementById('results-section').scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// ══════════════════════════════════════
+// MINI STATS
+// ══════════════════════════════════════
+function renderMiniStats() {
+  const total = allResults.length;
+  const easy = allResults.filter(r => selectedGrade - r.grade >= 5).length;
+  const close = allResults.filter(r => selectedGrade - r.grade < 2).length;
+
+  document.getElementById('mini-stats').innerHTML = `
+    <div class="mini-stat">
+      <div class="mini-stat-num" style="color:var(--accent);">${total}</div>
+      <div class="mini-stat-label">تخصص متاح</div>
+    </div>
+    <div class="mini-stat">
+      <div class="mini-stat-num" style="color:var(--green);">${easy}</div>
+      <div class="mini-stat-label">مريح (فارق +5%)</div>
+    </div>
+    <div class="mini-stat">
+      <div class="mini-stat-num" style="color:var(--gold);">${close}</div>
+      <div class="mini-stat-label">على الحافة (فارق &lt;2%)</div>
+    </div>
+  `;
+}
+
+// ══════════════════════════════════════
+// RENDER RESULTS
+// ══════════════════════════════════════
+function renderResults() {
+  const tbody = document.getElementById('results-body');
+  const count = filteredResults.length;
+  document.getElementById('results-count').textContent = count + ' تخصص';
+
+  if (count === 0) {
+    tbody.innerHTML = '';
+    document.getElementById('empty-state').style.display = 'block';
+    document.getElementById('pagination').innerHTML = '';
+    return;
+  }
+  document.getElementById('empty-state').style.display = 'none';
+
+  const start = (currentPage - 1) * PER_PAGE;
+  const page = filteredResults.slice(start, start + PER_PAGE);
+
+  tbody.innerHTML = page.map((r, i) => {
+    const globalRank = start + i + 1;
+    const diff = (selectedGrade - r.grade).toFixed(2);
+    const gradeClass = r.grade >= 90 ? 'grade-yellow' : r.grade >= 75 ? 'grade-green' : r.grade >= 60 ? 'grade-blue' : 'grade-red';
+    const diffClass = diff >= 5 ? 'diff-ok' : diff >= 2 ? 'diff-close' : 'diff-no';
+    const diffText = diff >= 5 ? `+${diff}%` : diff >= 2 ? `+${diff}%` : `+${diff}%`;
+
+    const rankClass = globalRank === 1 ? 'rank-1' : globalRank === 2 ? 'rank-2' : globalRank === 3 ? 'rank-3' : '';
+
+    // Split college name
+    const parts = r.college.split('/');
+    const uniName = parts[0] || r.college;
+    const facName = parts.slice(1).join(' / ');
+
+    return `
+      <tr>
+        <td><div class="rank-num ${rankClass}">${globalRank}</div></td>
+        <td>
+          <div class="college-name">${uniName}</div>
+          ${facName ? `<div class="college-sub">${facName}</div>` : ''}
+        </td>
+        <td>
+          <div class="grade-pill ${gradeClass}">${r.grade}%</div>
+        </td>
+        <td>
+          <span class="diff-badge ${diffClass}">${diffText}</span>
+        </td>
+      </tr>
+    `;
+  }).join('');
+
+  renderPagination(count);
+}
+
+// ══════════════════════════════════════
+// PAGINATION
+// ══════════════════════════════════════
+function renderPagination(total) {
+  const pages = Math.ceil(total / PER_PAGE);
+  const el = document.getElementById('pagination');
+  if (pages <= 1) { el.innerHTML = ''; return; }
+
+  let html = `<button class="page-btn" onclick="goPage(${currentPage-1})" ${currentPage===1?'disabled':''}>→</button>`;
+
+  const range = [];
+  for (let i = 1; i <= pages; i++) {
+    if (i === 1 || i === pages || (i >= currentPage-2 && i <= currentPage+2)) range.push(i);
+    else if (range[range.length-1] !== '...') range.push('...');
+  }
+
+  range.forEach(p => {
+    if (p === '...') html += `<span style="color:var(--text3);padding:0 4px;">...</span>`;
+    else html += `<button class="page-btn ${p===currentPage?'active':''}" onclick="goPage(${p})">${p}</button>`;
+  });
+
+  html += `<button class="page-btn" onclick="goPage(${currentPage+1})" ${currentPage===pages?'disabled':''}>←</button>`;
+  el.innerHTML = html;
+}
+
+function goPage(p) {
+  const pages = Math.ceil(filteredResults.length / PER_PAGE);
+  if (p < 1 || p > pages) return;
+  currentPage = p;
+  renderResults();
+  document.getElementById('results-section').scrollIntoView({behavior:'smooth'});
+}
+
+// ══════════════════════════════════════
+// FILTER
+// ══════════════════════════════════════
+function filterResults(q) {
+  const query = q.trim();
+  if (!query) {
+    filteredResults = [...allResults];
+  } else {
+    filteredResults = allResults.filter(r =>
+      r.college.includes(query)
+    );
+  }
+  currentPage = 1;
+  renderResults();
+}
+</script>
+</body>
+</html>
