@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>من نحن - natija2026 | البوابة العربية للقبول الجامعي</title>
+<meta name="description" content="natija2026 هي البوابة العربية الأولى لنتائج البكالوريا والقبول الجامعي. خدمة مجانية 100% تساعد الطلاب العرب في اختيار مستقبلهم الجامعي.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://natija2026.com/about.html">
+<meta name="theme-color" content="#0a0e1a">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
+<style>
+:root{--bg:#0a0e1a;--bg-elev:#111729;--surface:#161d35;--surface-2:#1c2440;--border:rgba(148,163,184,0.08);--border-strong:rgba(148,163,184,0.15);--primary:#4f7cff;--gold:#f5c842;--gold-soft:rgba(245,200,66,0.08);--gold-border:rgba(245,200,66,0.25);--success:#10b981;--text:#e8edf8;--text-2:#94a3b8;--text-3:#64748b;--text-4:#475569}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;direction:rtl;padding-bottom:80px;line-height:1.8}
+.header{position:sticky;top:0;z-index:50;background:rgba(10,14,26,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
+.back-btn{background:var(--surface);border:1px solid var(--border);color:var(--text-2);width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;text-decoration:none}
+.brand{display:flex;align-items:center;gap:8px;text-decoration:none;color:inherit;font-weight:800;font-size:15px}
+.brand-mark{width:30px;height:30px;background:var(--surface-2);border:1px solid var(--gold-border);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px}
+
+.hero{padding:36px 20px 24px;text-align:center;background:linear-gradient(180deg,var(--bg-elev),var(--bg));border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-100px;right:50%;width:300px;height:300px;background:radial-gradient(circle,rgba(245,200,66,0.1) 0%,transparent 70%);transform:translateX(50%);pointer-events:none}
+.logo-big{width:80px;height:80px;background:linear-gradient(135deg,var(--surface),var(--surface-2));border:2px solid var(--gold-border);border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:40px;margin:0 auto 16px;box-shadow:0 0 0 4px rgba(245,200,66,0.08),0 12px 32px rgba(245,200,66,0.15);position:relative;z-index:2}
+.hero h1{font-size:26px;font-weight:900;line-height:1.3;margin-bottom:10px;letter-spacing:-0.5px;position:relative;z-index:2}
+.hero h1 .gold{color:var(--gold)}
+.hero-tagline{font-size:13px;color:var(--text-2);max-width:340px;margin:0 auto;position:relative;z-index:2}
+
+.section{padding:24px 20px}
+.section-title{font-size:18px;font-weight:900;margin-bottom:12px;color:var(--gold);display:flex;align-items:center;gap:8px;letter-spacing:-0.3px}
+.section-title i{width:18px;height:18px}
+.section p{font-size:14px;color:var(--text-2);margin-bottom:12px;line-height:1.9}
+
+.values-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.value-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px}
+.value-emoji{font-size:24px;margin-bottom:8px}
+.value-title{font-size:13px;font-weight:800;margin-bottom:4px}
+.value-text{font-size:11px;color:var(--text-3);line-height:1.6}
+
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}
+.stat{background:linear-gradient(135deg,var(--surface),var(--bg-elev));border:1px solid var(--gold-border);border-radius:12px;padding:14px 8px;text-align:center}
+.stat-num{font-size:22px;font-weight:900;color:var(--gold);line-height:1;margin-bottom:4px;letter-spacing:-0.5px}
+.stat-label{font-size:10px;color:var(--text-3);font-weight:700}
+
+.sources-grid{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.source-item{background:var(--surface);border:1px solid var(--border-strong);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px;font-size:12px}
+.source-item i{color:var(--success);width:14px;height:14px;flex-shrink:0}
+.source-item strong{color:var(--text);font-weight:800}
+.source-item span{color:var(--text-3);font-weight:600}
+
+.cta-box{margin:24px 0;background:linear-gradient(135deg,var(--gold-soft),rgba(79,124,255,0.08));border:1px solid var(--gold-border);border-radius:16px;padding:20px;text-align:center}
+.cta-emoji{font-size:32px;margin-bottom:8px}
+.cta-title{font-size:16px;font-weight:900;margin-bottom:6px}
+.cta-text{font-size:12px;color:var(--text-2);margin-bottom:14px;line-height:1.7}
+.cta-btn{display:inline-flex;align-items:center;gap:6px;background:var(--gold);color:#000;text-decoration:none;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:900}
+
+.contact-card{background:var(--surface);border:1px solid var(--border-strong);border-radius:12px;padding:16px;margin-top:14px}
+.contact-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:12px}
+.contact-row:last-child{margin-bottom:0}
+.contact-row i{color:var(--gold);width:14px;height:14px}
+.contact-row strong{color:var(--text);font-weight:800}
+.contact-row a{color:var(--primary);text-decoration:none;font-weight:700}
+
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;height:64px;background:rgba(10,14,26,.95);backdrop-filter:blur(16px);border-top:1px solid var(--border);z-index:50;padding:0 8px;display:flex;justify-content:space-around;align-items:center}
+.bn-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 10px;color:var(--text-3);text-decoration:none;font-size:10px;font-weight:700;flex:1}
+.bn-icon{width:20px;height:20px}
+.bn-home{width:42px;height:42px;background:linear-gradient(135deg,var(--gold),#ffd966);border-radius:50%;display:flex;align-items:center;justify-content:center}
+
+@media(min-width:768px){body{max-width:480px;margin:0 auto;border-left:1px solid var(--border);border-right:1px solid var(--border)}}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <a href="/" class="back-btn"><i data-lucide="arrow-right" style="width:16px;height:16px"></i></a>
+  <a href="/" class="brand"><div class="brand-mark">🎓</div>natija2026</a>
+  <div style="width:34px"></div>
+</header>
+
+<section class="hero">
+  <div class="logo-big">🎓</div>
+  <h1>البوابة العربية<br><span class="gold">للقبول الجامعي</span></h1>
+  <p class="hero-tagline">منصة مجانية تساعد آلاف الطلاب العرب في اختيار تخصصاتهم الجامعية بناءً على بيانات رسمية ومحدّثة</p>
+</section>
+
+<div class="section">
+  <h2 class="section-title">
+    <i data-lucide="target"></i>
+    رسالتنا
+  </h2>
+  <p>أن نكون الوجهة العربية الأولى للطلاب الباحثين عن تخصصاتهم الجامعية. نؤمن بأن كل طالب عربي يستحق الوصول لمعلومات دقيقة ومحدّثة لمساعدته في اتخاذ أهم قرار في حياته الأكاديمية.</p>
+  
+  <div class="stats-row">
+    <div class="stat">
+      <div class="stat-num">10</div>
+      <div class="stat-label">دول عربية</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">1,400+</div>
+      <div class="stat-label">تخصص جامعي</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">مجاني</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section-title">
+    <i data-lucide="heart"></i>
+    قيمنا
+  </h2>
+  <div class="values-grid">
+    <div class="value-card">
+      <div class="value-emoji">🎯</div>
+      <div class="value-title">دقة عالية</div>
+      <div class="value-text">بيانات من المصادر الرسمية للوزارات</div>
+    </div>
+    <div class="value-card">
+      <div class="value-emoji">⚡</div>
+      <div class="value-title">سرعة فورية</div>
+      <div class="value-text">نتائج خلال ثوانٍ بدون انتظار</div>
+    </div>
+    <div class="value-card">
+      <div class="value-emoji">🔒</div>
+      <div class="value-title">خصوصية تامة</div>
+      <div class="value-text">بدون تسجيل أو بيانات شخصية</div>
+    </div>
+    <div class="value-card">
+      <div class="value-emoji">🌟</div>
+      <div class="value-title">مجاني للجميع</div>
+      <div class="value-text">خدمة مفتوحة لكل طالب عربي</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section-title">
+    <i data-lucide="shield-check"></i>
+    مصادر بياناتنا
+  </h2>
+  <p>نعتمد على المصادر الرسمية الموثوقة من الوزارات والهيئات التعليمية في كل دولة:</p>
+  <div class="sources-grid">
+    <div class="source-item">
+      <i data-lucide="badge-check"></i>
+      <div>
+        <strong>وزارة التعليم العالي والبحث العلمي العراقية</strong><br>
+        <span>mohesr.gov.iq</span>
+      </div>
+    </div>
+    <div class="source-item">
+      <i data-lucide="badge-check"></i>
+      <div>
+        <strong>وحدة تنسيق القبول الموحد - الأردن</strong><br>
+        <span>admhec.gov.jo</span>
+      </div>
+    </div>
+    <div class="source-item">
+      <i data-lucide="badge-check"></i>
+      <div>
+        <strong>وزارة التعليم العالي السورية</strong><br>
+        <span>مديرية القبول الجامعي</span>
+      </div>
+    </div>
+    <div class="source-item">
+      <i data-lucide="badge-check"></i>
+      <div>
+        <strong>وزارات التعليم العالي الخليجية</strong><br>
+        <span>السعودية، الإمارات، الكويت، قطر، البحرين، عُمان</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section-title">
+    <i data-lucide="refresh-cw"></i>
+    التحديث المستمر
+  </h2>
+  <p>معدلات القبول الجامعي تتغير سنوياً حسب أعداد المتقدمين والمقاعد المتاحة. لذلك نلتزم بـ:</p>
+  <ul style="padding-right:20px;font-size:13px;color:var(--text-2);line-height:2">
+    <li>تحديث البيانات مع كل موسم قبول جديد</li>
+    <li>إضافة تخصصات وجامعات جديدة باستمرار</li>
+    <li>مراجعة المصادر الرسمية شهرياً</li>
+    <li>تصحيح أي بيانات غير دقيقة فور اكتشافها</li>
+    <li>الشفافية الكاملة في تواريخ التحديث</li>
+  </ul>
+</div>
+
+<div class="section">
+  <div class="cta-box">
+    <div class="cta-emoji">🚀</div>
+    <div class="cta-title">جاهز لاكتشاف تخصصك؟</div>
+    <div class="cta-text">جرّب الحاسبة الآن واعرف كل التخصصات المتاحة لمعدلك</div>
+    <a href="/" class="cta-btn">
+      <i data-lucide="calculator" style="width:14px;height:14px"></i>
+      افتح الحاسبة
+    </a>
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section-title">
+    <i data-lucide="mail"></i>
+    تواصل معنا
+  </h2>
+  <p>عندك سؤال أو اقتراح؟ نحب نسمع منك:</p>
+  <div class="contact-card">
+    <div class="contact-row">
+      <i data-lucide="globe"></i>
+      <div><strong>الموقع:</strong> <a href="https://natija2026.com">natija2026.com</a></div>
+    </div>
+    <div class="contact-row">
+      <i data-lucide="message-circle"></i>
+      <div><strong>التحديثات:</strong> تابعنا للأخبار</div>
+    </div>
+    <div class="contact-row">
+      <i data-lucide="heart"></i>
+      <div><strong>الدعم:</strong> شارك الموقع مع أصدقائك</div>
+    </div>
+  </div>
+</div>
+
+<nav class="bottom-nav">
+  <a href="/results.html" class="bn-item"><i data-lucide="graduation-cap" class="bn-icon"></i>نتائج</a>
+  <a href="/" class="bn-item"><i data-lucide="calculator" class="bn-icon"></i>حاسبة</a>
+  <a href="/" class="bn-item"><div class="bn-home"><i data-lucide="home" style="width:20px;height:20px;color:#000"></i></div>الرئيسية</a>
+  <a href="/schedules.html" class="bn-item"><i data-lucide="calendar-days" class="bn-icon"></i>جداول</a>
+  <a href="/iraq.html" class="bn-item"><i data-lucide="book-open" class="bn-icon"></i>أدلة</a>
+</nav>
+
+<script>window.addEventListener('load',()=>{if(typeof lucide!=='undefined')lucide.createIcons()});</script>
+</body>
+</html>

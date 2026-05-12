@@ -1,0 +1,23 @@
+# natija2026.com - بوابة البكالوريا العربية
+# Updated: 2025-11-15
+
+User-agent: *
+Allow: /
+Disallow: /backend/
+Disallow: /api/
+Disallow: /admin/
+
+# جوجل
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# بينج
+User-agent: Bingbot
+Allow: /
+
+# Sitemap
+Sitemap: https://natija2026.com/sitemap.xml
+
+# الموقع الرسمي
+Host: natija2026.com
