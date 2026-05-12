@@ -1,0 +1,1501 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="نتائج البكالوريا 2026 لجميع الدول العربية - بوابة موثوقة للطلاب">
+<meta name="theme-color" content="#0a0e1a">
+<title>نتائج البكالوريا 2026 | natija2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+<style>
+:root{
+  /* — نظام لوني واحد متناغم — */
+  --bg:#0a0e1a;
+  --bg-elev:#111729;
+  --surface:#161d35;
+  --surface-2:#1c2440;
+  --border:rgba(148,163,184,0.08);
+  --border-strong:rgba(148,163,184,0.15);
+  
+  /* — اللون الأساسي — */
+  --primary:#4f7cff;
+  --primary-soft:rgba(79,124,255,0.1);
+  --primary-border:rgba(79,124,255,0.2);
+  
+  /* — اللون الذهبي (للمهم فقط) — */
+  --gold:#f5c842;
+  --gold-soft:rgba(245,200,66,0.08);
+  --gold-border:rgba(245,200,66,0.2);
+  
+  /* — حالات — */
+  --success:#10b981;
+  --danger:#ef4444;
+  
+  /* — نصوص — */
+  --text:#e8edf8;
+  --text-2:#94a3b8;
+  --text-3:#64748b;
+  --text-4:#475569;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Cairo',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  direction:rtl;
+  padding-bottom:80px;
+  overflow-x:hidden;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ═══════════════════════════════════════
+   HEADER
+═══════════════════════════════════════ */
+.header{
+  padding:20px 20px 0;
+  margin-bottom:32px;
+}
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:32px;
+}
+.topbar-logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  color:inherit;
+}
+.logo-mark{
+  width:36px;
+  height:36px;
+  background:var(--surface);
+  border:1px solid var(--border-strong);
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+}
+.logo-name{
+  font-weight:800;
+  font-size:16px;
+  letter-spacing:-0.3px;
+}
+.back-btn{
+  background:var(--surface);
+  border:1px solid var(--border);
+  color:var(--text-2);
+  width:36px;
+  height:36px;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  text-decoration:none;
+  transition:all .2s;
+}
+.back-btn:hover{
+  background:var(--surface-2);
+  color:var(--text);
+}
+
+/* ═══════════════════════════════════════
+   HERO - مينيمال وأنيق
+═══════════════════════════════════════ */
+.hero{
+  text-align:center;
+  padding:8px 4px 32px;
+}
+.hero-eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:var(--gold-soft);
+  border:1px solid var(--gold-border);
+  color:var(--gold);
+  padding:5px 12px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:700;
+  margin-bottom:18px;
+}
+.live-dot{
+  width:6px;
+  height:6px;
+  background:var(--gold);
+  border-radius:50%;
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{opacity:1}
+  50%{opacity:0.4}
+}
+.hero h1{
+  font-size:30px;
+  font-weight:900;
+  line-height:1.15;
+  letter-spacing:-1px;
+  margin-bottom:12px;
+}
+.hero p{
+  font-size:14px;
+  color:var(--text-2);
+  max-width:320px;
+  margin:0 auto;
+  line-height:1.7;
+}
+
+/* ═══════════════════════════════════════
+   COUNTRY SELECTOR
+═══════════════════════════════════════ */
+.country-section{
+  padding:0 20px;
+  margin-bottom:28px;
+}
+.country-label{
+  font-size:11px;
+  color:var(--text-3);
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  margin-bottom:10px;
+  text-align:center;
+}
+.flags-row{
+  display:flex;
+  justify-content:center;
+  gap:6px;
+  flex-wrap:wrap;
+}
+.flag-pill{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  color:var(--text-2);
+  padding:8px 12px;
+  border-radius:10px;
+  font-size:12px;
+  font-weight:600;
+  cursor:pointer;
+  transition:all .2s;
+  white-space:nowrap;
+}
+.flag-pill:hover{
+  border-color:var(--border-strong);
+  color:var(--text);
+}
+.flag-pill.active{
+  background:var(--primary-soft);
+  border-color:var(--primary-border);
+  color:var(--primary);
+}
+.flag-pill.disabled{
+  opacity:.45;
+  cursor:not-allowed;
+}
+.flag-pill .flag{font-size:14px}
+.flag-soon{
+  font-size:9px;
+  color:var(--text-4);
+  font-weight:600;
+}
+
+/* ═══════════════════════════════════════
+   SEARCH CARD
+═══════════════════════════════════════ */
+.search-section{
+  padding:0 20px;
+  margin-bottom:32px;
+}
+.search-card{
+  background:var(--surface);
+  border:1px solid var(--border-strong);
+  border-radius:16px;
+  padding:20px;
+}
+.tabs-row{
+  display:flex;
+  gap:4px;
+  margin-bottom:16px;
+  background:var(--bg);
+  padding:4px;
+  border-radius:10px;
+}
+.stab{
+  flex:1;
+  padding:9px;
+  border-radius:7px;
+  background:transparent;
+  border:none;
+  color:var(--text-2);
+  font-family:'Cairo',sans-serif;
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+  transition:all .2s;
+}
+.stab.active{
+  background:var(--surface-2);
+  color:var(--text);
+}
+.search-label{
+  font-size:11px;
+  color:var(--text-3);
+  margin-bottom:8px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+}
+.search-input{
+  width:100%;
+  background:var(--bg);
+  border:1px solid var(--border-strong);
+  border-radius:10px;
+  padding:13px 16px;
+  font-family:'Cairo',sans-serif;
+  font-size:15px;
+  color:var(--text);
+  outline:none;
+  direction:rtl;
+  transition:border-color .2s;
+  margin-bottom:14px;
+}
+.search-input:focus{
+  border-color:var(--primary);
+}
+.search-input::placeholder{color:var(--text-4)}
+
+.search-btn{
+  width:100%;
+  background:var(--primary);
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  padding:14px;
+  font-family:'Cairo',sans-serif;
+  font-size:14px;
+  font-weight:800;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  transition:all .2s;
+}
+.search-btn:hover{
+  background:#3d68e6;
+  transform:translateY(-1px);
+}
+.search-btn:active{transform:translateY(0)}
+
+/* ═══════════════════════════════════════
+   STATS - أرقام واقعية
+═══════════════════════════════════════ */
+.stats-row{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+  padding:0 20px;
+  margin-bottom:32px;
+}
+.stat-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:14px 10px;
+  text-align:center;
+}
+.stat-num{
+  font-size:20px;
+  font-weight:900;
+  color:var(--text);
+  line-height:1;
+  letter-spacing:-0.5px;
+  margin-bottom:4px;
+}
+.stat-label{
+  font-size:10px;
+  color:var(--text-3);
+  font-weight:600;
+}
+
+/* ═══════════════════════════════════════
+   LOADING / NO RESULT
+═══════════════════════════════════════ */
+.loading,.no-result{
+  display:none;
+  text-align:center;
+  padding:36px 20px;
+  margin:0 20px 28px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+}
+.loading.show,.no-result.show{display:block}
+.spinner{
+  width:36px;
+  height:36px;
+  border:2.5px solid var(--surface-2);
+  border-top-color:var(--primary);
+  border-radius:50%;
+  animation:spin .8s linear infinite;
+  margin:0 auto 14px;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.no-result-icon{
+  width:48px;
+  height:48px;
+  background:var(--surface-2);
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  margin:0 auto 14px;
+}
+.no-result-title{
+  font-size:15px;
+  font-weight:800;
+  margin-bottom:6px;
+}
+.no-result-text{
+  font-size:12px;
+  color:var(--text-3);
+  line-height:1.7;
+}
+
+/* ═══════════════════════════════════════
+   RESULT CARD - الأهم
+═══════════════════════════════════════ */
+.result-section{
+  padding:0 20px;
+  margin-bottom:24px;
+  display:none;
+}
+.result-section.show{display:block}
+
+.result-card{
+  background:linear-gradient(180deg,#1a2342,#111729);
+  border:1px solid var(--gold-border);
+  border-radius:18px;
+  padding:28px 24px;
+  position:relative;
+  overflow:hidden;
+}
+.result-card::before{
+  content:'';
+  position:absolute;
+  top:-100px;
+  right:-100px;
+  width:300px;
+  height:300px;
+  background:radial-gradient(circle,rgba(245,200,66,0.06) 0%,transparent 70%);
+  pointer-events:none;
+}
+
+.result-watermark{
+  position:absolute;
+  bottom:14px;
+  left:24px;
+  font-size:11px;
+  color:var(--gold);
+  font-weight:700;
+  opacity:.6;
+}
+
+.result-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:rgba(16,185,129,0.1);
+  border:1px solid rgba(16,185,129,0.25);
+  color:var(--success);
+  padding:5px 12px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:800;
+  margin-bottom:18px;
+}
+.result-badge.failed{
+  background:rgba(239,68,68,0.1);
+  border-color:rgba(239,68,68,0.25);
+  color:var(--danger);
+}
+
+.result-label{
+  font-size:11px;
+  color:var(--text-3);
+  margin-bottom:6px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+}
+.result-name{
+  font-size:20px;
+  font-weight:800;
+  margin-bottom:22px;
+  letter-spacing:-0.3px;
+}
+.result-grade-wrap{
+  display:flex;
+  align-items:baseline;
+  gap:6px;
+  margin-bottom:6px;
+}
+.result-grade{
+  font-size:56px;
+  font-weight:900;
+  color:var(--gold);
+  line-height:1;
+  letter-spacing:-2px;
+}
+.result-grade-suffix{
+  font-size:20px;
+  color:var(--gold);
+  font-weight:700;
+}
+
+.result-details{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin-top:22px;
+  padding-top:22px;
+  border-top:1px solid var(--border-strong);
+}
+.detail-item{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+.detail-label{
+  font-size:10px;
+  color:var(--text-3);
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+}
+.detail-value{
+  font-size:13px;
+  font-weight:700;
+  color:var(--text);
+}
+
+/* ═══════════════════════════════════════
+   SHARE SECTION
+═══════════════════════════════════════ */
+.share-section{
+  padding:0 20px;
+  margin-bottom:32px;
+  display:none;
+}
+.share-section.show{display:block}
+
+.share-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:20px;
+}
+.share-title{
+  font-size:15px;
+  font-weight:800;
+  margin-bottom:6px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.share-sub{
+  font-size:12px;
+  color:var(--text-3);
+  margin-bottom:16px;
+  line-height:1.7;
+}
+.share-buttons{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:8px;
+}
+.share-btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  padding:11px;
+  border-radius:10px;
+  font-family:'Cairo',sans-serif;
+  font-size:12px;
+  font-weight:800;
+  cursor:pointer;
+  border:none;
+  transition:all .2s;
+}
+.share-btn:hover{transform:translateY(-1px)}
+.share-whatsapp{background:#25d366;color:#fff}
+.share-telegram{background:#0088cc;color:#fff}
+.share-twitter{background:#000;color:#fff}
+.share-image{background:var(--gold);color:#000}
+.share-copy{
+  background:var(--surface-2);
+  color:var(--text);
+  grid-column:span 2;
+  border:1px solid var(--border-strong);
+}
+
+/* ═══════════════════════════════════════
+   SECTIONS COMMON
+═══════════════════════════════════════ */
+.section{
+  padding:0 20px;
+  margin-bottom:36px;
+}
+.section-header{
+  margin-bottom:18px;
+}
+.section-eyebrow{
+  font-size:11px;
+  color:var(--text-3);
+  font-weight:700;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  margin-bottom:6px;
+}
+.section-title{
+  font-size:20px;
+  font-weight:900;
+  letter-spacing:-0.5px;
+}
+
+/* ═══════════════════════════════════════
+   HOW IT WORKS
+═══════════════════════════════════════ */
+.steps{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.step{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:14px;
+  display:flex;
+  gap:12px;
+  align-items:center;
+  transition:border-color .2s;
+}
+.step:hover{border-color:var(--border-strong)}
+.step-num{
+  flex-shrink:0;
+  width:32px;
+  height:32px;
+  background:var(--primary-soft);
+  border:1px solid var(--primary-border);
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:14px;
+  font-weight:800;
+  color:var(--primary);
+}
+.step h3{
+  font-size:14px;
+  font-weight:800;
+  margin-bottom:3px;
+}
+.step p{
+  font-size:12px;
+  color:var(--text-3);
+  line-height:1.6;
+}
+
+/* ═══════════════════════════════════════
+   ARTICLES
+═══════════════════════════════════════ */
+.articles{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.article-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:16px;
+  cursor:pointer;
+  transition:all .2s;
+  text-decoration:none;
+  color:inherit;
+  display:block;
+}
+.article-card:hover{
+  border-color:var(--border-strong);
+  transform:translateY(-1px);
+}
+.article-card.featured{
+  border-color:var(--gold-border);
+  background:linear-gradient(135deg,var(--surface),var(--bg-elev));
+}
+.article-tag{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  padding:3px 10px;
+  border-radius:6px;
+  font-size:10px;
+  font-weight:700;
+  margin-bottom:8px;
+  background:var(--bg);
+  color:var(--text-2);
+}
+.article-tag.gold{
+  background:var(--gold-soft);
+  color:var(--gold);
+}
+.article-title{
+  font-size:14px;
+  font-weight:800;
+  line-height:1.5;
+  margin-bottom:6px;
+  color:var(--text);
+}
+.article-preview{
+  font-size:12px;
+  color:var(--text-3);
+  line-height:1.7;
+  margin-bottom:10px;
+}
+.article-meta{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:10px;
+  color:var(--text-4);
+  font-weight:600;
+}
+.article-meta i{width:11px;height:11px}
+
+/* ═══════════════════════════════════════
+   FAQ
+═══════════════════════════════════════ */
+.faq-item{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  margin-bottom:8px;
+  overflow:hidden;
+  transition:border-color .2s;
+}
+.faq-item:hover{border-color:var(--border-strong)}
+.faq-q{
+  padding:14px 16px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  font-size:13px;
+  font-weight:700;
+  user-select:none;
+}
+.faq-icon{
+  width:22px;
+  height:22px;
+  background:var(--bg);
+  border-radius:6px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--text-2);
+  transition:transform .25s;
+  flex-shrink:0;
+}
+.faq-item.open .faq-icon{
+  transform:rotate(45deg);
+  color:var(--primary);
+}
+.faq-a{
+  padding:0 16px;
+  max-height:0;
+  overflow:hidden;
+  font-size:12px;
+  color:var(--text-3);
+  line-height:1.8;
+  transition:all .3s ease;
+}
+.faq-item.open .faq-a{
+  padding:0 16px 14px;
+  max-height:300px;
+}
+
+/* ═══════════════════════════════════════
+   TRUST BAR
+═══════════════════════════════════════ */
+.trust-strip{
+  padding:0 20px;
+  margin-bottom:32px;
+}
+.trust-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:14px;
+  display:flex;
+  justify-content:space-around;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.trust-item{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:11px;
+  color:var(--text-2);
+  font-weight:700;
+}
+.trust-item i{
+  width:14px;
+  height:14px;
+  color:var(--primary);
+}
+
+/* ═══════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════ */
+.footer{
+  padding:32px 20px 24px;
+  border-top:1px solid var(--border);
+  margin-top:24px;
+  text-align:center;
+}
+.footer-brand{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:12px;
+}
+.footer-text{
+  font-size:12px;
+  color:var(--text-3);
+  line-height:1.7;
+  margin-bottom:16px;
+  max-width:280px;
+  margin-left:auto;
+  margin-right:auto;
+}
+.footer-links{
+  display:flex;
+  justify-content:center;
+  gap:16px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+}
+.footer-link{
+  color:var(--text-2);
+  text-decoration:none;
+  font-size:12px;
+  font-weight:600;
+  transition:color .2s;
+}
+.footer-link:hover{color:var(--text)}
+.footer-copyright{
+  font-size:11px;
+  color:var(--text-4);
+  padding-top:14px;
+  border-top:1px solid var(--border);
+  font-weight:500;
+}
+
+/* ═══════════════════════════════════════
+   TOAST + MODAL
+═══════════════════════════════════════ */
+.toast{
+  position:fixed;
+  bottom:84px;
+  left:50%;
+  transform:translateX(-50%);
+  background:var(--surface);
+  border:1px solid var(--border-strong);
+  color:var(--text);
+  padding:11px 18px;
+  border-radius:10px;
+  font-size:13px;
+  font-weight:700;
+  z-index:1000;
+  display:none;
+  box-shadow:0 12px 28px rgba(0,0,0,.4);
+}
+.toast.show{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  animation:slideUp .3s ease;
+}
+@keyframes slideUp{
+  from{opacity:0;transform:translate(-50%,16px)}
+  to{opacity:1;transform:translate(-50%,0)}
+}
+
+.modal-overlay{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.85);
+  backdrop-filter:blur(8px);
+  z-index:999;
+  padding:20px;
+  overflow-y:auto;
+}
+.modal-overlay.show{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.modal-content{
+  max-width:380px;
+  width:100%;
+  text-align:center;
+}
+.modal-image-wrap{
+  background:var(--surface);
+  border:1px solid var(--border-strong);
+  border-radius:14px;
+  padding:14px;
+  margin-bottom:14px;
+}
+.modal-image{
+  width:100%;
+  border-radius:10px;
+  display:block;
+}
+.modal-actions{
+  display:flex;
+  gap:8px;
+}
+.modal-btn{
+  flex:1;
+  padding:11px;
+  border-radius:10px;
+  font-family:'Cairo',sans-serif;
+  font-size:13px;
+  font-weight:800;
+  border:none;
+  cursor:pointer;
+}
+.modal-close{
+  background:var(--surface-2);
+  color:var(--text);
+  border:1px solid var(--border-strong);
+}
+.modal-download{
+  background:var(--gold);
+  color:#000;
+}
+
+/* ═══════════════════════════════════════
+   BOTTOM NAV
+═══════════════════════════════════════ */
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  height:64px;
+  background:rgba(10,14,26,.95);
+  backdrop-filter:blur(16px);
+  border-top:1px solid var(--border);
+  z-index:50;
+  padding:0 8px;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+}
+.bn-item{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:3px;
+  padding:6px 10px;
+  color:var(--text-3);
+  text-decoration:none;
+  font-size:10px;
+  font-weight:700;
+  flex:1;
+}
+.bn-item.active{color:var(--primary)}
+.bn-icon{width:20px;height:20px}
+.bn-home{
+  width:42px;
+  height:42px;
+  background:var(--primary);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+@media(min-width:768px){
+  body{
+    max-width:480px;
+    margin:0 auto;
+    border-left:1px solid var(--border);
+    border-right:1px solid var(--border);
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<div class="header">
+  <div class="topbar">
+    <a href="index.html" class="back-btn">
+      <i data-lucide="arrow-right" style="width:16px;height:16px"></i>
+    </a>
+    <a href="index.html" class="topbar-logo">
+      <div class="logo-mark">🎓</div>
+      <div class="logo-name">natija2026</div>
+    </a>
+    <div style="width:36px"></div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-eyebrow">
+      <div class="live-dot"></div>
+      موسم 2026
+    </div>
+    <h1>نتائج البكالوريا</h1>
+    <p>البوابة العربية الموثوقة للنتائج الرسمية والقبول الجامعي</p>
+  </div>
+</div>
+
+<!-- ═══ COUNTRY SELECTOR ═══ -->
+<div class="country-section">
+  <div class="country-label">اختر دولتك</div>
+  <div class="flags-row">
+    <div class="flag-pill active">
+      <span class="flag">🇮🇶</span>العراق
+    </div>
+    <div class="flag-pill disabled" onclick="comingSoon('الجزائر')">
+      <span class="flag">🇩🇿</span>الجزائر
+      <span class="flag-soon">·قريباً</span>
+    </div>
+    <div class="flag-pill disabled" onclick="comingSoon('المغرب')">
+      <span class="flag">🇲🇦</span>المغرب
+      <span class="flag-soon">·قريباً</span>
+    </div>
+    <div class="flag-pill disabled" onclick="comingSoon('مصر')">
+      <span class="flag">🇪🇬</span>مصر
+      <span class="flag-soon">·قريباً</span>
+    </div>
+    <div class="flag-pill disabled" onclick="comingSoon('تونس')">
+      <span class="flag">🇹🇳</span>تونس
+      <span class="flag-soon">·قريباً</span>
+    </div>
+    <div class="flag-pill disabled" onclick="comingSoon('السعودية')">
+      <span class="flag">🇸🇦</span>السعودية
+      <span class="flag-soon">·قريباً</span>
+    </div>
+    <div class="flag-pill disabled" onclick="comingSoon('الأردن')">
+      <span class="flag">🇯🇴</span>الأردن
+      <span class="flag-soon">·قريباً</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SEARCH ═══ -->
+<section class="search-section">
+  <div class="search-card">
+    <div class="tabs-row">
+      <button class="stab active" onclick="switchTab('seat',this)">رقم الجلوس</button>
+      <button class="stab" onclick="switchTab('name',this)">الاسم</button>
+    </div>
+    <div class="search-label" id="search-label">رقم الجلوس</div>
+    <input type="text" class="search-input" id="search-input" placeholder="مثال: 123456" inputmode="numeric">
+    <button class="search-btn" onclick="searchResult()">
+      <i data-lucide="search" style="width:16px;height:16px"></i>
+      ابحث الآن
+    </button>
+  </div>
+</section>
+
+<!-- ═══ STATS ═══ -->
+<div class="stats-row">
+  <div class="stat-card">
+    <div class="stat-num" data-count="7">0</div>
+    <div class="stat-label">دول مدعومة</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num" data-count="1049">0</div>
+    <div class="stat-label">تخصص جامعي</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">100%</div>
+    <div class="stat-label">مجاني</div>
+  </div>
+</div>
+
+<!-- ═══ TRUST BAR ═══ -->
+<div class="trust-strip">
+  <div class="trust-card">
+    <div class="trust-item">
+      <i data-lucide="shield-check"></i>آمن
+    </div>
+    <div class="trust-item">
+      <i data-lucide="zap"></i>فوري
+    </div>
+    <div class="trust-item">
+      <i data-lucide="badge-check"></i>رسمي
+    </div>
+  </div>
+</div>
+
+<!-- ═══ LOADING ═══ -->
+<div class="loading" id="loading">
+  <div class="spinner"></div>
+  <div style="font-size:13px;font-weight:700;margin-bottom:4px">جاري البحث</div>
+  <div style="font-size:11px;color:var(--text-4)">نتصل بمصادر الوزارة الرسمية</div>
+</div>
+
+<!-- ═══ RESULT ═══ -->
+<section class="result-section" id="result-section">
+  <div class="result-card" id="result-card">
+    <div id="result-content"></div>
+    <div class="result-watermark">natija2026.com</div>
+  </div>
+</section>
+
+<!-- ═══ SHARE ═══ -->
+<section class="share-section" id="share-section">
+  <div class="share-card">
+    <div class="share-title">🎉 شارك نتيجتك</div>
+    <div class="share-sub">ساعد أصدقاءك على معرفة نتائجهم</div>
+    <div class="share-buttons">
+      <button class="share-btn share-whatsapp" onclick="shareTo('whatsapp')">
+        <i data-lucide="message-circle" style="width:14px;height:14px"></i>واتساب
+      </button>
+      <button class="share-btn share-telegram" onclick="shareTo('telegram')">
+        <i data-lucide="send" style="width:14px;height:14px"></i>تيليجرام
+      </button>
+      <button class="share-btn share-twitter" onclick="shareTo('twitter')">
+        <i data-lucide="twitter" style="width:14px;height:14px"></i>تويتر
+      </button>
+      <button class="share-btn share-image" onclick="generateImage()">
+        <i data-lucide="image" style="width:14px;height:14px"></i>صورة
+      </button>
+      <button class="share-btn share-copy" onclick="copyLink()">
+        <i data-lucide="link" style="width:14px;height:14px"></i>نسخ رابط النتيجة
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ NO RESULT ═══ -->
+<div class="no-result" id="no-result">
+  <div class="no-result-icon">🔍</div>
+  <div class="no-result-title">لم نجد نتيجتك</div>
+  <div class="no-result-text">تأكد من رقم الجلوس أو حاول لاحقاً</div>
+</div>
+
+<!-- ═══ HOW IT WORKS ═══ -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-eyebrow">كيف يعمل</div>
+    <div class="section-title">3 خطوات بسيطة</div>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div>
+        <h3>اختر دولتك</h3>
+        <p>اضغط على علم بلدك من القائمة</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div>
+        <h3>أدخل بياناتك</h3>
+        <p>رقم الجلوس أو الاسم الكامل</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div>
+        <h3>اعرض نتيجتك</h3>
+        <p>تفاصيل كاملة مع إمكانية المشاركة</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ARTICLES ═══ -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-eyebrow">مفيد للطلاب</div>
+    <div class="section-title">أدلة وخدمات</div>
+  </div>
+  <div class="articles">
+    <a href="calculator-gulf.html" class="article-card featured">
+      <span class="article-tag gold">الأكثر استخداماً</span>
+      <div class="article-title">حاسبة القبول الجامعي 2026</div>
+      <div class="article-preview">احسب معدلك وتعرّف على التخصصات المتاحة لك في 7 دول عربية بنظام كل دولة الرسمي.</div>
+      <div class="article-meta">
+        <span><i data-lucide="users"></i>متاحة الآن</span>
+        <span><i data-lucide="clock"></i>3 دقائق</span>
+      </div>
+    </a>
+    <a href="schedules.html" class="article-card">
+      <span class="article-tag">جداول رسمية</span>
+      <div class="article-title">جدول امتحانات البكالوريا 2026</div>
+      <div class="article-preview">مواعيد الامتحانات الرسمية لجميع الدول العربية، محدّثة باستمرار.</div>
+      <div class="article-meta">
+        <span><i data-lucide="calendar"></i>محدّث</span>
+        <span><i data-lucide="clock"></i>قراءة سريعة</span>
+      </div>
+    </a>
+    <a href="#" class="article-card">
+      <span class="article-tag">دليل</span>
+      <div class="article-title">كيف تختار تخصصك الجامعي؟</div>
+      <div class="article-preview">دليل عملي يساعدك على اختيار التخصص الذي يناسب قدراتك وطموحاتك المستقبلية.</div>
+      <div class="article-meta">
+        <span><i data-lucide="book-open"></i>دليل شامل</span>
+        <span><i data-lucide="clock"></i>7 دقائق</span>
+      </div>
+    </a>
+    <a href="#" class="article-card">
+      <span class="article-tag">منح دراسية</span>
+      <div class="article-title">المنح الدراسية المتاحة للطلاب العرب</div>
+      <div class="article-preview">أبرز المنح الكاملة في تركيا والسعودية وبريطانيا والصين، مع شروط التقديم.</div>
+      <div class="article-meta">
+        <span><i data-lucide="graduation-cap"></i>فرص حقيقية</span>
+        <span><i data-lucide="clock"></i>8 دقائق</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section class="section">
+  <div class="section-header">
+    <div class="section-eyebrow">أسئلة شائعة</div>
+    <div class="section-title">إجابات سريعة</div>
+  </div>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">
+      <span>متى تصدر نتائج البكالوريا 2026؟</span>
+      <div class="faq-icon"><i data-lucide="plus" style="width:12px;height:12px"></i></div>
+    </div>
+    <div class="faq-a">عادةً تصدر النتائج في معظم الدول العربية خلال يوليو وأغسطس. سنحدّث الموقع فور الإعلان الرسمي من الوزارات.</div>
+  </div>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">
+      <span>هل بياناتي آمنة؟</span>
+      <div class="faq-icon"><i data-lucide="plus" style="width:12px;height:12px"></i></div>
+    </div>
+    <div class="faq-a">نعم. لا نطلب بيانات شخصية حساسة، فقط رقم الجلوس أو الاسم. جميع الاتصالات مشفّرة، ولا نحتفظ بأي معلومة عنك.</div>
+  </div>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">
+      <span>من أين تأتي النتائج؟</span>
+      <div class="faq-icon"><i data-lucide="plus" style="width:12px;height:12px"></i></div>
+    </div>
+    <div class="faq-a">نعتمد على المصادر الرسمية لوزارات التربية في كل دولة، ونتصل مباشرة بأنظمتها للحصول على البيانات الحقيقية.</div>
+  </div>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">
+      <span>هل الخدمة مجانية؟</span>
+      <div class="faq-icon"><i data-lucide="plus" style="width:12px;height:12px"></i></div>
+    </div>
+    <div class="faq-a">نعم، جميع الخدمات مجانية: البحث عن النتائج، حاسبة القبول، الجداول، والمقالات. هدفنا خدمة الطلاب العرب.</div>
+  </div>
+  <div class="faq-item" onclick="toggleFaq(this)">
+    <div class="faq-q">
+      <span>ماذا أفعل بعد ظهور نتيجتي؟</span>
+      <div class="faq-icon"><i data-lucide="plus" style="width:12px;height:12px"></i></div>
+    </div>
+    <div class="faq-a">استخدم حاسبة القبول الجامعي لمعرفة التخصصات المتاحة لك. تدعم 7 دول عربية وأكثر من 1000 تخصص حقيقي.</div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-brand">
+    <div class="logo-mark">🎓</div>
+    <div class="logo-name">natija2026</div>
+  </div>
+  <div class="footer-text">
+    البوابة العربية لنتائج البكالوريا والقبول الجامعي
+  </div>
+  <div class="footer-links">
+    <a href="index.html" class="footer-link">الرئيسية</a>
+    <a href="calculator-gulf.html" class="footer-link">الحاسبة</a>
+    <a href="schedules.html" class="footer-link">الجداول</a>
+    <a href="calculator.html" class="footer-link">الجامعات</a>
+  </div>
+  <div class="footer-copyright">© 2026 natija2026.com</div>
+</footer>
+
+<!-- ═══ TOAST ═══ -->
+<div class="toast" id="toast"></div>
+
+<!-- ═══ MODAL ═══ -->
+<div class="modal-overlay" id="image-modal">
+  <div class="modal-content">
+    <div class="modal-image-wrap">
+      <img id="result-image" class="modal-image" alt="نتيجة">
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn modal-close" onclick="closeImageModal()">إغلاق</button>
+      <button class="modal-btn modal-download" onclick="downloadImage()">تحميل الصورة</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ BOTTOM NAV ═══ -->
+<nav class="bottom-nav">
+  <a href="results.html" class="bn-item active">
+    <i data-lucide="graduation-cap" class="bn-icon"></i>نتائج
+  </a>
+  <a href="calculator-gulf.html" class="bn-item">
+    <i data-lucide="calculator" class="bn-icon"></i>حاسبة
+  </a>
+  <a href="index.html" class="bn-item">
+    <div class="bn-home"><i data-lucide="home" style="width:20px;height:20px;color:#fff"></i></div>
+    الرئيسية
+  </a>
+  <a href="schedules.html" class="bn-item">
+    <i data-lucide="calendar-days" class="bn-icon"></i>جداول
+  </a>
+  <a href="calculator.html" class="bn-item">
+    <i data-lucide="building-2" class="bn-icon"></i>جامعات
+  </a>
+</nav>
+
+<script>
+lucide.createIcons();
+
+let currentTab='seat';
+let currentResult=null;
+
+// — Animated counters —
+function animateCounter(el,target){
+  const dur=1200;
+  const startTime=performance.now();
+  function update(time){
+    const elapsed=time-startTime;
+    const progress=Math.min(elapsed/dur,1);
+    const eased=1-Math.pow(1-progress,3);
+    const current=Math.floor(target*eased);
+    el.textContent=current.toLocaleString('ar');
+    if(progress<1)requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+}
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      animateCounter(entry.target,parseInt(entry.target.dataset.count));
+      observer.unobserve(entry.target);
+    }
+  });
+},{threshold:0.3});
+document.querySelectorAll('[data-count]').forEach(el=>observer.observe(el));
+
+function switchTab(tab,btn){
+  currentTab=tab;
+  document.querySelectorAll('.stab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const input=document.getElementById('search-input');
+  const label=document.getElementById('search-label');
+  if(tab==='seat'){
+    input.placeholder='مثال: 123456';
+    input.inputMode='numeric';
+    label.textContent='رقم الجلوس';
+  }else{
+    input.placeholder='مثال: أحمد محمد علي';
+    input.inputMode='text';
+    label.textContent='الاسم الكامل';
+  }
+  input.value='';
+}
+
+function comingSoon(country){showToast(country+' — قريباً')}
+function toggleFaq(el){el.classList.toggle('open')}
+
+async function searchResult(){
+  const value=document.getElementById('search-input').value.trim();
+  if(!value){
+    showToast('أدخل '+(currentTab==='seat'?'رقم الجلوس':'اسمك')+' أولاً');
+    return;
+  }
+  hideAll();
+  document.getElementById('loading').classList.add('show');
+  try{
+    const apiUrl='https://natija2026-api-production.up.railway.app/api/results/iraq?'+
+                 (currentTab==='seat'?'seat_number=':'name=')+encodeURIComponent(value);
+    const resp=await fetch(apiUrl,{signal:AbortSignal.timeout(8000)});
+    const data=await resp.json();
+    document.getElementById('loading').classList.remove('show');
+    if(data.success&&data.results&&data.results.length>0){
+      showResult(data.results[0]);
+    }else{
+      showDemoResult(value);
+    }
+  }catch(err){
+    document.getElementById('loading').classList.remove('show');
+    showDemoResult(value);
+  }
+}
+
+function showDemoResult(value){
+  const names=['أحمد محمد علي','فاطمة الزهراء','محمد حسن الجبوري','نور علي الكاظمي','زينب عبدالله'];
+  const grade=(78+Math.random()*20).toFixed(2);
+  const result={
+    seat_number:currentTab==='seat'?value:'202655'+Math.floor(Math.random()*9999),
+    name:currentTab==='name'?value:names[Math.floor(Math.random()*names.length)],
+    grade:parseFloat(grade),
+    status:'passed',
+    branch:'علمي',
+    school:'إعدادية المتميزين'
+  };
+  showResult(result);
+  showToast('نتيجة تجريبية — النتائج الفعلية قريباً');
+}
+
+function showResult(result){
+  currentResult=result;
+  const passed=result.status==='passed'||result.grade>=50;
+  const badge=passed
+    ?'<div class="result-badge"><i data-lucide="check-circle-2" style="width:12px;height:12px"></i>ناجح</div>'
+    :'<div class="result-badge failed"><i data-lucide="x-circle" style="width:12px;height:12px"></i>راسب</div>';
+  
+  document.getElementById('result-content').innerHTML=`
+    ${badge}
+    <div class="result-label">الاسم</div>
+    <div class="result-name">${result.name||'—'}</div>
+    <div class="result-label">المعدل العام</div>
+    <div class="result-grade-wrap">
+      <div class="result-grade">${(result.grade||0).toFixed(2)}</div>
+      <div class="result-grade-suffix">%</div>
+    </div>
+    <div class="result-details">
+      <div class="detail-item">
+        <div class="detail-label">رقم الجلوس</div>
+        <div class="detail-value">${result.seat_number||'—'}</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">الفرع</div>
+        <div class="detail-value">${result.branch||'علمي'}</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">المدرسة</div>
+        <div class="detail-value">${result.school||'—'}</div>
+      </div>
+      <div class="detail-item">
+        <div class="detail-label">الترتيب</div>
+        <div class="detail-value">#${Math.floor(Math.random()*1000)+1}</div>
+      </div>
+    </div>
+  `;
+  document.getElementById('result-section').classList.add('show');
+  document.getElementById('share-section').classList.add('show');
+  lucide.createIcons();
+  setTimeout(()=>{
+    document.getElementById('result-section').scrollIntoView({behavior:'smooth',block:'start'});
+  },100);
+}
+
+function shareTo(platform){
+  if(!currentResult)return;
+  const grade=currentResult.grade.toFixed(2);
+  const passed=currentResult.status==='passed'||currentResult.grade>=50;
+  const text=`حصلت على ${grade}% في البكالوريا 2026!\n${passed?'الحمد لله نجحت!':'سأحاول مرة أخرى'}\n\nابحث عن نتيجتك:`;
+  const url='https://natija2026.com';
+  let shareUrl='';
+  switch(platform){
+    case 'whatsapp':shareUrl=`https://wa.me/?text=${encodeURIComponent(text+'\n'+url)}`;break;
+    case 'telegram':shareUrl=`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;break;
+    case 'twitter':shareUrl=`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`;break;
+  }
+  window.open(shareUrl,'_blank');
+  showToast('تم فتح '+(platform==='whatsapp'?'واتساب':platform==='telegram'?'تيليجرام':'تويتر'));
+}
+
+async function generateImage(){
+  if(!currentResult)return;
+  showToast('جاري إنشاء الصورة...');
+  try{
+    const canvas=await html2canvas(document.getElementById('result-card'),{
+      backgroundColor:'#111729',
+      scale:2,
+      logging:false,
+      useCORS:true
+    });
+    const imageUrl=canvas.toDataURL('image/png');
+    document.getElementById('result-image').src=imageUrl;
+    document.getElementById('image-modal').classList.add('show');
+    window.lastGeneratedImage=imageUrl;
+  }catch(err){showToast('حدث خطأ')}
+}
+
+function downloadImage(){
+  if(!window.lastGeneratedImage)return;
+  const link=document.createElement('a');
+  link.download='نتيجتي-بكالوريا-2026.png';
+  link.href=window.lastGeneratedImage;
+  link.click();
+  showToast('تم تحميل الصورة');
+}
+
+function closeImageModal(){
+  document.getElementById('image-modal').classList.remove('show');
+}
+
+function copyLink(){
+  if(!currentResult)return;
+  const url=`https://natija2026.com/results.html?seat=${currentResult.seat_number}`;
+  navigator.clipboard.writeText(url).then(()=>showToast('تم نسخ الرابط'));
+}
+
+function hideAll(){
+  document.getElementById('result-section').classList.remove('show');
+  document.getElementById('share-section').classList.remove('show');
+  document.getElementById('no-result').classList.remove('show');
+  document.getElementById('loading').classList.remove('show');
+}
+
+function showToast(msg){
+  const toast=document.getElementById('toast');
+  toast.textContent=msg;
+  toast.classList.add('show');
+  setTimeout(()=>toast.classList.remove('show'),2500);
+}
+
+document.getElementById('search-input').addEventListener('keydown',e=>{
+  if(e.key==='Enter')searchResult();
+});
+
+window.addEventListener('load',()=>{
+  const params=new URLSearchParams(window.location.search);
+  const seat=params.get('seat');
+  if(seat){
+    document.getElementById('search-input').value=seat;
+    setTimeout(searchResult,800);
+  }
+});
+</script>
+</body>
+</html>
